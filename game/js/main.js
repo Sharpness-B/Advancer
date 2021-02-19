@@ -11,4 +11,4 @@ function pipeline() {
     console.log(objects)
 }
 
-setInterval(pipeline, 50);  
+setInterval(pipeline, 500);  
