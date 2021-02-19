@@ -1,29 +1,14 @@
 <?php
     require("connection.php");
 
-    //print_r($_REQUEST);
+    // $sql = "INSERT INTO test VALUES ( \"".$_GET["rocket"]."\" );";
+    // $result = mysqli_query($connection, $sql);  
+
+    $sql = "SELECT RAND() AS tall;";
+    $result = mysqli_query($connection, $sql);  
 ?>
 
-
 {
-    "glossary": {
-        "title": "example glossary",
-		"GlossDiv": {
-            "title": "S",
-			"GlossList": {
-                "GlossEntry": {
-                    "ID": "SGML",
-					"SortAs": "SGML",
-					"GlossTerm": "Standard Generalized Markup Language",
-					"Acronym": "SGML",
-					"Abbrev": "ISO 8879:1986",
-					"GlossDef": {
-                        "para": "A meta-markup language, used to create markup languages such as DocBook.",
-						"GlossSeeAlso": ["GML", "XML"]
-                    },
-					"GlossSee": "markup"
-                }
-            }
-        }
-    }
+    "tall": <?php while ($row = mysqli_fetch_assoc($result)) {echo $row["tall"];} ?>,
+    "data": <?php echo $_GET["rocket"]; ?>
 }
