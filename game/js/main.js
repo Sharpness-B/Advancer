@@ -1,9 +1,14 @@
-let objects = {};
-let data = {point: [1,2,3]};
+let objects = [];
+
+let ship = {
+    brand: "Tesla",
+    model: "Roadster",
+    year: 2008
+};
 
 function pipeline() {
-    updateObjects("db/retriever.php", data);
-    console.log(objects);
+    updateObjects("db/retriever.php", ship);
+    console.log(objects)
 }
 
-setInterval(pipeline, 50);
+setInterval(pipeline, 50);  
