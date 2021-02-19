@@ -1,12 +1,12 @@
 let xmlhttp;
 
 function updateObjects(url, data) {
-    let get = "?data="+data;
+    let params = "data="+data;
     
     xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = handleFile;
-    xmlhttp.open("GET", url+get, true);
-    xmlhttp.send();
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send(params);
 }
 
 function handleFile(){
