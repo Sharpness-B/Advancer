@@ -7,7 +7,7 @@ let ship = {
 };
 
 function pipeline() {
-    updateObjects("db/retriever.php", ship);
+    updateObjects("../db/retriever.php", ship);
     console.log(objects)
 }
 
