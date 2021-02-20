@@ -2,6 +2,36 @@
 <diagram xmlns="http://oxygene.sk/ns/diagram/1/" >
   <notation>CrowsFoot</notation>
   <item-list>
+    <item type="database-table" id="{2ce76b7d-581d-45f8-bd5a-2bddf1757f76}" >
+      <position>
+        <x>505.2</x>
+        <y>70.8</y>
+      </position>
+      <table>
+        <name>lasers</name>
+        <color>#ffffff</color>
+        <column-list>
+          <column>
+            <name>id</name>
+            <data-type>INTEGER</data-type>
+            <required>True</required>
+            <primary-key>True</primary-key>
+          </column>
+          <column>
+            <name>userid</name>
+            <data-type>INTERGER</data-type>
+            <required>False</required>
+            <primary-key>False</primary-key>
+          </column>
+          <column>
+            <name>location</name>
+            <data-type>TEXT</data-type>
+            <required>False</required>
+            <primary-key>False</primary-key>
+          </column>
+        </column-list>
+      </table>
+    </item>
     <item type="database-table" id="{723e7db9-bab1-42c2-af2f-f7851da450f9}" >
       <position>
         <x>481.2</x>
@@ -77,42 +107,6 @@
         </column-list>
       </table>
     </item>
-    <item type="database-table" id="{2ce76b7d-581d-45f8-bd5a-2bddf1757f76}" >
-      <position>
-        <x>521.2</x>
-        <y>68.4</y>
-      </position>
-      <table>
-        <name>lasers</name>
-        <color>#ffffff</color>
-        <column-list>
-          <column>
-            <name>id</name>
-            <data-type>INTEGER</data-type>
-            <required>True</required>
-            <primary-key>True</primary-key>
-          </column>
-          <column>
-            <name>userid</name>
-            <data-type>INTERGER</data-type>
-            <required>False</required>
-            <primary-key>False</primary-key>
-          </column>
-          <column>
-            <name>location</name>
-            <data-type>TEXT</data-type>
-            <required>False</required>
-            <primary-key>False</primary-key>
-          </column>
-          <column>
-            <name>speed</name>
-            <data-type>TEXT</data-type>
-            <required>False</required>
-            <primary-key>False</primary-key>
-          </column>
-        </column-list>
-      </table>
-    </item>
     <item type="database-relationship" id="{93bbb656-e37f-45a3-8f0d-7c72b6fc21f0}" >
       <line>
         <connector-list>
@@ -155,8 +149,8 @@
           </connector>
           <connector>
             <position>
-              <x>521.2</x>
-              <y>105.9</y>
+              <x>505.2</x>
+              <y>101.3</y>
             </position>
             <angle>180</angle>
             <hub owner="{2ce76b7d-581d-45f8-bd5a-2bddf1757f76}" />
