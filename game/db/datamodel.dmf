@@ -24,18 +24,8 @@
             <primary-key>False</primary-key>
           </column>
           <column>
-            <name>location</name>
-            <data-type>TEXT</data-type>
-            <required>False</required>
-            <primary-key>False</primary-key>
-          </column>
-          <column>
             <name>boundingvolume</name>
             <data-type>TEXT</data-type>
-            <required>False</required>
-            <primary-key>False</primary-key>
-          </column>
-          <column>
             <required>False</required>
             <primary-key>False</primary-key>
           </column>
@@ -137,7 +127,7 @@
           <connector>
             <position>
               <x>481.2</x>
-              <y>266.7</y>
+              <y>252.7</y>
             </position>
             <angle>180</angle>
             <hub owner="{723e7db9-bab1-42c2-af2f-f7851da450f9}" />
