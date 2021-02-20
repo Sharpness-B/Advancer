@@ -4,7 +4,7 @@ USE advancer;
 
 CREATE TABLE users (
     id VARCHAR(255) PRIMARY KEY,
-    arbour INT,
+    armour INT,
     speed INT,
     laser INT,
     missile INT,
