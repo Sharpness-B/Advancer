@@ -3,7 +3,7 @@
     $servername = "localhost";
     $username   = "root";
     $password   = "";
-    $dbname     = "flex";
+    $dbname     = "advancer";
     
     // the connection to db
     $connection = mysqli_connect(
