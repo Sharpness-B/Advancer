@@ -12,7 +12,7 @@
     
     mysqli_set_charset($connection, "utf-8");
 
-    // check test
+    // check 
     if (!$connection) {
         die("db connection failed");
     }
