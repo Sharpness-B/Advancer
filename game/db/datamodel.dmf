@@ -1,11 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <diagram xmlns="http://oxygene.sk/ns/diagram/1/" >
-  <notation>Relational</notation>
+  <notation>CrowsFoot</notation>
   <item-list>
+    <item type="database-table" id="{723e7db9-bab1-42c2-af2f-f7851da450f9}" >
+      <position>
+        <x>481.2</x>
+        <y>222.2</y>
+      </position>
+      <table>
+        <name>ships</name>
+        <color>#ffffff</color>
+        <column-list>
+          <column>
+            <name>id</name>
+            <data-type>INTEGER</data-type>
+            <required>True</required>
+            <primary-key>True</primary-key>
+          </column>
+          <column>
+            <name>userid</name>
+            <data-type>INTEGER</data-type>
+            <required>False</required>
+            <primary-key>False</primary-key>
+          </column>
+          <column>
+            <name>location</name>
+            <data-type>TEXT</data-type>
+            <required>False</required>
+            <primary-key>False</primary-key>
+          </column>
+          <column>
+            <name>boundingvolume</name>
+            <data-type>TEXT</data-type>
+            <required>False</required>
+            <primary-key>False</primary-key>
+          </column>
+          <column>
+            <required>False</required>
+            <primary-key>False</primary-key>
+          </column>
+        </column-list>
+      </table>
+    </item>
     <item type="database-table" id="{4b6f26e6-a82c-4859-ba75-30eefc479933}" >
       <position>
-        <x>345</x>
-        <y>189</y>
+        <x>272.4</x>
+        <y>116.6</y>
       </position>
       <table>
         <name>users</name>
@@ -49,8 +89,8 @@
     </item>
     <item type="database-table" id="{2ce76b7d-581d-45f8-bd5a-2bddf1757f76}" >
       <position>
-        <x>510</x>
-        <y>146</y>
+        <x>521.2</x>
+        <y>68.4</y>
       </position>
       <table>
         <name>lasers</name>
@@ -83,94 +123,21 @@
         </column-list>
       </table>
     </item>
-    <item type="database-table" id="{723e7db9-bab1-42c2-af2f-f7851da450f9}" >
-      <position>
-        <x>507</x>
-        <y>281</y>
-      </position>
-      <table>
-        <name>ships</name>
-        <color>#ffffff</color>
-        <column-list>
-          <column>
-            <name>id</name>
-            <data-type>INTEGER</data-type>
-            <required>True</required>
-            <primary-key>True</primary-key>
-          </column>
-          <column>
-            <name>userid</name>
-            <data-type>INTEGER</data-type>
-            <required>False</required>
-            <primary-key>False</primary-key>
-          </column>
-          <column>
-            <name>location</name>
-            <data-type>TEXT</data-type>
-            <required>False</required>
-            <primary-key>False</primary-key>
-          </column>
-          <column>
-            <name>boundingvolume</name>
-            <data-type>TEXT</data-type>
-            <required>False</required>
-            <primary-key>False</primary-key>
-          </column>
-          <column>
-            <required>False</required>
-            <primary-key>False</primary-key>
-          </column>
-        </column-list>
-      </table>
-    </item>
-    <item type="database-relationship" id="{ac149563-1a20-4e3b-8b2f-a35c5d29bf3c}" >
+    <item type="database-relationship" id="{93bbb656-e37f-45a3-8f0d-7c72b6fc21f0}" >
       <line>
         <connector-list>
           <connector>
             <position>
-              <x>421</x>
-              <y>223.333</y>
+              <x>348.4</x>
+              <y>185.267</y>
             </position>
             <angle>0</angle>
             <hub owner="{4b6f26e6-a82c-4859-ba75-30eefc479933}" />
           </connector>
           <connector>
             <position>
-              <x>510</x>
-              <y>183.5</y>
-            </position>
-            <angle>180</angle>
-            <hub owner="{2ce76b7d-581d-45f8-bd5a-2bddf1757f76}" />
-          </connector>
-        </connector-list>
-      </line>
-      <relationship>
-        <cardinality>OneToMany</cardinality>
-        <modality>
-          <child>Optional</child>
-          <parent>Optional</parent>
-        </modality>
-        <columns>
-          <child>0</child>
-          <parent>1</parent>
-        </columns>
-      </relationship>
-    </item>
-    <item type="database-relationship" id="{102b32fd-68e4-4a3c-98eb-fce174c36125}" >
-      <line>
-        <connector-list>
-          <connector>
-            <position>
-              <x>421</x>
-              <y>257.667</y>
-            </position>
-            <angle>0</angle>
-            <hub owner="{4b6f26e6-a82c-4859-ba75-30eefc479933}" />
-          </connector>
-          <connector>
-            <position>
-              <x>507</x>
-              <y>325.5</y>
+              <x>481.2</x>
+              <y>266.7</y>
             </position>
             <angle>180</angle>
             <hub owner="{723e7db9-bab1-42c2-af2f-f7851da450f9}" />
@@ -179,6 +146,35 @@
       </line>
       <relationship>
         <cardinality>OneToOne</cardinality>
+        <modality>
+          <child>Optional</child>
+          <parent>Optional</parent>
+        </modality>
+      </relationship>
+    </item>
+    <item type="database-relationship" id="{ac149563-1a20-4e3b-8b2f-a35c5d29bf3c}" >
+      <line>
+        <connector-list>
+          <connector>
+            <position>
+              <x>348.4</x>
+              <y>150.933</y>
+            </position>
+            <angle>0</angle>
+            <hub owner="{4b6f26e6-a82c-4859-ba75-30eefc479933}" />
+          </connector>
+          <connector>
+            <position>
+              <x>521.2</x>
+              <y>105.9</y>
+            </position>
+            <angle>180</angle>
+            <hub owner="{2ce76b7d-581d-45f8-bd5a-2bddf1757f76}" />
+          </connector>
+        </connector-list>
+      </line>
+      <relationship>
+        <cardinality>OneToMany</cardinality>
         <modality>
           <child>Optional</child>
           <parent>Optional</parent>
