@@ -1,0 +1,129 @@
+/* Main Menu GUI */
+p { color: white;font-size: 2.4em;}
+h1 { 
+    color: #41c8c8;
+    text-shadow: 0 0 170px #fff, 0 0 170px #fff, 0 0 170px #fff, 0 0 170px #fff, 0 0 170px #fff, 0 0 170px #fff, 0 0 170px #858062;
+    font-family: "Ubuntu",Tahoma,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size:   2.4em;
+    font-weight: bold;
+    text-align:  center;
+    margin-bottom: 5em;
+    padding-left: 5em;
+    padding-right:5em;
+}
+html, body {
+    background-color: black;
+    margin: 0;
+    padding: 0;
+}
+#main_menu {
+    right: 50%;
+    bottom: 50%;
+    transform: translate(50%,50%);
+    position: absolute;
+    z-index: 1;
+}
+#list_of_content {
+    display: flex;
+    flex-direction: column;
+}
+
+.li_option {
+    display: inline-block;
+    margin-bottom: 2em;
+}
+
+.li_option_upgr {
+    display: flex;
+}
+
+.button {
+    border:           1px solid #858062;
+    border-radius:    3em;
+    box-shadow:       0 0 10px #858062;
+    background-color: rgba(0,0,0,0);
+    color:            white;
+
+    font-family: "Ubuntu",Tahoma,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size:   1.4em;
+    font-weight: bold;
+    text-align:  center;
+
+    padding: 1em 2em;
+    width:   30em;
+    display: inline-block;
+    cursor:  pointer;
+    outline: none;
+} .button:active { border: 2px solid white; }
+
+.button:hover {
+    border: 2px solid #858062;
+    border-radius:    3em;
+}
+
+/* Upgrade GUI */
+#upgr_body {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    right: 50%;
+    bottom: 60%;
+    transform: translate(50%,50%);
+    position: absolute;
+    z-index: 1;
+}
+.button_upgr {
+    font-size: 2em;
+    background-color: #93dada;
+    background-image: radial-gradient(#93dada, rgba(0,0,0,0.1), rgba(0,0,0,0) 60%);
+    border: none;
+    color: "black";
+    padding: 0.2 0.4em;
+    text-align: center;
+    font-size: 2em;
+    margin-left: 1em;
+    width: 6em;
+    height: 2em;
+    margin-top: 0.4em;
+}
+.dot {
+    margin-top: 2em;
+    height: 30px;
+    width: 30px;
+    background-color: #bbb;
+    border-radius: 50%;
+}
+.info {
+    margin:0;
+    margin-right: 1em;
+}
+.list_of_content_upgr {
+    border: 1px solid white;
+    border-radius: 0.2em;
+    padding: 1em;
+    margin: 2em;
+    height: fit-content;
+}
+#go_back {
+    margin-top: 1em;
+    right: 50%;
+    transform: translate(50%,50%);
+    position:absolute;
+    outline: none;
+    bottom: 20%;
+} #go_back:active { border: 2px solid white; }
+
+svg {
+    width: 100%;
+    position: absolute;
+    left:3%;
+    top:0.3em;
+    height: 3em;
+}
+canvas {
+    position: absolute;
+    z-index: -1;
+}
+.upgr_img {
+    margin-right: 1em;
+}
