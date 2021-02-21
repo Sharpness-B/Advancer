@@ -7,13 +7,9 @@ let ship = {
     boundingvolume: [[1,3,4], [3,4,2], [2,10,4]]
 };
 
-function pipeline() {
-    let multiplayer = true;
-    
-    if (multiplayer) updateObjects("../db/updater.php", ship);
-    else             ;
-
-    console.log(objects)
+function pipeline() {    
+    if (multiplayer)       updateObjects("../db/updater.php", ship);
+    else if (singleplayer) ;
 }
 
 setInterval(pipeline, 500);  
