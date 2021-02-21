@@ -4,22 +4,22 @@
         <title>Flexing Game 100</title>
         <meta   charset="utf-8">
         <!--<meta   http-equiv="refresh" content="420; url=https://youtu.be/dQw4w9WgXcQ"/>-->
-        <link   rel="stylesheet" type="text/css"  href="../style.css">
+        <link   rel="stylesheet" type="text/css"  href="../css/style.css">
         <script src="../js/gui.js" defer></script>
+        <script src="../js/main.js" defer></script>
     </head>
     <body>
-        <canvas id="canvas"></canvas>
+        <canvas id="menu_canvas"></canvas>
         <section id="upgr_body">
             
-            <nav class="list_of_content_upgr">
-                <p>ShipImageHere</p>
+            <nav>
+                <img src="../assets/spaceship.png" width="600px" height="600px">
             </nav>
             
             <nav class="list_of_content_upgr">
                 <ul>
                     <li class="li_option_upgr">
-                        <img scr="../icon.png">
-                        <p class="info">Armor</p>
+                        <img src="../assets/armor.png" class="info" width="90px" height="90px">
                         <span class="dot"></span>
                         <span class="dot"></span>
                         <span class="dot"></span>
@@ -29,8 +29,7 @@
                         <p id="armor_price"></p>
                     </li>
                     <li class="li_option_upgr">
-                        <img scr="../icon.png">
-                        <p class="info">Speed</p>
+                        <img src="../assets/speed.png" class="info"  width="90px" height="90px">
                         <span class="dot"></span>
                         <span class="dot"></span>
                         <span class="dot"></span>
@@ -40,8 +39,7 @@
                         <p id="armor_price"></p>
                     </li>
                     <li class="li_option_upgr">
-                        <img scr="../icon.png">
-                        <p class="info">Lasers</p>
+                        <img src="../assets/laser.png" class="info" width="90px" height="90px">
                         <span class="dot"></span>
                         <span class="dot"></span>
                         <span class="dot"></span>
@@ -51,8 +49,7 @@
                         <p id="armor_price"></p>
                     </li>
                     <li class="li_option_upgr">
-                        <img scr="../icon.png">
-                        <p class="info">Missil</p>
+                        <img src="../assets/missile.png" class="info" width="90px" height="90px">
                         <span class="dot"></span>
                         <span class="dot"></span>
                         <span class="dot"></span>
@@ -62,8 +59,7 @@
                         <p id="armor_price"></p>
                     </li>
                     <li class="li_option_upgr">
-                        <img scr="../icon.png">
-                        <p class="info">Energy</p>
+                        <img src="../assets/energy.png" class="info" width="90px" height="90px">
                         <span class="dot"></span>
                         <span class="dot"></span>
                         <span class="dot"></span>
@@ -75,7 +71,7 @@
                 </ul>
             </nav>
         </section>
-        <button id="go_back" class="button" onclick="back()">Done!</button>
+        <button id="go_back" class="button">Done!</button>
     </body>
 </html>
 
@@ -85,11 +81,9 @@ Speed:
 Lasers:
 Heatseekers:
 Energy:
-
 Special upgrades:
 Dash:
 Shield:
 Mines:
 Ghost:
-
 -->
