@@ -4,19 +4,32 @@
         <title>Flexing Game 100</title>
         <meta   charset="utf-8">
         <!--<meta   http-equiv="refresh" content="420; url=https://youtu.be/dQw4w9WgXcQ"/>-->
-        <link   rel="stylesheet" type="text/css"  href="style.css">
+        <link   rel="stylesheet" type="text/css"  href="css/style.css">
         <link   rel="icon"       type="image/png" href="logo.png">
         <script src="js/multiplayerUpdater.js"></script>
         <script src="js/main.js" defer></script>
         <script src="js/gui.js" defer></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
     </head>
     <body>
-        <canvas id="canvas"></canvas>
+        <canvas id="menu_canvas"></canvas>
         <nav id="main_menu">
             <ul id="list_of_content">
+                <h1>Advancer
+                    <svg>
+                        <line x1="0"    x2="10%"  y1="0"    y2="0"    stroke="white" stroke-width="1"/>
+                        <line x1="0"    x2="0"    y1="0"    y2="30%"  stroke="white" stroke-width="1"/>
+                        <line x1="0"    x2="10%"  y1="100%" y2="100%" stroke="white" stroke-width="1"/>
+                        <line x1="0"    x2="0"    y1="100%" y2="70%"  stroke="white" stroke-width="1"/>
+                        <line x1="90%"  x2="100%" y1="100%" y2="100%" stroke="white" stroke-width="1"/>
+                        <line x1="100%" x2="100%" y1="100%" y2="70%"  stroke="white" stroke-width="1"/>
+                        <line x1="90%"  x2="100%" y1="0"    y2="0"    stroke="white" stroke-width="1"/>
+                        <line x1="100%" x2="100%" y1="0"    y2="30%"  stroke="white" stroke-width="1"/>
+                    </svg>
+                </h1>
                 <li class="li_option"><button class="button" id="multiplr">Laser your friends</button></li>
-                <li class="li_option"><button class="button" id="grinding">Grindin mode</button></li>
-                <li class="li_option"><button class="button" id="upgrades" onclick="upgr()">Ludicrous Upgrade</button></li>
+                <li class="li_option"><button class="button" id="grinding">Grinding mode</button></li>
+                <li class="li_option"><button class="button" id="upgrades">Ludicrous upgrades</button></li>
             </ul>
         </nav>
     </body>
