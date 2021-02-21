@@ -6,7 +6,7 @@ function initFingerprintJS() {
     FingerprintJS.load().then(fp => {
         fp.get().then(result => {
             userID = result.visitorId;
-            DBstoreUserID("db/registrer.php", userID);
+            DBstoreUserID("../db/registrer.php", userID);
         });
     });
 }

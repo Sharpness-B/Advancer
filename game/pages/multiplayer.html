@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html>
-    <!DOCTYPE html>
-    <html>
-        <head>
-            <title>Advancer</title>
-            <meta   charset="utf-8">
-            <link   rel="stylesheet" type="text/css"  href="../css/style.css">
-            <link   rel="icon"       type="image/png" href="../assets/spaceshipIcon.png">
-            <script defer>
-                let multiplayer = true; 
-                let singleplayer = false;
-            </script>
-            <script defer src="../js/gui.js"></script>
-            <script defer src="../js/multiplayerUpdater.js"></script>
-            <script defer src="../js/main.js"></script>
-        </head>
+    <head>
+        <title>Advancer</title>
+        <meta   charset="utf-8">
+        <link   rel="stylesheet" type="text/css"  href="../css/style.css">
+        <link   rel="icon"       type="image/png" href="../assets/spaceshipIcon.png">
+        <script defer src="../js/userIdentifier.js"></script>
+        <script defer async src="https://cdn.jsdelivr.net/npm/@fingerprintjs/fingerprintjs@3/dist/fp.min.js"
+            onload="initFingerprintJS()">
+        </script>
+        <script defer>
+            let multiplayer = true; 
+            let singleplayer = false;
+        </script>
+        <script defer src="../js/gui.js"></script>
+        <script defer src="../js/multiplayerUpdater.js"></script>
+        <script defer src="../js/main.js"></script>
+    </head>
     <body>
         <canvas id="canvas"></canvas>
         <nav id="main_menu">
