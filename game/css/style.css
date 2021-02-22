@@ -26,6 +26,7 @@ html, body {
 #list_of_content {
     display: flex;
     flex-direction: column;
+    padding: 0;
 }
 
 .li_option {
@@ -113,12 +114,20 @@ html, body {
     bottom: 20%;
 } #go_back:active { border: 2px solid white; }
 
-svg {
+#logo_svg {
     width: 100%;
     position: absolute;
-    left:3%;
+    left:0%;
     top:0.3em;
     height: 3em;
+}
+#game_svg {
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%);
 }
 canvas {
     position: absolute;
