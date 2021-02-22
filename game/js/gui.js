@@ -1,6 +1,8 @@
 let loca = document.location.href.split("/");
 if (loca[loca.length-1].toString() == "index.html") {
-    buttonSoundEffectSetup();
+    document.getElementsByClassName("button")[0].onmouseover = function(){sound();}
+    document.getElementsByClassName("button")[1].onmouseover = function(){sound();}
+    document.getElementsByClassName("button")[2].onmouseover = function(){sound();}
 
     document.getElementById("upgrades").onclick = function() {
         musicCheck();
@@ -24,7 +26,8 @@ if (loca[loca.length-1].toString() == "upgrades.html") {
 }
 if (loca[loca.length-1].toString() == "singleplayer.html" || loca[loca.length-1].toString() == "multiplayer.html") {
     document.getElementById("main_menu").style.display = "none";
-    buttonSoundEffectSetup();
+    document.getElementsByClassName("button")[0].onmouseover = function(){sound();}
+    document.getElementsByClassName("button")[1].onmouseover = function(){sound();}
 
     document.getElementById("go_back2").onclick = function() {
         musicCheck();
@@ -33,16 +36,8 @@ if (loca[loca.length-1].toString() == "singleplayer.html" || loca[loca.length-1]
     document.getElementById("resume").onclick = function() {
         document.getElementById("main_menu").style.display = "none";
     }
+}
 
-}
-function buttonSoundEffectSetup() {
-    let b1 = document.getElementsByClassName("button")[0];
-    let b2 = document.getElementsByClassName("button")[1];
-    let b3 = document.getElementsByClassName("button")[2];
-    b1.onmouseover = function() {sound();}
-    b2.onmouseover = function() {sound();}
-    b3.onmouseover = function() {sound();}
-}
 let audioButton = document.createElement('audio');
 if (loca[loca.length-1].toString() == "index.html") audioButton.setAttribute('src', 'assets/button.mp3');
 else {audioButton.setAttribute('src', '../assets/button.mp3'); }
@@ -58,7 +53,7 @@ function musicCheck() {
 }
 function createCookie(name,value) {
     let date = new Date();
-    date.setTime(date.getTime() + (60 *1000));
+    date.setTime(date.getTime() + (10 *1000));
     let expires = "; expires=" + date.toGMTString();
     document.cookie = name + "=" + value + expires + "; path=/";
 }
@@ -84,6 +79,8 @@ if (loca[loca.length-1].toString() == "index.html" || (loca[loca.length-1].toStr
             ctx.fillStyle = "white";
             for (let i=0;i<100;i++) {
                 let s = starList[i];
+                ctx.shadowBlur = s.spdY*4;
+                ctx.shadowColor = "white";
                 ctx.beginPath();
                 ctx.arc(s.x, s.y, s.spdY, 0, 2*Math.PI);
                 ctx.fill();
