@@ -1,4 +1,5 @@
 let objects = [];
+let loc = document.location.href.split("/");
 
 let ship = {
     brand: "Tesla",
