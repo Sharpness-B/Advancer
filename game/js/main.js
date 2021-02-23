@@ -13,7 +13,7 @@ function pipeline() {
     else if (singleplayer) ;
 }
 
-setInterval(pipeline, 500);  
+setInterval(pipeline, 500);
 
 /*      Updates canvas size on rezise    */
 let cnv = document.getElementsByTagName("canvas")[0];
