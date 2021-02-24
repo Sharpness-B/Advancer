@@ -1,5 +1,5 @@
 let objects = [];
-let loc = document.location.href.split("/");
+//let loc = document.location.href.split("/");
 
 let ship = {
     brand: "Tesla",
@@ -24,6 +24,8 @@ function fit_to_screen(){
 window.addEventListener('resize', fit_to_screen);
 
 /* Keyinputs */
+/*
+
 if (loc[loc.length-1].toString() == "singleplayer.html" || loc[loc.length-1].toString() == "multiplayer.html") {
     document.addEventListener('keyup', function(){
         let key = event.key;
@@ -39,29 +41,10 @@ if (loc[loc.length-1].toString() == "singleplayer.html" || loc[loc.length-1].toS
             }
         }
     });
-}
-
-/* MUSIC */
-function readCookie(name) {
-    let nameEQ = name + "=";
-    let ca = document.cookie.split(';');
-    for(let i=0;i < ca.length;i++) {
-        let c = ca[i];
-        while (c.charAt(0)==' ') { c = c.substring(1,c.length); }
-        if (c.indexOf(nameEQ) == 0) return parseFloat(c.substring(nameEQ.length,c.length));
-    }
-    return null;
-}
-
-let audioElement = document.createElement('audio');
-if (loc[loc.length-1].toString() == "index.html") audioElement.setAttribute('src', 'assets/music1.mp3');
-else {audioElement.setAttribute('src', '../assets/music1.mp3'); }
-audioElement.load();
-audioElement.play();
-c = readCookie("music");
-if (c) audioElement.currentTime = c;
+}*/
 
 /* Canvas game */
+/*
 if (loc[loc.length-1].toString() == "singleplayer.html" || loc[loc.length-1].toString() == "multiplayer.html") {
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
@@ -107,3 +90,4 @@ if (loc[loc.length-1].toString() == "singleplayer.html" || loc[loc.length-1].toS
         // Enemy's (x,y) pos relativ til meg + missiler.
     }, 1000/fps);
 }
+*/

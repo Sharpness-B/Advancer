@@ -46,18 +46,3 @@ function sound(){
     audioButton.currentTime=0;
     audioButton.play();
 }
-
-function musicCheck() {
-    if (readCookie("music")) eraseCookie("music");
-    createCookie("music",audioElement.currentTime);
-}
-function createCookie(name,value) {
-    let date = new Date();
-    date.setTime(date.getTime() + (10 *1000));
-    let expires = "; expires=" + date.toGMTString();
-    document.cookie = name + "=" + value + expires + "; path=/";
-}
-
-function eraseCookie(name) {
-    createCookie(name,"",-1);
-}
