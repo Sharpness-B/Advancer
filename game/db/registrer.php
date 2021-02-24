@@ -10,7 +10,7 @@
     // hvis ikke resultat fra db <=> hvis ikke ID i db
     if (!$row) {
         // registrer ny bruker
-        $sql = "INSERT INTO users VALUES(\"$userID\");";
+        $sql = "INSERT INTO users (id) VALUES (\"$userID\");";
         $result = mysqli_query($connection, $sql);
  
         // returner upgrades
