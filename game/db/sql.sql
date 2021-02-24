@@ -22,3 +22,4 @@ CREATE TABLE ships (
     userid VARCHAR(255),
     boundingvolume VARCHAR(255)
 );
+ 
