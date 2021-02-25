@@ -3,7 +3,9 @@ CREATE DATABASE advancer;
 USE advancer;
 
 CREATE TABLE users (
-    id VARCHAR(255) PRIMARY KEY,
+    /*id VARCHAR(255) PRIMARY KEY,*/
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    fingerprint VARCHAR(255),
     balance INT DEFAULT 30,
     armour  INT DEFAULT 1,
     speed   INT DEFAULT 1,
