@@ -1,7 +1,7 @@
 let xmlhttp;
 
 function updateObjects(url, data) {
-    let params = "rocket=" + JSON.stringify(data);
+    let params = "data=" + JSON.stringify(data) + "&userID=" + $userID; // url escape data
     
     xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = handleFile;
