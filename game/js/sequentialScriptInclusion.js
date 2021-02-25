@@ -22,7 +22,7 @@ function sequentialScriptInclusion(scripts){
     else return;
 }
 
-// <script src="sequentialScriptInclusion.js" 
+// <script defer src="sequentialScriptInclusion.js" 
 //     onload="sequentialScriptInclusion([
 //         'cookie.js',
 //         'gui.js',
