@@ -3,7 +3,7 @@ let fingerprint;
 let upgrades;
 let xmlhttpUserID;
 
-function initFingerprintJS() {
+function login() {
     // hvis cookie
     if (readCookie("userID")) {
         userID = readCookie("userID");   
