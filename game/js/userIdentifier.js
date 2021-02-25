@@ -6,7 +6,8 @@ let xmlhttpUserID;
 function initFingerprintJS() {
     // hvis cookie
     if (readCookie("userID")) {
-        userID = readCookie("userID");        
+        userID = readCookie("userID");   
+        console.log(userID)     
         eraseCookie("userID");
         registrer(userID, null);
     }
@@ -24,10 +25,9 @@ function initFingerprintJS() {
     }
 }
 
-// registrer bruker i DB hvis ny. hent ut nivå på oppgraderinger
+// registrer bruker i DB hvis ny. hent ut nivå på oppgraderinger, og lag en cookie til slutt
 function registrer(userID, fingerprint) { 
     DBstoreUserID_getUpgrades("../db/registrer.php", userID, fingerprint); 
-    createCookie("userID", userID, 60*60*24*60);
 }
 
 function DBstoreUserID_getUpgrades(url, userID, fingerprint) {
@@ -49,6 +49,8 @@ function upgradesResponse(){
 
         userID = responsObject.userID;
         upgrades = responsObject.upgrades;
+
+        createCookie("userID", userID, 60*60*24*60);
     }
 }
 

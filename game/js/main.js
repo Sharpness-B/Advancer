@@ -13,6 +13,7 @@ function pipeline() {
     else if (singleplayer) ;
 }
 
+initFingerprintJS();
 setInterval(pipeline, 500);
 
 /* cnv = document.getElementsByTagName("canvas")[0];
