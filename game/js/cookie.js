@@ -14,14 +14,14 @@ function readCookie(name) {
 }
 
 // Make cookie
-function createCookie(name,value) {
+function createCookie(name,value,seconds) {
     let date = new Date();
-    date.setTime(date.getTime() + (10 *1000));
+    date.setTime(date.getTime() + seconds*1000);
     let expires = "; expires=" + date.toGMTString();
     document.cookie = name + "=" + value + expires + "; path=/";
 }
 
 //Remove cookie
 function eraseCookie(name) {
-    createCookie(name,"",-1);
+    createCookie(name,null,-1);
 }
