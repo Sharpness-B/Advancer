@@ -3,15 +3,27 @@ let upgrades;
 let xmlhttpUserID;
 
 function initFingerprintJS() {
+    // hvis cookie
+    if (readCookie("userID")) {
+        eraseCookie("userID");
+        userID = readCookie("userID");
+        createCookie("userID", userID);
+    }
+
+    // hvis ikke
     FingerprintJS.load().then(fp => {
         fp.get().then(result => {
             userID = result.visitorId;
-            DBstoreUserID("../db/registrer.php", userID);
+            // lagre i cookie
+            createCookie("userID", userID);
         });
     });
+
+    // registrer bruker i DB hvis ny. hent ut nivå på oppgraderinger
+    DBstoreUserID_getUpgrades("../db/registrer.php", userID); 
 }
 
-function DBstoreUserID(url, userID) {
+function DBstoreUserID_getUpgrades(url, userID) {
     let params = "userID=" + userID;
     
     xmlhttpUserID = new XMLHttpRequest();
@@ -30,7 +42,7 @@ function upgradesResponse(){
     }
 }
 
-// <script src="js/userIdentifier.js"></script>
-// <script async src="https://cdn.jsdelivr.net/npm/@fingerprintjs/fingerprintjs@3/dist/fp.min.js"
+// <script defer src="js/userIdentifier.js"></script>
+// <script defer async src="https://cdn.jsdelivr.net/npm/@fingerprintjs/fingerprintjs@3/dist/fp.min.js"
 //     onload="initFingerprintJS()">
 // </script>
