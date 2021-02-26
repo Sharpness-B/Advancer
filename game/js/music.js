@@ -11,5 +11,5 @@ if (c) audioElement.currentTime = c;
 // (Update) cookie music play time when a player leaves this page, (activated by a button in gui.js)
 function musicCheck() {
     if (readCookie("music")) eraseCookie("music");
-    createCookie("music",audioElement.currentTime);
+    createCookie("music",audioElement.currentTime,10);
 }
