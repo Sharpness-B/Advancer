@@ -1,4 +1,5 @@
-
+// log in
+login();
 
 // Button functionality
 document.getElementsByClassName("button")[0].onmouseover = function(){sound();}

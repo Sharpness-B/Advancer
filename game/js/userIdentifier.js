@@ -4,6 +4,7 @@ let upgrades;
 let xmlhttpUserID;
 
 function login() {
+    console.log("logging in")
     // hvis cookie
     if (readCookie("userID")) {
         userID = readCookie("userID");   
@@ -26,7 +27,7 @@ function login() {
 
 // registrer bruker i DB hvis ny. hent ut nivå på oppgraderinger, og lag en cookie til slutt
 function registrer(userID, fingerprint) { 
-    DBstoreUserID_getUpgrades("../db/registrer.php", userID, fingerprint); 
+    DBstoreUserID_getUpgrades("db/registrer.php", userID, fingerprint); 
 }
 
 function DBstoreUserID_getUpgrades(url, userID, fingerprint) {
@@ -47,6 +48,8 @@ function upgradesResponse(){
         upgrades = responsObject.upgrades;
 
         createCookie("userID", userID, 60*60*24*60);
+
+        console.log("---> login complete; userID: " + userID.toString());
     }
 }
 
