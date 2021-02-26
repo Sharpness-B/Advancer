@@ -13,16 +13,7 @@ function pipeline() {
     else if (singleplayer) ;
 }
 
-login();
 setInterval(pipeline, 500);
-
-/* cnv = document.getElementsByTagName("canvas")[0];
-function fit_to_screen(){
-    cnv.width = innerWidth;
-    cnv.height = innerHeight;
-} fit_to_screen();
-window.addEventListener('resize', fit_to_screen);*/
-
 
 let locc = document.location.href.split("/");
 
@@ -45,19 +36,17 @@ if (locc[locc.length-1].toString() == "singleplayer.html" || locc[locc.length-1]
 }
 
 /*      Updates canvas size on rezise    */
-
-
-let canvas = document.getElementsByTagName("canvas")[0];
-canvas.height = innerHeight;
-canvas.width = innerWidth;
-let width  = canvas.width;
-let height = canvas.height;
-let ctx    = canvas.getContext("2d");
+let canvas    = document.getElementsByTagName("canvas")[0];
+canvas.height = window.innerHeight;
+canvas.width  = window.innerWidth;
+let width     = canvas.width;
+let height    = canvas.height;
+let ctx       = canvas.getContext("2d");
 function fit_to_screen() {
-    canvas.width = innerWidth;
-    canvas.height = innerHeight;
-    width = canvas.width;
-    height = canvas.height;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    width = innerWidth;
+    height = innerHeight;
 } window.addEventListener('resize', fit_to_screen);
 
 if (locc[locc.length-1].toString() == "singleplayer.html" || locc[locc.length-1].toString() == "multiplayer.html") {
@@ -199,7 +188,7 @@ if (locc[locc.length-1].toString() == "singleplayer.html" || locc[locc.length-1]
     let rotationX=0;
     let rotationY=0;
 
-    canvas.addEventListener('mousemove', function(e) {
+    document.addEventListener('mousemove', function(e) {
         rotationX = (((  ( (e.clientX) - (width/2)  ) / Math.PI ) / (width )) * -1 );
         rotationY = (((  ( (e.clientY) - (height/2) ) / Math.PI ) / (height)) * -1 );
     });

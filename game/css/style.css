@@ -106,12 +106,12 @@ html, body {
     height: fit-content;
 }
 #go_back {
-    margin-top: 1em;
-    right: 50%;
+    position: absolute;
     transform: translate(50%,50%);
-    position:absolute;
+    margin: 5px;
+    right: 50%;
     outline: none;
-    bottom: 20%;
+    top: 100%;
 } #go_back:active { border: 2px solid white; }
 
 #logo_svg {
