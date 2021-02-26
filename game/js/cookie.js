@@ -12,7 +12,13 @@ function readCookie(name) {
     // }
     // return null;
 
-    return document.cookie.match("(^|;)\\s*" + name + "\\s*=\\s*([^;]+)")?.pop() || null;
+    if (document.cookie.indexOf(name) > -1) {
+        return document.cookie.split(name)[1].split("; ")[0].substr(1)
+    } 
+    
+    else {
+        return null;
+    }
 }
 
 // Make cookie
