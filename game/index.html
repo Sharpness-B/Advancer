@@ -6,25 +6,16 @@
         <!--<meta   http-equiv="refresh" content="420; url=https://youtu.be/dQw4w9WgXcQ"/>-->
         <link   rel="stylesheet" type="text/css"  href="css/style.css">
         <link   rel="icon"       type="image/png" href="assets/spaceshipIcon.png">
-<!--
-        <script defer>
-            let multiplayer = false; 
-            let singleplayer = false;
-        </script>
-        <script defer src="js/cookie.js"></script>
-        <script defer src="js/main.js"></script>
-        <script defer src="js/gui.js"></script>
-        <script defer src="js/menu_animation.js"></script>
-        <script defer src="js/music.js"></script>
--->
-        <script defer>
+        <script>
             let multiplayer = false; 
             let singleplayer = false;
         </script>
         <script defer src="js/sequentialScriptInclusion.js" 
             onload="sequentialScriptInclusion([
+                'https:\/\/cdn.jsdelivr.net/npm/@fingerprintjs/fingerprintjs@3/dist/fp.min.js',
+                'js/userIdentifier.js',
                 'js/cookie.js',
-                'js/gui.js',
+                'js/index.js',
                 'js/menu_animation.js',
                 'js/music.js',
                 'js/main.js'
@@ -32,6 +23,9 @@
         </script>
     </head>
     <body>
+
+        <!-- OVERLAY 1. MAIN MENU -->
+
         <canvas id="menu_canvas"></canvas>
         <nav id="main_menu">
             <ul id="list_of_content">
@@ -52,16 +46,19 @@
                 <li class="li_option"><button class="button" id="upgrades">Ludicrous upgrades</button></li>
             </ul>
         </nav>
-        <!--section id="upgr_body">
+    
+        <!-- OVERLAY 2. UPGRADES MAIN MENU -->
+
+        <section id="upgr_body">
             
             <nav>
-                <img src="../assets/spaceship.png" width="600px" height="600px">
+                <img src="assets/spaceship.png" width="600px" height="600px">
             </nav>
             
             <nav class="list_of_content_upgr">
                 <ul>
                     <li class="li_option_upgr">
-                        <img src="../assets/armor.png" class="info" width="90px" height="90px">
+                        <img src="assets/armor.png" class="info" width="90px" height="90px">
                         <span class="dot"></span>
                         <span class="dot"></span>
                         <span class="dot"></span>
@@ -71,7 +68,7 @@
                         <p id="armor_price"></p>
                     </li>
                     <li class="li_option_upgr">
-                        <img src="../assets/speed.png" class="info"  width="90px" height="90px">
+                        <img src="assets/speed.png" class="info"  width="90px" height="90px">
                         <span class="dot"></span>
                         <span class="dot"></span>
                         <span class="dot"></span>
@@ -81,7 +78,7 @@
                         <p id="speed_price"></p>
                     </li>
                     <li class="li_option_upgr">
-                        <img src="../assets/laser.png" class="info" width="90px" height="90px">
+                        <img src="assets/laser.png" class="info" width="90px" height="90px">
                         <span class="dot"></span>
                         <span class="dot"></span>
                         <span class="dot"></span>
@@ -91,7 +88,7 @@
                         <p id="laser_price"></p>
                     </li>
                     <li class="li_option_upgr">
-                        <img src="../assets/missile.png" class="info" width="90px" height="90px">
+                        <img src="assets/missile.png" class="info" width="90px" height="90px">
                         <span class="dot"></span>
                         <span class="dot"></span>
                         <span class="dot"></span>
@@ -101,7 +98,7 @@
                         <p id="missile_price"></p>
                     </li>
                     <li class="li_option_upgr">
-                        <img src="../assets/energy.png" class="info" width="90px" height="90px">
+                        <img src="assets/energy.png" class="info" width="90px" height="90px">
                         <span class="dot"></span>
                         <span class="dot"></span>
                         <span class="dot"></span>
@@ -112,7 +109,7 @@
                     </li>
                 </ul>
             </nav>
+            <button id="go_back" class="button">Done!</button>
         </section>
-        <button id="go_back" class="button">Done!</button-->
     </body>
 </html>
