@@ -7,7 +7,6 @@ function login() {
     // hvis cookie
     if (readCookie("userID")) {
         userID = readCookie("userID");   
-        console.log(userID)     
         eraseCookie("userID");
         registrer(userID, null);
     }
@@ -42,10 +41,7 @@ function DBstoreUserID_getUpgrades(url, userID, fingerprint) {
 function upgradesResponse(){
     if (xmlhttpUserID.readyState == 4 && xmlhttpUserID.status == 200) {
         let response = xmlhttpUserID.response;
-        
-        console.log(response);
-
-        responsObject = JSON.parse(response);
+        let responsObject = JSON.parse(response);
 
         userID = responsObject.userID;
         upgrades = responsObject.upgrades;

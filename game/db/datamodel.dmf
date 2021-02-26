@@ -78,6 +78,18 @@
             <primary-key>True</primary-key>
           </column>
           <column>
+            <name>fingerprint</name>
+            <data-type>VARCHAR(255)</data-type>
+            <required>False</required>
+            <primary-key>False</primary-key>
+          </column>
+          <column>
+            <name>balance</name>
+            <data-type>INTEGER</data-type>
+            <required>False</required>
+            <primary-key>False</primary-key>
+          </column>
+          <column>
             <name>armour</name>
             <data-type>INTEGER</data-type>
             <required>False</required>
@@ -91,16 +103,19 @@
           </column>
           <column>
             <name>laser</name>
+            <data-type>INTEGER</data-type>
             <required>False</required>
             <primary-key>False</primary-key>
           </column>
           <column>
             <name>missile</name>
+            <data-type>INTEGER</data-type>
             <required>False</required>
             <primary-key>False</primary-key>
           </column>
           <column>
             <name>energy</name>
+            <data-type>INTEGER</data-type>
             <required>False</required>
             <primary-key>False</primary-key>
           </column>
@@ -112,8 +127,8 @@
         <connector-list>
           <connector>
             <position>
-              <x>348.4</x>
-              <y>185.267</y>
+              <x>364.4</x>
+              <y>203.933</y>
             </position>
             <angle>0</angle>
             <hub owner="{4b6f26e6-a82c-4859-ba75-30eefc479933}" />
@@ -134,6 +149,10 @@
           <child>Optional</child>
           <parent>Optional</parent>
         </modality>
+        <columns>
+          <child>0</child>
+          <parent>1</parent>
+        </columns>
       </relationship>
     </item>
     <item type="database-relationship" id="{ac149563-1a20-4e3b-8b2f-a35c5d29bf3c}" >
@@ -141,8 +160,8 @@
         <connector-list>
           <connector>
             <position>
-              <x>348.4</x>
-              <y>150.933</y>
+              <x>364.4</x>
+              <y>160.267</y>
             </position>
             <angle>0</angle>
             <hub owner="{4b6f26e6-a82c-4859-ba75-30eefc479933}" />
