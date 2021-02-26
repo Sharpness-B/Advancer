@@ -16,7 +16,7 @@
     }
 
     else {
-        $sql = "SELECT * FROM users WHERE id=\"$userID\";";
+        $sql = "SELECT * FROM users WHERE id=$userID;";
     }
 
 
@@ -27,8 +27,7 @@
     while ($row = mysqli_fetch_assoc($result)) {
         $userID = $row["id"];
 
-        echo "
-        {
+        echo "{
             \"userID\": $userID,
     
             \"upgrades\": {
