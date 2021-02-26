@@ -7,7 +7,6 @@ function login() {
     // hvis cookie
     if (readCookie("userID")) {
         userID = readCookie("userID");   
-        console.log(userID)     
         eraseCookie("userID");
         registrer(userID, null);
     }
