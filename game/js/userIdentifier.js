@@ -41,8 +41,7 @@ function DBstoreUserID_getUpgrades(url, userID, fingerprint) {
 function upgradesResponse(){
     if (xmlhttpUserID.readyState == 4 && xmlhttpUserID.status == 200) {
         let response = xmlhttpUserID.response;
-        
-        responsObject = JSON.parse(response);
+        let responsObject = JSON.parse(response);
 
         userID = responsObject.userID;
         upgrades = responsObject.upgrades;
