@@ -228,6 +228,8 @@ if (locc[locc.length-1].toString() == "singleplayer.html" || locc[locc.length-1]
     }, 1000/fps);
     function b(x) {return ((x*1000)|0)/1000}
 }
+
+
 /*
 if (locc[locc.length-1].toString() == "singleplayer.html" || locc[locc.length-1].toString() == "multiplayer.html") {
     const canvas = document.getElementById('canvas');
