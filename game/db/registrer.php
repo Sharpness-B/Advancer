@@ -3,30 +3,23 @@
     $userID      = $_GET["userID"];
     $fingerprint = $_GET["fingerprint"];
 
-    // sjekk om bruker finnes fra før av
-    //$sql = "SELECT * FROM users WHERE id=\"$userID\";";
-    //$result = mysqli_query($connection, $sql);
-    //$row = mysqli_fetch_assoc($result);
 
-    // hvis ikke resultat fra db <=> hvis ikke ID i db
-    //if (!$row) {
-    if (!$userID) { // hvis ikke 0
+    
+    // sjekk om bruker finnes fra før av
+    if (!$userID) { // hvis 0
         // registrer ny bruker
-        //$sql = "INSERT INTO users (id) VALUES (\"$userID\");";
         $sql = "INSERT INTO users (fingerprint) VALUES(\"$fingerprint\");";
         $result = mysqli_query($connection, $sql);
 
         // hent ut id
-        $sql = "SELECT * FROM users WHERE fingerprint=\"$fingerprint\";"; // fingerprint er kandidatnøkkel
-        // $result = mysqli_query($connection, $sql);
-        // while ($row = mysqli_fetch_assoc($result)) {
-        //     $userID = $row["id"];
-        // }
+        $sql = "SELECT * FROM users WHERE fingerprint=\"$fingerprint\" ORDER BY id LIMIT 1;"; // fingerprint er kandidatnøkkel
     }
 
     else {
         $sql = "SELECT * FROM users WHERE id=\"$userID\";";
     }
+
+
 
     // returner upgrades
     $result = mysqli_query($connection, $sql);
@@ -36,7 +29,7 @@
 
         echo "
         {
-            \"id\": $userID,
+            \"userID\": $userID,
     
             \"upgrades\": {
                 \"armour\":  ".$row["armour"].",
