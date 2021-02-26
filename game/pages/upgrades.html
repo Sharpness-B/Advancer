@@ -5,6 +5,7 @@
         <meta   charset="utf-8">
         <link   rel="stylesheet" type="text/css"  href="../css/style.css">
         <link   rel="icon"       type="image/png" href="../assets/spaceshipIcon.png">
+<!--
         <script defer src="../js/userIdentifier.js"></script>
         <script defer async src="https://cdn.jsdelivr.net/npm/@fingerprintjs/fingerprintjs@3/dist/fp.min.js"
             onload="initFingerprintJS()">
@@ -18,6 +19,22 @@
         <script defer src="../js/main.js"></script>
         <script defer src="../js/menu_animation.js"></script>
         <script defer src="../js/music.js"></script>
+-->
+        <script defer>
+            let multiplayer = false; 
+            let singleplayer = false;
+        </script>
+        <script defer src="../js/sequentialScriptInclusion.js" 
+            onload="sequentialScriptInclusion([
+                'https:\/\/cdn.jsdelivr.net/npm/@fingerprintjs/fingerprintjs@3/dist/fp.min.js',
+                '../js/userIdentifier.js',
+                '../js/cookie.js',
+                '../js/gui.js',
+                '../js/menu_animation.js',
+                '../js/music.js',
+                '../js/main.js'
+            ]);">
+        </script>
     </head>
     <body>
         <canvas id="menu_canvas"></canvas>

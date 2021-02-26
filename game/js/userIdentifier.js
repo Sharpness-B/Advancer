@@ -1,30 +1,37 @@
 let userID;
+let fingerprint;
 let upgrades;
 let xmlhttpUserID;
 
-function initFingerprintJS() {
+function login() {
     // hvis cookie
     if (readCookie("userID")) {
+        userID = readCookie("userID");   
+        console.log(userID)     
         eraseCookie("userID");
-        userID = readCookie("userID");
-        createCookie("userID", userID);
+        registrer(userID, null);
     }
 
     // hvis ikke
-    FingerprintJS.load().then(fp => {
-        fp.get().then(result => {
-            userID = result.visitorId;
-            // lagre i cookie
-            createCookie("userID", userID);
-        });
-    });
+    else {
+        userID = 0;
 
-    // registrer bruker i DB hvis ny. hent ut nivå på oppgraderinger
-    DBstoreUserID_getUpgrades("../db/registrer.php", userID); 
+        FingerprintJS.load().then(fp => {
+            fp.get().then(result => {
+                fingerprint = result.visitorId;
+                registrer(userID, fingerprint)
+            });
+        });
+    }
 }
 
-function DBstoreUserID_getUpgrades(url, userID) {
-    let params = "userID=" + userID;
+// registrer bruker i DB hvis ny. hent ut nivå på oppgraderinger, og lag en cookie til slutt
+function registrer(userID, fingerprint) { 
+    DBstoreUserID_getUpgrades("../db/registrer.php", userID, fingerprint); 
+}
+
+function DBstoreUserID_getUpgrades(url, userID, fingerprint) {
+    let params = "userID=" + userID +"&fingerprint=" + fingerprint;
     
     xmlhttpUserID = new XMLHttpRequest();
     xmlhttpUserID.onreadystatechange = upgradesResponse;
@@ -33,12 +40,17 @@ function DBstoreUserID_getUpgrades(url, userID) {
 }
 
 function upgradesResponse(){
-    if (xmlhttpUserID. readyState == 4 && xmlhttpUserID.status == 200) {
+    if (xmlhttpUserID.readyState == 4 && xmlhttpUserID.status == 200) {
         let response = xmlhttpUserID.response;
-        upgrades = JSON.parse(response);
+        
+        console.log(response);
 
-        console.log(userID);
-        console.log(upgrades);
+        responsObject = JSON.parse(response);
+
+        userID = responsObject.userID;
+        upgrades = responsObject.upgrades;
+
+        createCookie("userID", userID, 60*60*24*60);
     }
 }
 
