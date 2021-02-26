@@ -1,5 +1,3 @@
-document.getElementById("upgr_body").style.display = "none";
-
 document.getElementsByClassName("button")[0].onmouseover = function(){sound();}
 document.getElementsByClassName("button")[1].onmouseover = function(){sound();}
 document.getElementsByClassName("button")[2].onmouseover = function(){sound();}
