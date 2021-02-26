@@ -43,8 +43,6 @@ function upgradesResponse(){
     if (xmlhttpUserID.readyState == 4 && xmlhttpUserID.status == 200) {
         let response = xmlhttpUserID.response;
         
-        console.log(response);
-
         responsObject = JSON.parse(response);
 
         userID = responsObject.userID;
