@@ -18,6 +18,8 @@ function handleFile(){
         balance = responsObject.balance;
         upgrades = responsObject.upgrades;
         updatePrices(upgrades);
+
+        console.log("---> upgrade process complete");
         
         console.log(balance, upgrades)
     }
