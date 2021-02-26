@@ -17,6 +17,7 @@ html, body {
     padding: 0;
 }
 #main_menu {
+    display: none;
     right: 50%;
     bottom: 50%;
     transform: translate(50%,50%);
