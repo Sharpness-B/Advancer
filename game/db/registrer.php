@@ -31,7 +31,7 @@
             \"userID\": $userID,
     
             \"upgrades\": {
-                \"armour\":  ".$row["armour"].",
+                \"armor\":   ".$row["armor"].",
                 \"speed\":   ".$row["speed"].",
                 \"laser\":   ".$row["laser"].",
                 \"missile\": ".$row["missile"].",

@@ -16,7 +16,7 @@
     while ($row = mysqli_fetch_assoc($result)) {
         $values = [
             "balance" => $row["balance"],
-            "armour"  => $row["armour"],
+            "armor"   => $row["armor"],
             "speed"   => $row["speed"],
             "laser"   => $row["laser"],
             "missile" => $row["missile"],
@@ -43,7 +43,7 @@
 
     // returner nytt objekt
     echo "{    
-        \"armour\":  ".$values["armour"].",
+        \"armor\":   ".$values["armor"].",
         \"speed\":   ".$values["speed"].",
         \"laser\":   ".$values["laser"].",
         \"missile\": ".$values["missile"].",

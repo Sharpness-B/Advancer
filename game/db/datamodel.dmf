@@ -90,7 +90,7 @@
             <primary-key>False</primary-key>
           </column>
           <column>
-            <name>armour</name>
+            <name>armor</name>
             <data-type>INTEGER</data-type>
             <required>False</required>
             <primary-key>False</primary-key>
