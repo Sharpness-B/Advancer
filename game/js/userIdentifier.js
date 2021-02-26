@@ -1,5 +1,6 @@
 let userID;
 let fingerprint;
+let balance;
 let upgrades;
 let xmlhttpUserID;
 

@@ -13,27 +13,30 @@ function executePurchase(url, userID, upgrade) {
 function handleFile(){
     if (xmlhttp. readyState == 4 && xmlhttp.status == 200) {
         let response = xmlhttp.response;
-        upgrades = JSON.parse(response);
+        let responsObject = JSON.parse(response);
+
+        balance = responsObject.balance;
+        upgrades = responsObject.upgrades;
         updatePrices(upgrades);
         
-        console.log(upgrades)
+        console.log(balance, upgrades)
     }
 }
 
 
 
 // button interaction
-let button_armor   = document.getElementById("button_armor");
-let button_speed   = document.getElementById("button_speed");
-let button_laser   = document.getElementById("button_laser");
+let button_armor   = document.getElementById("button_armor"  );
+let button_speed   = document.getElementById("button_speed"  );
+let button_laser   = document.getElementById("button_laser"  );
 let button_missile = document.getElementById("button_missile");
-let button_energy  = document.getElementById("button_energy");
+let button_energy  = document.getElementById("button_energy" );
 
-button_armor.onclick   = function() {executePurchase("db/transaction.php", userID, "armor");}
-button_speed.onclick   = function() {executePurchase("db/transaction.php", userID, "speed");}
-button_laser.onclick   = function() {executePurchase("db/transaction.php", userID, "laser");}
+button_armor.onclick   = function() {executePurchase("db/transaction.php", userID, "armor"  );}
+button_speed.onclick   = function() {executePurchase("db/transaction.php", userID, "speed"  );}
+button_laser.onclick   = function() {executePurchase("db/transaction.php", userID, "laser"  );}
 button_missile.onclick = function() {executePurchase("db/transaction.php", userID, "missile");}
-button_energy.onclick  = function() {executePurchase("db/transaction.php", userID, "energy");}
+button_energy.onclick  = function() {executePurchase("db/transaction.php", userID, "energy" );}
 
 // visual effects
 function price(level) {

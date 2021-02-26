@@ -36,17 +36,30 @@
 
         $result = mysqli_query($connection, $sql);
 
+        $values["balance"] -= price($values[$upgrade]);
         $values[$upgrade] ++;
     }
 
 
 
     // returner nytt objekt
-    echo "{    
-        \"armor\":   ".$values["armor"].",
-        \"speed\":   ".$values["speed"].",
-        \"laser\":   ".$values["laser"].",
-        \"missile\": ".$values["missile"].",
-        \"energy\":  ".$values["energy"]."
+    // echo "{    
+    //     \"armor\":   ".$values["armor"].",
+    //     \"speed\":   ".$values["speed"].",
+    //     \"laser\":   ".$values["laser"].",
+    //     \"missile\": ".$values["missile"].",
+    //     \"energy\":  ".$values["energy"]."
+    // }";
+
+    echo "{
+        \"balance\": ".$values["balance"].",
+
+        \"upgrades\": {
+            \"armor\":   ".$values["armor"].",
+            \"speed\":   ".$values["speed"].",
+            \"laser\":   ".$values["laser"].",
+            \"missile\": ".$values["missile"].",
+            \"energy\":  ".$values["energy"]."
+        }
     }";
 ?>

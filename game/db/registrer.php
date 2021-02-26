@@ -25,10 +25,9 @@
     $result = mysqli_query($connection, $sql);
 
     while ($row = mysqli_fetch_assoc($result)) {
-        $userID = $row["id"];
-
         echo "{
-            \"userID\": $userID,
+            \"userID\": ".$row["id"].",
+            \"balance\": ".$row["balance"].",
     
             \"upgrades\": {
                 \"armor\":   ".$row["armor"].",
