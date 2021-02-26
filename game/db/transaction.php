@@ -43,14 +43,6 @@
 
 
     // returner nytt objekt
-    // echo "{    
-    //     \"armor\":   ".$values["armor"].",
-    //     \"speed\":   ".$values["speed"].",
-    //     \"laser\":   ".$values["laser"].",
-    //     \"missile\": ".$values["missile"].",
-    //     \"energy\":  ".$values["energy"]."
-    // }";
-
     echo "{
         \"balance\": ".$values["balance"].",
 
