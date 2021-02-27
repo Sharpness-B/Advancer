@@ -17,7 +17,9 @@ function handleFile(){
 
         balance = responsObject.balance;
         upgrades = responsObject.upgrades;
+
         updatePrices(upgrades);
+        updateDotColors(upgrades);
 
         console.log("---> upgrade process complete");
         
@@ -52,4 +54,18 @@ function updatePrices(upgrades) {
     button_laser  .innerHTML = price(upgrades.laser  );
     button_missile.innerHTML = price(upgrades.missile);
     button_energy .innerHTML = price(upgrades.energy );
+}
+
+function updateDotColors(upgrades) {
+    let keys = Object.keys(upgrades);
+
+    for (let i=0; i<keys.length; i++) { // for hver oppgradering
+        for (let l=1; l<=upgrades[keys[i]]; l++) { // for hver level
+            let elementID = "dot" + keys[i] + l.toString();
+            let element   = document.getElementById(elementID);
+ 
+            element.classList.remove("dot");
+            element.classList.add("dotFilled");
+        }
+    }
 }

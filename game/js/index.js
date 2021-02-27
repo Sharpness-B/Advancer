@@ -10,6 +10,7 @@ document.getElementById("upgrades").onclick = function() {
     document.getElementById("upgr_body").style.display = "flex";
     document.getElementById("main_menu").style.display = "none";
     updatePrices(upgrades);
+    updateDotColors(upgrades);
 }
 document.getElementById("multiplr").onclick = function() {
     musicCheck();
