@@ -87,12 +87,17 @@ html, body {
     height: 2em;
     margin-top: 0.4em;
 }
-.dot {
+.dot, .dotFilled{
     margin-top: 2em;
     height: 30px;
     width: 30px;
-    background-color: #bbb;
     border-radius: 50%;
+}
+.dot {
+    background-color: #bbb;
+}
+.dotFilled {
+    background-color: #8D99AE;
 }
 .info {
     margin:0;
