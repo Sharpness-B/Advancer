@@ -12,7 +12,7 @@
         $result = mysqli_query($connection, $sql);
 
         // hent ut id
-        $sql = "SELECT * FROM users WHERE fingerprint=\"$fingerprint\" ORDER BY id LIMIT 1;"; // fingerprint er kandidatnøkkel
+        $sql = "SELECT * FROM users WHERE fingerprint=\"$fingerprint\" ORDER BY id ASC LIMIT 1;"; // fingerprint er kandidatnøkkel
     }
 
     else {
