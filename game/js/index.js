@@ -11,6 +11,7 @@ document.getElementById("upgrades").onclick = function() {
     document.getElementById("main_menu").style.display = "none";
     updatePrices(upgrades);
     updateDotColors(upgrades);
+    updateBalance(balance);
 }
 document.getElementById("multiplr").onclick = function() {
     musicCheck();

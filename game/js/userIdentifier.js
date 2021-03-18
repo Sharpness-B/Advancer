@@ -47,6 +47,7 @@ function upgradesResponse(){
 
         userID = responsObject.userID;
         upgrades = responsObject.upgrades;
+        balance = responsObject.balance;
 
         createCookie("userID", userID, 60*60*24*60);
 

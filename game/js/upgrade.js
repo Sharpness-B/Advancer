@@ -20,6 +20,7 @@ function handleFile(){
 
         updatePrices(upgrades);
         updateDotColors(upgrades);
+        updateBalance(balance);
 
         console.log("---> upgrade process complete");
         
@@ -35,6 +36,8 @@ let button_speed   = document.getElementById("button_speed"  );
 let button_laser   = document.getElementById("button_laser"  );
 let button_missile = document.getElementById("button_missile");
 let button_energy  = document.getElementById("button_energy" );
+
+let p_balance  = document.getElementById("balance");
 
 button_armor.onclick   = function() {executePurchase("db/transaction.php", userID, "armor"  );}
 button_speed.onclick   = function() {executePurchase("db/transaction.php", userID, "speed"  );}
@@ -68,4 +71,8 @@ function updateDotColors(upgrades) {
             element.classList.add("dotFilled");
         }
     }
+}
+
+function updateBalance(balance) {
+    p_balance.innerHTML = balance.toString() + "§";
 }
