@@ -27,7 +27,9 @@ let polygon = {
 
     volume: function(polygon) {},
 
-    area: function(polygon) {},
+    area: function(polygon) {
+        // https://www.mathwords.com/a/area_convex_polygon.htm
+    },
 
     triangulate: function(polygon) {},
 
