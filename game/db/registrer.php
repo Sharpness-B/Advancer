@@ -12,11 +12,11 @@
         $result = mysqli_query($connection, $sql);
 
         // hent ut id
-        $sql = "SELECT * FROM users WHERE fingerprint=\"$fingerprint\" ORDER BY id LIMIT 1;"; // fingerprint er kandidatnøkkel
+        $sql = "SELECT * FROM users WHERE fingerprint=\"$fingerprint\" ORDER BY id ASC LIMIT 1;"; // fingerprint er kandidatnøkkel
     }
 
     else {
-        $sql = "SELECT * FROM users WHERE id=\"$userID\";";
+        $sql = "SELECT * FROM users WHERE id=$userID;";
     }
 
 
@@ -25,14 +25,12 @@
     $result = mysqli_query($connection, $sql);
 
     while ($row = mysqli_fetch_assoc($result)) {
-        $userID = $row["id"];
-
-        echo "
-        {
-            \"userID\": $userID,
+        echo "{
+            \"userID\": ".$row["id"].",
+            \"balance\": ".$row["balance"].",
     
             \"upgrades\": {
-                \"armour\":  ".$row["armour"].",
+                \"armor\":   ".$row["armor"].",
                 \"speed\":   ".$row["speed"].",
                 \"laser\":   ".$row["laser"].",
                 \"missile\": ".$row["missile"].",

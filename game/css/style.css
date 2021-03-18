@@ -93,12 +93,26 @@ html, body {
     height: 2em;
     margin-top: 0.4em;
 }
-.dot {
-    margin-top: 2em;
+.dot, .dotFilled{
+    margin-top: auto;
+    margin-bottom: auto;
     height: 30px;
     width: 30px;
-    background-color: #bbb;
     border-radius: 50%;
+    margin-left: 0.1vw;
+}
+.dot {
+    background-color: #858062;
+    background-image: radial-gradient(#858062, rgba(0,0,0,0.1), rgba(0,0,0,0) 100%);
+}
+.dotFilled {
+    background-color: #93dada;
+    background-image: radial-gradient(#93dada, rgba(0,0,0,0.1), rgba(0,0,0,0) 60%);
+   
+    
+    background-color: #f58905;
+    background-image: radial-gradient(#f58905, rgba(0,0,0,0.1), rgba(0,0,0,0) 60%);
+
 }
 .info {
     margin:0;

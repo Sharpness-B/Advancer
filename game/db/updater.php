@@ -7,21 +7,21 @@
 
 
     // fjern gamle verdier fra DB
-    $sql = "DELETE FROM ships WHERE userid=\"$userID\";";
+    $sql = "DELETE FROM ships WHERE userid=$userID;";
     $result = mysqli_query($connection, $sql);  
 
-    $sql = "DELETE FROM lasers WHERE userid=\"$userID\";";
+    $sql = "DELETE FROM lasers WHERE userid=$userID;";
     $result = mysqli_query($connection, $sql); 
 
 
 
     // legg til oppdaterte verdier i DB
-    $sql = "INSERT INTO ships VALUES(\"$userID\", \"[[x,y,z],[x,y,z],[x,y,z]]\");";
+    $sql = "INSERT INTO ships VALUES($userID, \"[[x,y,z],[x,y,z],[x,y,z]]\");";
     $result = mysqli_query($connection, $sql);
 
     // for hver laser
     // foreach($data->lasers as $lasers) {
-    //     $sql = "INSERT INTO lasers VALUES(\"$userID\", \"$lasers->location\");";
+    //     $sql = "INSERT INTO lasers VALUES($userID, \"$lasers->location\");";
     //     $result = mysqli_query($connection, $sql);  
     // }
 
@@ -30,7 +30,7 @@
     // hente ut objekter fra andre spillere fra DB
     // skip
     $ships = [1,2,3]; 
-    $sql = "SELECT * FROM ships WHERE NOT userid=\"$userID\";";
+    $sql = "SELECT * FROM ships WHERE NOT userid=$userID;";
     $result = mysqli_query($connection, $sql); 
     while ($row = mysqli_fetch_assoc($result)) {
         array_push($ships, $row["boundingvolume"]);
@@ -38,7 +38,7 @@
     
     // lasere
     $lasers = [];
-    $sql = "SELECT * FROM lasers WHERE NOT userid=\"$userID\";";
+    $sql = "SELECT * FROM lasers WHERE NOT userid=$userID;";
     $result = mysqli_query($connection, $sql);
     while ($row = mysqli_fetch_assoc($result)) {
         array_push($lasers, $row["location"]);

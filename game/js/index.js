@@ -1,4 +1,5 @@
-
+// log in
+login();
 
 // Button functionality
 document.getElementsByClassName("button")[0].onmouseover = function(){sound();}
@@ -8,6 +9,8 @@ document.getElementsByClassName("button")[2].onmouseover = function(){sound();}
 document.getElementById("upgrades").onclick = function() {
     document.getElementById("upgr_body").style.display = "flex";
     document.getElementById("main_menu").style.display = "none";
+    updatePrices(upgrades);
+    updateDotColors(upgrades);
 }
 document.getElementById("multiplr").onclick = function() {
     musicCheck();

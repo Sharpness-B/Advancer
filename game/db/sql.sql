@@ -7,7 +7,7 @@ CREATE TABLE users (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     fingerprint VARCHAR(255),
     balance INT DEFAULT 30,
-    armour  INT DEFAULT 1,
+    armor   INT DEFAULT 1,
     speed   INT DEFAULT 1,
     laser   INT DEFAULT 1,
     missile INT DEFAULT 1,
