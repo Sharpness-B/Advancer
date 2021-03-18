@@ -1,32 +1,39 @@
-let pip = {
+let polygon = {
     pipConvex3D: function(polygon) {
-        //                D .
-        //                 /=\\
-        //                /===\ \
-        //               /=====\' \
-        //              /=======\'' \                  P'
-        //             /=========\ ' '\
-        //            /===========\''   \ 
-        //           /=============\ ' '  \
-        //          /===============\ P ''  \
-        //         /=================\' ' ' ' \
-        //        /===================\' ' '  ' \
-        //       /=====================\' '   ' ' \ C
-        //      /=======================\  '   ' /
-        //     /=========================\   ' /
-        //    /===========================\'  /
-        // A /=============================\/ B
+        //                D .                                          //            
+        //                 /=\\                                        //  
+        //                /===\ \                                      //      
+        //               /=====\' \                                    //          
+        //              /=======\'' \                  P'              //                            
+        //             /=========\ ' '\                                //                  
+        //            /===========\''   \                              //                     
+        //           /=============\ ' '  \                            //                      
+        //          /===============\ P ''  \                          //                              P           
+        //         /=================\' ' ' ' \                        //                           /====\---\                
+        //        /===================\' ' '  ' \                      //                       /========|' '  ---\                  
+        //       /=====================\' '   ' ' \ C                  //                   /=============\' '   ' ' \ C                      
+        //      /=======================\  '   ' /                     //               /=================|  '   ' /                   
+        //     /=========================\   ' /                       //           /=====================\  '  /                 
+        //    /===========================\'  /                        //       /=========================|'  /                                                  
+        // A /=============================\/ B                        // A /=============================\/ B                                               
     
         // hvis volum(ABC...N) = volum(ABC....P) + volum(ABP...N) + volum(APC...N) + volum(PBC...N)
+        //                     = volum(ABCP) + volum(ABPD) + volum(APCD) + volum(PBCD)
+
+        // 1 dele polygonet inn i trekanter
+        // konstruere pyramider med trekantene og p
+        // 2 volum av alle pyramidene med flate trekant og 
     },
 
     volume: function(polygon) {},
 
-    pip3D: function(polygon, point) {
-        // NB: fungerer kun om punktet er synlig fra alle koordinataksene
-        console.warn("pip.pip3 does only work if the point is visible from all three coordinate axis")
+    area: function(polygon) {},
+
+    triangulate: function(polygon) {},
+
+    pip3D: function(polygon, point) { // fungerer logikken?
         // projsjektere til plan fra 3 ulike perspektiv
-        // hvis innenfor begge <=> punktet er innenfor plygonet
+        // hvis innenfor alle <=> punktet er innenfor plygonet
     
         // xy-planet
         let xyPolygon = polygon.map(function(val) {
@@ -115,8 +122,6 @@ let pip = {
         return Math.abs((x1 * (y2 - y3) + x2 * (y3 - y1)  
                        + x3 * (y1 - y2)) / 2);
     },
-
-    area: function(polygon) {},
 };
 
 // // 2D TEST
