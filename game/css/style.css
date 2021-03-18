@@ -37,6 +37,12 @@ html, body {
 .li_option_upgr {
     display: flex;
 }
+.li_option_upgr_balance {
+    display: flex;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
 .button {
     border:           1px solid #858062;
@@ -64,7 +70,7 @@ html, body {
 
 /* Upgrade GUI */
 #upgr_body {
-    display: flex;
+    display: none;
     flex-direction: row;
     justify-content: space-evenly;
     right: 50%;
