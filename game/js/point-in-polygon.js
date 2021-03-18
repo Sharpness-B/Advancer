@@ -29,6 +29,20 @@ let polygon = {
 
     area: function(polygon) {
         // https://www.mathwords.com/a/area_convex_polygon.htm
+
+        let det1 = 0;
+        let det2 = 0;
+    
+        for (let n=0; n<polygon.length-1; n++) {
+            det1 += polygon[n][0]*polygon[n+1][1];
+            det2 += polygon[n][1]*polygon[n+1][0];
+        }
+
+        det1 += polygon[polygon.length-1][0]*polygon[0][1];
+        det2 += polygon[polygon.length-1][1]*polygon[0][0];
+
+        let area = 0.5 * (det1 - det2);
+        return Math.abs(area); // rekkefølgen har betydning; derfor abs-verdi
     },
 
     triangulate: function(polygon) {},
@@ -138,7 +152,7 @@ let polygon = {
 // let b = [1,1];
 // let c = [10,10];
 // 
-// console.log(pip.pip2D(a,b));
+// console.log(polygon.pip2D(a,b));
 
 // // 3D TEST
 // let a = [
@@ -150,4 +164,12 @@ let polygon = {
 
 // let b = [1,1,1];
 
-// console.log(pip.pip3D(a,b))
+// console.log(polygon.pip3D(a,b))
+
+console.log(polygon.area([
+    [2,-4],
+    [2,3],
+    [6,1],
+    [3,1],
+    [5,-2]
+]));
