@@ -22,6 +22,6 @@ CREATE TABLE lasers (
 
 CREATE TABLE ships (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    userid         INT,
-    boundingvolume VARCHAR(255)
+    userid  INT,
+    polygon VARCHAR(255)
 );

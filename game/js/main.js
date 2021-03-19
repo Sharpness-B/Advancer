@@ -20,7 +20,7 @@ function pipeline() {
 }
 
 // ha deltatime
-setInterval(pipeline, 500);
+//setInterval(pipeline, 500);
 
 
 
@@ -222,6 +222,16 @@ setInterval(() => {
     player.position.z += (player.viewVector.z)/10 * player.speed;
 
     update();
+
+
+    let testmultiplayer = {
+        userID: userID,
+        polygon: [[player.position.x,player.position.y,player.position.z]],
+        lasers: [[3,3,2],[3,3,2]],
+        missiles: []
+    };
+    
+    updateObjects("db/updater.php", testmultiplayer);
 
 }, 1000/fps);
 function b(x) {return ((x*1000)|0)/1000}

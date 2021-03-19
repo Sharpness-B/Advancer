@@ -35,7 +35,7 @@
 
 
     // legg til oppdaterte verdier i DB
-    $sql = "INSERT INTO ships (userid, boundingvolume) VALUES($userID, \"$polygonSTR\");";
+    $sql = "INSERT INTO ships (userid, polygon) VALUES($userID, \"$polygonSTR\");";
     $result = mysqli_query($connection, $sql);
 
     // for hver laser
@@ -48,11 +48,11 @@
 
     // hente ut objekter fra andre spillere fra DB
     // skip
-    $ships = [1,2,3]; 
+    $ships = []; 
     $sql = "SELECT * FROM ships WHERE NOT userid=$userID;";
     $result = mysqli_query($connection, $sql); 
     while ($row = mysqli_fetch_assoc($result)) {
-        array_push($ships, $row["boundingvolume"]);
+        array_push($ships, $row["polygon"]);
     }
     
     // lasere
