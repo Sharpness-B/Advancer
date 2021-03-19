@@ -19,7 +19,7 @@
           </column>
           <column>
             <name>userid</name>
-            <data-type>INTERGER</data-type>
+            <data-type>INTEGER</data-type>
             <required>False</required>
             <primary-key>False</primary-key>
           </column>
@@ -54,7 +54,7 @@
             <primary-key>False</primary-key>
           </column>
           <column>
-            <name>boundingvolume</name>
+            <name>polygon</name>
             <data-type>TEXT</data-type>
             <required>False</required>
             <primary-key>False</primary-key>
