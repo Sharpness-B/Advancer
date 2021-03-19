@@ -49,7 +49,7 @@ let polygon = {
 
     pip3D: function(polygon, point) { // fungerer logikken?
         // projsjektere til plan fra 3 ulike perspektiv
-        // hvis innenfor alle <=> punktet er innenfor plygonet
+        // hvis innenfor alle <=> punktet er sannsynligvis innenfor plygonet
     
         // xy-planet
         let xyPolygon = polygon.map(function(val) {
