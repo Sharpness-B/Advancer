@@ -21,11 +21,9 @@ class vec3
         return(Math.sqrt(this.x**2 + this.y**2 + this.z**2));
     }
 
-    add(vector)
+    static add(vec1, vec2)
     {
-        this.x += vector.x;
-        this.y += vector.y;
-        this.z += vector.z;
+        return(new vec3(vec1.x + vec2.x, vec1.y + vec2.y, vec1.z + vec2.z));
     }
 
     subtract(vector)
@@ -55,5 +53,24 @@ class vec3
         this.x /= len;
         this.y /= len;
         this.z /= len;
+    }
+
+    transform(mat)
+    {
+        let x = mat[0][0]*this.x +
+                mat[0][1]*this.y +
+                mat[0][2]*this.z;
+
+        let y = mat[1][0]*this.x +
+                mat[1][1]*this.y +
+                mat[1][2]*this.z;
+
+        let z = mat[2][0]*this.x +
+                mat[2][1]*this.y +
+                mat[2][2]*this.z;
+
+        this.x = x;
+        this.y = y;
+        this.z = z;
     }
 }
