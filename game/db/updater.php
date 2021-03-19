@@ -39,10 +39,17 @@
     $result = mysqli_query($connection, $sql);
 
     // for hver laser
-    // foreach($data->lasers as $lasers) {
-    //     $sql = "INSERT INTO lasers VALUES($userID, \"$lasers->location\");";
-    //     $result = mysqli_query($connection, $sql);  
-    // }
+    foreach($data->lasers as $location) {
+        $laserSTR = "[";
+        foreach ($location as $value) {
+            $laserSTR .= $value . ",";
+        }
+        $laserSTR = substr($laserSTR, 0, -1);
+        $laserSTR .= "]";
+        
+        $sql = "INSERT INTO lasers (userid, location) VALUES($userID, \"$laserSTR\");";
+        $result = mysqli_query($connection, $sql);  
+    }
 
 
 
