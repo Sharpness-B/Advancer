@@ -5,7 +5,7 @@
     $data = json_decode( $_GET["data"] ); // url escape
 
 
-    // 
+    // formater data.polygon
     $polygonSTR = "[";
 
     foreach ($data -> polygon as $point) {
@@ -36,7 +36,6 @@
 
     // legg til oppdaterte verdier i DB
     $sql = "INSERT INTO ships (userid, boundingvolume) VALUES($userID, \"$polygonSTR\");";
-    echo $sql;
     $result = mysqli_query($connection, $sql);
 
     // for hver laser
@@ -66,6 +65,7 @@
 
 
 
+    // returnere nye verdier
     // formatering
     $shipsJSON  = "["; 
     $lasersJSON = "[";
