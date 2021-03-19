@@ -79,5 +79,30 @@ function updateBalance(balance) {
 
 /*Canvas*/
 
-let ctx = document.getElementById("canvasPreview").getContext("2d");
+/*let ctx = document.getElementById("canvasPreview").getContext("2d");
 
+let cam = new Camera(1.6, 1, -5, new vec3(0, 0, 3));
+
+let cube = {
+    vert: [
+        new vec3(-0.3, 0.3, 0.3),
+        new vec3(0.3, 0.3, 0.3),
+        new vec3(0.3, -0.3, 0.3),
+        new vec3(-0.3, -0.3, 0.3),
+        new vec3(-0.3, 0.3, -0.3),
+        new vec3(0.3, 0.3, -0.3),
+        new vec3(0.3, -0.3, -0.3),
+        new vec3(-0.3, -0.3, -0.3)],
+    face: [
+        [0, 1, 2, 3, 0],
+        [4, 5, 6, 7, 4],
+        [1, 5, 6, 2, 1],
+        [0, 4, 7, 3, 0],
+        [0, 1, 5, 4, 0],
+        [2, 6, 7, 3, 2]],
+    pos: new vec3(0.5, 0.3, -0.8)
+};
+
+let scale = ctx.canvas.width/2;
+
+DrawCubeWF(cube);*/
