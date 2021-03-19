@@ -2,6 +2,8 @@ let xmlhttp;
 
 function updateObjects(url, data) {
     let params = "data=" + JSON.stringify(data) + "&userID=" + userID; // url escape data
+
+    console.log(url+"?"+params);
     
     xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = handleFile;
@@ -14,6 +16,6 @@ function handleFile(){
         let response = xmlhttp.response;
         objects = JSON.parse(response);
 
-        console.log("test")
+        console.log(objects);
     }
 }

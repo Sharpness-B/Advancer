@@ -49,9 +49,11 @@ function upgradesResponse(){
         upgrades = responsObject.upgrades;
         balance = responsObject.balance;
 
-        updatePrices(upgrades);
-        updateDotColors(upgrades);
-        updateBalance(balance);
+        if (!multiplayer && !singleplayer) {
+            updatePrices(upgrades);
+            updateDotColors(upgrades);
+            updateBalance(balance);
+        }
 
         createCookie("userID", userID, 60*60*24*60);
 

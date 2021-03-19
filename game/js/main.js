@@ -12,7 +12,7 @@ let data = {
 };
 
 function pipeline() {    
-    if (multiplayer)       updateObjects("../db/updater.php", data);
+    if (multiplayer)       updateObjects("db/updater.php", data);
     else if (singleplayer) ;
 
     // regne ut ny posisjon på egne lasere, missiler og skip
