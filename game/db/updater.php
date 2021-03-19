@@ -2,7 +2,26 @@
     require("connection.php");
 
     $userID = $_GET["userID"];
-    $data = $_GET["data"]; // url escape
+    $data = json_decode( $_GET["data"] ); // url escape
+
+
+    // 
+    $polygonSTR = "[";
+
+    foreach ($data -> polygon as $point) {
+        $polygonSTR .= "[";
+        foreach ($point as $value) {
+            $polygonSTR .= $value . ",";
+        }
+        $polygonSTR = substr($polygonSTR, 0, -1);
+        $polygonSTR .= "],";
+    }
+
+    if (count($data -> polygon)) {
+        $polygonSTR = substr($polygonSTR, 0, -1);
+    }
+
+    $polygonSTR .= "]";
 
 
 
@@ -16,7 +35,8 @@
 
 
     // legg til oppdaterte verdier i DB
-    $sql = "INSERT INTO ships VALUES($userID, \"[[x,y,z],[x,y,z],[x,y,z]]\");";
+    $sql = "INSERT INTO ships (userid, boundingvolume) VALUES($userID, \"$polygonSTR\");";
+    echo $sql;
     $result = mysqli_query($connection, $sql);
 
     // for hver laser
