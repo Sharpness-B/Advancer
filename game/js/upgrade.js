@@ -76,3 +76,8 @@ function updateDotColors(upgrades) {
 function updateBalance(balance) {
     p_balance.innerHTML = balance.toString() + "§";
 }
+
+/*Canvas*/
+
+let ctx = document.getElementById("canvasPreview").getContext("2d");
+
