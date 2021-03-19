@@ -1,21 +1,24 @@
+// log in
+if (multiplayer) login();
+
 let objects = [];
 //let loc = document.location.href.split("/");
 
-let ship = {
-    brand: "Tesla",
-    model: "Roadster",
-    year: 2008,
-    boundingvolume: [[1,3,4], [3,4,2], [2,10,4]]
+let data = {
+    userID: userID,
+    polygon: [[1,3,4], [3,4,2], [2,10,4]],
+    lasers: [[3,3,2],[3,3,2]],
+    missiles: []
 };
 
 function pipeline() {    
-    if (multiplayer)       updateObjects("../db/updater.php", ship);
+    if (multiplayer)       updateObjects("../db/updater.php", data);
     else if (singleplayer) ;
 }
 
 setInterval(pipeline, 500);
 
-let locc = document.location.href.split("/");
+// let locc = document.location.href.split("/");
 
 /* Keyinputs */
 document.addEventListener('keyup', function(){
