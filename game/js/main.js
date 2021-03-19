@@ -1,5 +1,5 @@
 // log in
-if (multiplayer) login();
+login();
 
 let objects = [];
 //let loc = document.location.href.split("/");
@@ -19,7 +19,11 @@ function pipeline() {
     // tegne objects og egne laser, missiler og skip
 }
 
+// ha deltatime
 setInterval(pipeline, 500);
+
+
+
 
 // let locc = document.location.href.split("/");
 
