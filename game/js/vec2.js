@@ -1,5 +1,3 @@
-"use strict";
-
 class vec2
 {
     x;
@@ -25,6 +23,12 @@ class vec2
     {
         this.x += vector.x;
         this.y += vector.y;
+    }
+
+    subtract(vector)
+    {
+        this.x -= vector.x;
+        this.y -= vector.y;
     }
 
     multiply(scale)
@@ -95,5 +99,10 @@ class vec2
         {
             return false;
         }
+    }
+
+    tov3(z)
+    {
+        return new vec3(this.x, this.y, z);
     }
 }
