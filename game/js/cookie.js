@@ -26,7 +26,8 @@ function createCookie(name,value,seconds) {
     let date = new Date();
     date.setTime(date.getTime() + seconds*1000);
     let expires = "; expires=" + date.toGMTString();
-    document.cookie = name + "=" + value + expires + "; path=/";
+    let SameSite = "; SameSite=Lax";
+    document.cookie = name + "=" + value + SameSite + expires + "; path=/";
 }
 
 //Remove cookie
