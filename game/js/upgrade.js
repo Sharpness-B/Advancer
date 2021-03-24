@@ -79,30 +79,104 @@ function updateBalance(balance) {
 
 /*Canvas*/
 
-/*let ctx = document.getElementById("canvasPreview").getContext("2d");
+let ctx = document.getElementById("canvasPreview").getContext("2d");
+ctx.imageSmoothingEnabled = false;
+ctx.translate(ctx.canvas.width/2, ctx.canvas.height/2);
 
-let cam = new Camera(1.6, 1, -5, new vec3(0, 0, 3));
+let fps = 0;
+let drawFps;
+let dt_old = 0;   // Til å ta tiden brukt per frame
 
-let cube = {
-    vert: [
-        new vec3(-0.3, 0.3, 0.3),
-        new vec3(0.3, 0.3, 0.3),
-        new vec3(0.3, -0.3, 0.3),
-        new vec3(-0.3, -0.3, 0.3),
-        new vec3(-0.3, 0.3, -0.3),
-        new vec3(0.3, 0.3, -0.3),
-        new vec3(0.3, -0.3, -0.3),
-        new vec3(-0.3, -0.3, -0.3)],
-    face: [
-        [0, 1, 2, 3, 0],
-        [4, 5, 6, 7, 4],
-        [1, 5, 6, 2, 1],
-        [0, 4, 7, 3, 0],
-        [0, 1, 5, 4, 0],
-        [2, 6, 7, 3, 2]],
-    pos: new vec3(0.5, 0.3, -0.8)
-};
+let intervalFpsCounter = setInterval(function() { drawFps = fps; }, 200);
 
 let scale = ctx.canvas.width/2;
 
-DrawCubeWF(cube);*/
+let light = {
+    strength: 1,
+    vert: [
+        new vec3(-0.1, 0.1, 0.1),
+        new vec3(0.1, 0.1, 0.1),
+        new vec3(0.1, -0.1, 0.1),
+        new vec3(-0.1, -0.1, 0.1),
+        new vec3(-0.1, 0.1, -0.1),
+        new vec3(0.1, 0.1, -0.1),
+        new vec3(0.1, -0.1, -0.1),
+        new vec3(-0.1, -0.1, -0.1)],
+    face: [
+        [0, 1, 2, 0],
+        [0, 2, 3, 0],
+
+        [4, 6, 5, 4],
+        [4, 7, 6, 4],
+
+        [1, 5, 6, 1],
+        [1, 6, 2, 1],
+
+        [0, 7, 4, 0],
+        [0, 3, 7, 0],
+    
+        [0, 5, 1, 0],
+        [0, 4, 5, 0],
+    
+        [2, 6, 7, 2],
+        [2, 7, 3, 2]],
+    pos: new vec3(0.0, 0.5, -5.0)
+};
+
+let cube = {
+    vert: [
+        new vec3(-0.6, 0.6, 0.6),
+        new vec3(0.6, 0.6, 0.6),
+        new vec3(0.6, -0.6, 0.6),
+        new vec3(-0.6, -0.6, 0.6),
+        new vec3(-0.6, 0.6, -0.6),
+        new vec3(0.6, 0.6, -0.6),
+        new vec3(0.6, -0.6, -0.6),
+        new vec3(-0.6, -0.6, -0.6)],
+        
+    face: [
+        [0, 1, 2, 0],
+        [0, 2, 3, 0],
+
+        [4, 6, 5, 4],
+        [4, 7, 6, 4],
+
+        [1, 5, 6, 1],
+        [1, 6, 2, 1],
+
+        [0, 7, 4, 0],
+        [0, 3, 7, 0],
+    
+        [0, 5, 1, 0],
+        [0, 4, 5, 0],
+    
+        [2, 6, 7, 2],
+        [2, 7, 3, 2]],
+    pos: new vec3(0.0, -0.8, -3.0),
+    color: [255, 255, 255]
+};
+
+let cam = new Camera(   new vec3(0.0, 0.0, -3.0), // Pos
+                        new vec3(0.0, 0.0, -1.0), // Dir
+                        1.6, 1.0, -5.0);          // FOV, near, far
+
+function mainLoop()
+{
+    fps = Math.round(1000 / (performance.now() - dt_old));
+    dt_old = performance.now();
+
+    for(let v = 0; v < cube.vert.length; v++)
+    {
+        cube.vert[v].transform(Matrix.rotateY(0.01));
+    }
+
+    ctx.clearRect(-ctx.canvas.width/2, -ctx.canvas.height/2, ctx.canvas.width, ctx.canvas.height);
+
+    DrawModel(cube);
+
+    ctx.fillStyle = "white";
+    ctx.fillText(drawFps, -300, -200);
+
+    requestAnimationFrame(mainLoop);
+}
+mainLoop();
