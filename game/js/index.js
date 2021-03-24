@@ -36,7 +36,7 @@ function sound(){
 // Canvas menu moving background
 let cnv1 = document.getElementById("menu_canvas");
 if (cnv1) {
-    let ctx = cnv1.getContext("2d"), starList = [];
+    let ctxBG = cnv1.getContext("2d"), starList = [];
     for (let i=0;i<100;i++) {
         starList.push({
             x: Math.ceil(Math.random()*innerWidth-5), 
@@ -45,16 +45,16 @@ if (cnv1) {
         }); 
     }
     setInterval(() => {
-        ctx.fillStyle = "black";
-        ctx.fillRect(0,0,cnv1.width,cnv1.height);
-        ctx.fillStyle = "white";
+        ctxBG.fillStyle = "black";
+        ctxBG.fillRect(0,0,cnv1.width,cnv1.height);
+        ctxBG.fillStyle = "white";
         for (let i=0;i<100;i++) {
             let s = starList[i];
-            ctx.shadowBlur = s.spdY*4;
-            ctx.shadowColor = "white";
-            ctx.beginPath();
-            ctx.arc(s.x, s.y, s.spdY, 0, 2*Math.PI);
-            ctx.fill();
+            ctxBG.shadowBlur = s.spdY*4;
+            ctxBG.shadowColor = "white";
+            ctxBG.beginPath();
+            ctxBG.arc(s.x, s.y, s.spdY, 0, 2*Math.PI);
+            ctxBG.fill();
             s.y+=s.spdY;
             if (s.y > cnv1.height) starList[i] = {x: Math.ceil(Math.random()*innerWidth-5), y: 0, spdY: Math.ceil(Math.random()*5) }
         }
@@ -67,7 +67,7 @@ canvas.height = window.innerHeight;
 canvas.width  = window.innerWidth;
 let width     = canvas.width;
 let height    = canvas.height;
-let ctx       = canvas.getContext("2d");
+let ctxBG       = canvas.getContext("2d");
 function fit_to_screen() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
