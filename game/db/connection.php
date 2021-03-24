@@ -7,7 +7,7 @@
 
     // $servername = "mysql.elev.stolav.it";
     // $username = "stolav_advancer";
-    // $password = "LRGH?v*C";
+    // $password = "";
     // $dbname = "stolav_advancer";
     
     // the connection to db
