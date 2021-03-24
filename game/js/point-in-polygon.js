@@ -25,7 +25,7 @@ let polygon = {
         // 2 volum av alle pyramidene med flate trekant og 
     },
 
-    poplygonip: function(polygon) {};
+    poplygonip: function(polygon) {},
 
     volume: function(polygon) {},
 
