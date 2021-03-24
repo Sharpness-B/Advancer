@@ -17,11 +17,13 @@ CREATE TABLE users (
 CREATE TABLE lasers (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     userid   INT,
-    location VARCHAR(255)
+    location VARCHAR(255),
+    time     DATETIME default CURRENT_TIMESTAMP
 );
 
 CREATE TABLE ships (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     userid  INT,
-    polygon VARCHAR(255)
+    polygon VARCHAR(255),
+    time    DATETIME default CURRENT_TIMESTAMP
 );

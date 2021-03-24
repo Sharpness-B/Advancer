@@ -4,6 +4,11 @@
     $username   = "root";
     $password   = "";
     $dbname     = "advancer";
+
+    // $servername = "mysql.elev.stolav.it";
+    // $username = "stolav_advancer";
+    // $password = "LRGH?v*C";
+    // $dbname = "stolav_advancer";
     
     // the connection to db
     $connection = mysqli_connect(

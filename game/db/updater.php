@@ -33,6 +33,13 @@
     $result = mysqli_query($connection, $sql); 
 
 
+    // slett andres gamle verider
+    $sql = "DELETE FROM ships WHERE time < NOW() - INTERVAL 5 DAY_SECOND;";
+    $result = mysqli_query($connection, $sql);  
+
+    $sql = "DELETE FROM lasers WHERE time < NOW() - INTERVAL 5 DAY_SECOND;";
+    $result = mysqli_query($connection, $sql); 
+
 
     // legg til oppdaterte verdier i DB
     $sql = "INSERT INTO ships (userid, polygon) VALUES($userID, \"$polygonSTR\");";
