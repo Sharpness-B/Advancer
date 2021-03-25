@@ -263,14 +263,23 @@ document.addEventListener('keydown', function(e) {
 document.addEventListener('keyup', function(e) {
     if (e.keyCode == 87) player.speed = 0;
     if (e.keyCode == 83) player.speed = 0;
+    if (e.keyCode == 66) {
+        if (rotating == false) {
+            rotating = true;
+        }
+        else {
+            rotating = false;
+        }
+    }
 });
 
 let spin = 1;
 
 
+rotating = true;
 fps = 20;
 setInterval(() => {
-    player.viewVector.rotateZ(rotationX);
+    if (rotating) player.viewVector.rotateZ(rotationX);
 
     player.position.y += (player.viewVector.y)/10 * player.speed;
     player.position.x += (player.viewVector.x)/10 * player.speed;
