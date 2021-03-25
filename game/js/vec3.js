@@ -85,6 +85,9 @@ class vec3
         this.y = y;
         this.z = z;
     }
+<<<<<<< HEAD
+}
+=======
 
     static dot(v, u)
     {
@@ -100,3 +103,4 @@ class vec3
         );
     }
 }
+>>>>>>> 014a56f2183dfdd1be05ffa3f815cc06a24f7da3

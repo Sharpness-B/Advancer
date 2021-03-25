@@ -7,9 +7,9 @@ let xmlhttpUserID;
 function login() {
     console.log("logging in")
     // hvis cookie
-    if (readCookie("userID")) {
-        userID = readCookie("userID");   
-        eraseCookie("userID");
+    if (cookie.readCookie("userID")) {
+        userID = cookie.readCookie("userID");   
+        cookie.eraseCookie("userID");
         registrer(userID, null);
     }
 
@@ -55,7 +55,7 @@ function upgradesResponse(){
             updateBalance(balance);
         }
 
-        createCookie("userID", userID, 60*60*24*60);
+        cookie.createCookie("userID", userID, 60*60*24*60);
 
         console.log("---> login complete; userID: " + userID.toString());
     }
