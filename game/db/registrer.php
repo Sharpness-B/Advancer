@@ -23,9 +23,22 @@
     }
 
     else {
-        // oppdatere fingerprint
-        $sql = "UPDATE users SET fingerprint=\"$fingerprint\" WHERE id=$userID;";
+        // hvis brukeren ikke finnes i db
+        $sql = "SELECT * FROM users WHERE id=$userID;";
         $result = mysqli_query($connection, $sql);
+        $cnt = mysqli_num_rows($result);
+
+        if (!$cnt) {
+            // registrer ny bruker
+            $sql = "INSERT INTO users (id, fingerprint) VALUES($userID, \"$fingerprint\");";
+            $result = mysqli_query($connection, $sql);
+        }
+
+        else {
+            // oppdatere fingerprint
+            $sql = "UPDATE users SET fingerprint=\"$fingerprint\" WHERE id=$userID;";
+            $result = mysqli_query($connection, $sql);
+        }
 
         // hent ut upgrades
         $sql = "SELECT * FROM users WHERE id=$userID;";
