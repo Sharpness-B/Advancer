@@ -4,13 +4,15 @@ class Camera
     near;
     far;
     position;
+    direction;
     
-    constructor(fov, near, far, position)
+    constructor(position, direction, fov, near, far)
     {
         this.fov = fov;
         this.near = near;
         this.far = far;
         this.position = position;
+        this.direction = direction;
     }
 
     get viewMatrix()
@@ -26,6 +28,7 @@ class Camera
     get cameraMatrix()
     {
         let p = this.position;
+        let d = this.direction;
 
         // (T)ranslate to origin
         let T = [   [   1,    0,    0,    0],
@@ -34,13 +37,13 @@ class Camera
                 [-1*p.x, -1*p.y, -1*p.z,    1]   ];
 
         // (R)otate so -z is forward
-        let theta = Math.atan(p.x/p.z);
+        let theta = Math.atan(d.x/d.z);
         let Ry = [      [   Math.cos(theta),                  0,    Math.sin(theta),                  0],
                         [                 0,                  1,                  0,                  0],
                         [-1*Math.sin(theta),                  0,    Math.cos(theta),                  0],
                         [                 0,                  0,                  0,                  1]    ];;
 
-        let phi = Math.atan(p.y/Math.sqrt( p.x**2 + p.z**2 ));
+        let phi = Math.atan(d.y/Math.sqrt( d.x**2 + d.z**2 ));
         let Rx = [  [                 1,                  0,                  0,                  0],
                     [                 0,    Math.cos(  phi), -1*Math.sin(  phi),                  0],
                     [                 0,    Math.sin(  phi),    Math.cos(  phi),                  0],

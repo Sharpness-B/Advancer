@@ -37,8 +37,8 @@ class Matrix
     static rotateX(ang)
     {
         return([[                 1,                  0,                  0],
-                [                 0,    Math.cos(theta), -1*Math.sin(theta)],
-                [                 0,    Math.sin(theta),    Math.cos(theta)]]);
+                [                 0,    Math.cos(ang), -1*Math.sin(ang)],
+                [                 0,    Math.sin(ang),    Math.cos(ang)]]);
     }
 
     static rotateY(ang)
@@ -50,8 +50,8 @@ class Matrix
 
     static rotateZ(ang)
     {
-        return([[   Math.cos(theta), -1*Math.sin(theta),                  0],
-                [   Math.sin(theta),    Math.cos(theta),                  0],
+        return([[   Math.cos(ang), -1*Math.sin(ang),                  0],
+                [   Math.sin(ang),    Math.cos(ang),                  0],
                 [                 0,                  0,                  1]]);
     }
 }

@@ -1,7 +1,7 @@
 // log in
 login();
 
-let objects = [];
+let objects = {};
 //let loc = document.location.href.split("/");
 
 let data = {
@@ -186,13 +186,38 @@ function update() {
             // Draw star 
             let x = Vector.getXvalueFrom3D( player, s );
             let y = height/1.5 - dis*4;
+
+
             ctx.fillStyle = "#FFFFFF";
             ctx.beginPath();
             ctx.arc(x,y,size,0,Math.PI*2);
             ctx.fill();
         }
+
     }
+    console.log(starList[2]);
+
     
+    if (objects.ships) {
+        for (let i=0; i<objects.ships.length; i++) {
+            let ship = objects.ships[i];
+            let s = {
+                x: ship[0][0],
+                y: ship[0][1],
+                z: 0
+            }
+            let dis = Vector.distance(player.position,s);
+            let size = ( renderdistance*5 / dis )*2;
+            
+            let x = Vector.getXvalueFrom3D( player, s );
+            let y = height/1.5 - dis*4;
+
+            ctx.fillStyle = "#FF0000";
+            ctx.beginPath();
+            ctx.arc(x,y,size,0,Math.PI*2);
+            ctx.fill();
+        }
+    }
 }
 let rotationX=0;
 let rotationY=0;
@@ -214,7 +239,7 @@ document.addEventListener('keyup', function(e) {
 let spin = 1;
 
 
-fps = 30;
+fps = 5;
 setInterval(() => {
     player.viewVector.rotateZ(rotationX);
 

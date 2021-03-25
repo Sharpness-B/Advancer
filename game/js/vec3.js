@@ -26,12 +26,10 @@ class vec3
         return(new vec3(vec1.x + vec2.x, vec1.y + vec2.y, vec1.z + vec2.z));
     }
 
-    subtract(vector)
+    static subtract(vec1, vec2)
     {
-        this.x -= vector.x;
-        this.y -= vector.y;
-        this.z -= vector.z;
-    }
+        return(new vec3(vec1.x - vec2.x, vec1.y - vec2.y, vec1.z - vec2.z));
+    }    
 
     multiply(scale)
     {
@@ -45,6 +43,20 @@ class vec3
             this.y *= scale;
             this.z *= scale;
         }
+    }
+
+    divide(scale)
+    {
+        if(scale instanceof vec3)
+        {
+            return(this.x / scale.x + this.y / scale.y + this.z / scale.z);
+        }
+        else
+        {
+            this.x /= scale;
+            this.y /= scale;
+            this.z /= scale;
+        }   
     }
 
     normalize()
@@ -73,4 +85,22 @@ class vec3
         this.y = y;
         this.z = z;
     }
+<<<<<<< HEAD
 }
+=======
+
+    static dot(v, u)
+    {
+        return v.x * u.x + v.y * u.y + v.z * u.z;
+    }
+
+    static cross(v, u)
+    {
+        return new vec3(
+            v.y * u.z - v.z * u.y,
+          -(v.x * u.z - v.z * u.x),
+            v.x * u.y - v.y * u.x
+        );
+    }
+}
+>>>>>>> 014a56f2183dfdd1be05ffa3f815cc06a24f7da3
