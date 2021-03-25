@@ -1,55 +1,57 @@
 class Matrix
 {
-    cols;
-    rows;
-    matArray;
-
-    constructor(matrixArray)
+    static multiply(left, right)
     {
-        this.rows = matrixArray[0].length;
-        this.cols = matrixArray.length;
-        this.matArray = matrixArray;
-    }
 
-    static multiply(mat1, mat2)
-    {
-        let mat3array = new Array();
-        for(let r = 0; r < mat2.cols; r++)
-        {
-            mat3array.push(new Array(mat1.rows));
-        }
-        
-        for(let k = 0; k < mat2.cols; k++)
-        {
-            for(let r = 0; r < mat2.rows; r++)
-            {
-                let sum = 0;
-                for(let c = 0; c < mat1.cols; c++)
-                {
-                    sum += mat1.matArray[c][r] * mat2.matArray[k][c];
+        let leftRows      = left.length;
+        // let leftColumns   = left[0].length;
+        // let rightRows     = right.length;
+        let rightColumns  = right[0].length;
+
+        let resultRows    = leftRows;
+        let resultColumns = rightColumns;
+
+        let result = [];
+        for(let r=0; r<resultRows; r++) {
+            let row= [];
+            for(let c=0; c<resultColumns; c++) {
+                let value = 0;
+                for( let i=0; i<right.length; i++) {
+                    value += left[r][i] * right[i][c];
                 }
-                mat3array[k][r] = sum;
+                row.push(value);
             }
+            result.push(row);
         }
-        return(mat3array);
+        return result;
     }
 
-    static vtom(vector)
+    static v3tom(vector)
     {
-        return(new Matrix([[vector.x, vector.y, vector.z, 1]]));
+        return([[vector.x],
+                [vector.y],
+                [vector.z],
+                [1]]);
     }
 
-    static invert(matrix)
+    static rotateX(ang)
     {
-        let matArray = matrix.matArray;
-        for(let c = 0; c < matArray.length; c++)
-        {
-            for(let r = 0; r < matArray[0].length; r++)
-            {
-                matArray[c][r] = 1/matArray[c][r];
-            }
-        }
+        return([[                 1,                  0,                  0],
+                [                 0,    Math.cos(theta), -1*Math.sin(theta)],
+                [                 0,    Math.sin(theta),    Math.cos(theta)]]);
+    }
 
-        return(new Matrix(matArray));
+    static rotateY(ang)
+    {
+        return( [[Math.cos(ang),  0, Math.sin(ang)],
+                [0,                1,             0],
+                [-1*Math.sin(ang), 0,  Math.cos(ang)]]);
+    }
+
+    static rotateZ(ang)
+    {
+        return([[   Math.cos(theta), -1*Math.sin(theta),                  0],
+                [   Math.sin(theta),    Math.cos(theta),                  0],
+                [                 0,                  0,                  1]]);
     }
 }

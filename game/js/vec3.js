@@ -21,11 +21,9 @@ class vec3
         return(Math.sqrt(this.x**2 + this.y**2 + this.z**2));
     }
 
-    add(vector)
+    static add(vec1, vec2)
     {
-        this.x += vector.x;
-        this.y += vector.y;
-        this.z += vector.z;
+        return(new vec3(vec1.x + vec2.x, vec1.y + vec2.y, vec1.z + vec2.z));
     }
 
     subtract(vector)
@@ -56,67 +54,23 @@ class vec3
         this.y /= len;
         this.z /= len;
     }
-}
 
+    transform(mat)
+    {
+        let x = mat[0][0]*this.x +
+                mat[0][1]*this.y +
+                mat[0][2]*this.z;
 
+        let y = mat[1][0]*this.x +
+                mat[1][1]*this.y +
+                mat[1][2]*this.z;
 
+        let z = mat[2][0]*this.x +
+                mat[2][1]*this.y +
+                mat[2][2]*this.z;
 
-var pressKey = function(event) {
-    
-}
-const unpressKey = function(event) {
-    
-}
-var screenBoxCX = window.innerWidth / 2;
-var screenBoxCY = window.innerHeight / 2;
-
-const getMouseInGeneral = function(event) {
-    screenBoxCX = window.innerWidth / 2;
-    screenBoxCY = window.innerHeight / 2;
-    var mouseClientX = event.clientX - screenBoxCX;
-    var mouseClientY = event.clientY - screenBoxCY;
-
-    
-}
-
-
-const getMouseDown = function(mouse) {
-    //var mousepress = 0;
-    //document.getElementById("click").innerHTML = mouse.button;
-    switch (mouse.button) {
-        case 1:
-            mousepress[1] = 1
-            break;
-        case 0:
-            mousepress[0] = 1
-            break;
-        case 2:
-            mousepress[2] = 1
-            break;
+        this.x = x;
+        this.y = y;
+        this.z = z;
     }
 }
-
-const getMouseUp = function(mouse) {
-        switch (mouse.button) {
-        case 1:
-            mousepress[1] = 0
-            break;
-        case 0:
-            mousepress[0] = 0
-            break;
-        case 2:
-            mousepress[2] = 0
-            break;
-    }
-}
-
-
-function sendMouse(x, y) {
-
-}
-
-document.addEventListener('mousemove', getMouseInGeneral);
-document.addEventListener('keydown', pressKey);
-document.addEventListener('keyup', unpressKey);
-document.addEventListener('mousedown', getMouseDown);
-document.addEventListener('mouseup', getMouseUp);

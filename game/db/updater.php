@@ -2,7 +2,26 @@
     require("connection.php");
 
     $userID = $_GET["userID"];
-    $data = $_GET["data"]; // url escape
+    $data = json_decode( $_GET["data"] ); // url escape
+
+
+    // formater data.polygon
+    $polygonSTR = "[";
+
+    foreach ($data -> polygon as $point) {
+        $polygonSTR .= "[";
+        foreach ($point as $value) {
+            $polygonSTR .= $value . ",";
+        }
+        $polygonSTR = substr($polygonSTR, 0, -1);
+        $polygonSTR .= "],";
+    }
+
+    if (count($data -> polygon)) {
+        $polygonSTR = substr($polygonSTR, 0, -1);
+    }
+
+    $polygonSTR .= "]";
 
 
 
@@ -16,24 +35,31 @@
 
 
     // legg til oppdaterte verdier i DB
-    $sql = "INSERT INTO ships VALUES($userID, \"[[x,y,z],[x,y,z],[x,y,z]]\");";
+    $sql = "INSERT INTO ships (userid, polygon) VALUES($userID, \"$polygonSTR\");";
     $result = mysqli_query($connection, $sql);
 
     // for hver laser
-    // foreach($data->lasers as $lasers) {
-    //     $sql = "INSERT INTO lasers VALUES($userID, \"$lasers->location\");";
-    //     $result = mysqli_query($connection, $sql);  
-    // }
+    foreach($data->lasers as $location) {
+        $laserSTR = "[";
+        foreach ($location as $value) {
+            $laserSTR .= $value . ",";
+        }
+        $laserSTR = substr($laserSTR, 0, -1);
+        $laserSTR .= "]";
+        
+        $sql = "INSERT INTO lasers (userid, location) VALUES($userID, \"$laserSTR\");";
+        $result = mysqli_query($connection, $sql);  
+    }
 
 
 
     // hente ut objekter fra andre spillere fra DB
     // skip
-    $ships = [1,2,3]; 
+    $ships = []; 
     $sql = "SELECT * FROM ships WHERE NOT userid=$userID;";
     $result = mysqli_query($connection, $sql); 
     while ($row = mysqli_fetch_assoc($result)) {
-        array_push($ships, $row["boundingvolume"]);
+        array_push($ships, $row["polygon"]);
     }
     
     // lasere
@@ -46,6 +72,7 @@
 
 
 
+    // returnere nye verdier
     // formatering
     $shipsJSON  = "["; 
     $lasersJSON = "[";

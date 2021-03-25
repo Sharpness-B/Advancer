@@ -16,12 +16,12 @@ CREATE TABLE users (
 
 CREATE TABLE lasers (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    userid   VARCHAR(255),
+    userid   INT,
     location VARCHAR(255)
 );
 
 CREATE TABLE ships (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    userid         VARCHAR(255),
-    boundingvolume VARCHAR(255)
+    userid  INT,
+    polygon VARCHAR(255)
 );

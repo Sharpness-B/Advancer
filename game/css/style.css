@@ -149,10 +149,11 @@ html, body {
     -ms-transform: translateX(-50%);
     transform: translateX(-50%);
 }
-canvas {
+#menu_canvas {
     position: absolute;
     z-index: -1;
 }
-.upgr_img {
+
+#canvasPreview {
     margin-right: 1em;
 }

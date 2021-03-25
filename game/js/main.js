@@ -1,21 +1,31 @@
+// log in
+login();
+
 let objects = [];
 //let loc = document.location.href.split("/");
 
-let ship = {
-    brand: "Tesla",
-    model: "Roadster",
-    year: 2008,
-    boundingvolume: [[1,3,4], [3,4,2], [2,10,4]]
+let data = {
+    userID: userID,
+    polygon: [[1,3,4], [3,4,2], [2,10,4]],
+    lasers: [[3,3,2],[3,3,2]],
+    missiles: []
 };
 
 function pipeline() {    
-    if (multiplayer)       updateObjects("../db/updater.php", ship);
+    if (multiplayer)       updateObjects("db/updater.php", data);
     else if (singleplayer) ;
+
+    // regne ut ny posisjon på egne lasere, missiler og skip
+    // tegne objects og egne laser, missiler og skip
 }
 
-setInterval(pipeline, 500);
+// ha deltatime
+//setInterval(pipeline, 500);
 
-let locc = document.location.href.split("/");
+
+
+
+// let locc = document.location.href.split("/");
 
 /* Keyinputs */
 document.addEventListener('keyup', function(){
@@ -182,6 +192,7 @@ function update() {
             ctx.fill();
         }
     }
+    
 }
 let rotationX=0;
 let rotationY=0;
@@ -212,6 +223,16 @@ setInterval(() => {
     player.position.z += (player.viewVector.z)/10 * player.speed;
 
     update();
+
+
+    let testmultiplayer = {
+        userID: userID,
+        polygon: [[player.position.x,player.position.y,player.position.z]],
+        lasers: [[3,3,2],[3,3,2]],
+        missiles: []
+    };
+    
+    updateObjects("db/updater.php", testmultiplayer);
 
 }, 1000/fps);
 function b(x) {return ((x*1000)|0)/1000}
