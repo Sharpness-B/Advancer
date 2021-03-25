@@ -24,7 +24,7 @@ function handleFile(){
 
         console.log("---> upgrade process complete");
         
-        console.log(balance, upgrades)
+        // console.log(balance, upgrades)
     }
 }
 
