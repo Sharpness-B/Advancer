@@ -74,6 +74,10 @@ function DrawModel(model)
 
         if(N.z >= 0) { continue; }      // cull the backfaces
 
+        /* Ambient lighting */
+
+        let ambLum = 0.2;
+
         /* Diffusion lighting */
 
         let pc = vec3.add(vec3.add(model.vert[model.face[f][0]], model.vert[model.face[f][1]]), model.vert[model.face[f][2]]);
@@ -84,8 +88,16 @@ function DrawModel(model)
         N.normalize();      // Normalize bot vectors
         vl.normalize();     // so to be used for dotproduct
 
-        let luminance = vec3.dot(N, vl);    // 0-1 value luminance mulitplier
+        let difLum = vec3.dot(N, vl);    // 0-1 value luminance mulitplier
+
+        /* Set color luminance */
+
+        if(difLum < 0) { difLum = 0; }
+
+        let luminance = ambLum + difLum;
+
         ctx.fillStyle = "rgb(" + color[0]*luminance + ", " + color[1]*luminance + ", " + color[2]*luminance + ")"; // Change luminance of object
+        //ctx.fillStyle = "rgb(" + color[0]*difLum + ", " + color[1]*difLum + ", " + color[2]*difLum + ")"; // Change luminance of object
         
         ctx.beginPath();
         ctx.moveTo(scale*modelScreen[model.face[f][0]].x, scale*modelScreen[model.face[f][0]].y);
