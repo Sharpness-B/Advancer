@@ -1,7 +1,7 @@
 // log in
 login();
 
-let objects = [];
+let objects = {};
 //let loc = document.location.href.split("/");
 
 let data = {
@@ -186,9 +186,26 @@ function update() {
             // Draw star 
             let x = Vector.getXvalueFrom3D( player, s );
             let y = height/1.5 - dis*4;
+
+
             ctx.fillStyle = "#FFFFFF";
             ctx.beginPath();
             ctx.arc(x,y,size,0,Math.PI*2);
+            ctx.fill();
+        }
+
+    }
+
+    if (objects.ships) {
+        for (let i=0; i<objects.ships.length; i++) {
+            let ship = objects.ships[i];
+
+            let x = ship[0][0];
+            let y = ship[0][1];
+            
+            ctx.fillStyle = "#FF0000";
+            ctx.beginPath();
+            //ctx.arc(??,??,??,0,Math.PI*2);
             ctx.fill();
         }
     }
@@ -213,7 +230,7 @@ document.addEventListener('keyup', function(e) {
 let spin = 1;
 
 
-fps = 30;
+fps = 5;
 setInterval(() => {
     player.viewVector.rotateZ(rotationX);
 
