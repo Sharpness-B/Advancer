@@ -1,6 +1,3 @@
-// log in
-login();
-
 let objects = {};
 //let loc = document.location.href.split("/");
 

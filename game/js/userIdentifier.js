@@ -57,6 +57,9 @@ function upgradesResponse(){
     }
 }
 
+// log in
+login();
+
 // <script defer src="js/userIdentifier.js"></script>
 // <script defer async src="https://cdn.jsdelivr.net/npm/@fingerprintjs/fingerprintjs@3/dist/fp.min.js"
 //     onload="login()">
