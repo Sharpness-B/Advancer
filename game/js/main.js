@@ -147,7 +147,7 @@ let starList = [
     new Star(
         0,
         0,
-        "#"+Math.floor(Math.random()*16777215).toString(16)
+        "#"+"rgb("+0+","+Math.floor(Math.random()*255)+","+Math.floor(Math.random()*255)+")"
     )
 ];
 let renderdistance = 20;
@@ -156,7 +156,7 @@ function randomStar() {
     return new Star(
         Math.random()*renderdistance,
         Math.random()*(Math.PI*2),
-        "#"+Math.floor(Math.random()*16777215).toString(16)
+        "rgb("+0+","+Math.floor(Math.random()*50+205)+","+Math.floor(Math.random()*50+205)+")"
     );
 }
 
@@ -167,6 +167,7 @@ if (starCount>1) {
     }
 }
 let distances;
+let f = false;
 function update() {
     if (spin>1) spin = 0;
 
@@ -175,10 +176,16 @@ function update() {
     ctx.fillRect(0,0,width,height);
     ctx.fill();
 
+    let World_objects = [];
+
+
+    // Collect stars
     for (let i=0;i<starCount;i++) {
         let s = starList[i];
         if (spin==1) s.addAngle(0.01);
         let dis = Vector.distance(player.position,s);
+
+        //list1.concat(list2);
         if (dis > 0.2 && dis < 100) {
             let size = ( renderdistance*5 / dis )*2;
 
@@ -186,18 +193,20 @@ function update() {
             // Draw star 
             let x = Vector.getXvalueFrom3D( player, s );
             let y = height/1.5 - dis*4;
-
-
-            ctx.fillStyle = "#FFFFFF";
-            ctx.beginPath();
-            ctx.arc(x,y,size,0,Math.PI*2);
-            ctx.fill();
+            //console.log(s);
+            let o = {
+                dis: dis,
+                color: s.color,
+                x: x,
+                y: y,
+                size: size,
+                type: "star"
+            }
+            World_objects.push(o);
         }
-
     }
-    console.log(starList[2]);
-
     
+    // Collect enemies
     if (objects.ships) {
         for (let i=0; i<objects.ships.length; i++) {
             let ship = objects.ships[i];
@@ -212,12 +221,32 @@ function update() {
             let x = Vector.getXvalueFrom3D( player, s );
             let y = height/1.5 - dis*4;
 
-            ctx.fillStyle = "#FF0000";
-            ctx.beginPath();
-            ctx.arc(x,y,size,0,Math.PI*2);
-            ctx.fill();
+            World_objects.push( {
+                dis: dis,
+                color: "#ff0000",
+                x: x,
+                y: y,
+                size: size,
+                type: "player"
+            });
         }
     }
+
+    // Draw both stars and enemies
+    //if (f==false) console.log(World_objects);
+
+    World_objects.sort(function (a, b) {return b.dis - a.dis; });
+
+    if (f==false) console.log(World_objects);
+    for (let i=0;i<World_objects.length-1;i++) {
+        let s = World_objects[i];
+        ctx.fillStyle = s.color; //s.color;
+        ctx.beginPath();
+        ctx.arc(s.x,s.y,s.size,0,Math.PI*2);
+        ctx.fill();
+    }
+    //console.log(World_objects);
+    f = true;
 }
 let rotationX=0;
 let rotationY=0;
@@ -239,7 +268,7 @@ document.addEventListener('keyup', function(e) {
 let spin = 1;
 
 
-fps = 5;
+fps = 20;
 setInterval(() => {
     player.viewVector.rotateZ(rotationX);
 
