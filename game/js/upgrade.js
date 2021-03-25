@@ -13,18 +13,16 @@ function executePurchase(url, userID, upgrade) {
 function handleFile(){
     if (xmlhttp. readyState == 4 && xmlhttp.status == 200) {
         let response = xmlhttp.response;
-        let responsObject = JSON.parse(response);
+        let responseObject = JSON.parse(response);
 
-        balance = responsObject.balance;
-        upgrades = responsObject.upgrades;
+        balance = responseObject.balance;
+        upgrades = responseObject.upgrades;
 
         updatePrices(upgrades);
         updateDotColors(upgrades);
         updateBalance(balance);
 
-        console.log("---> upgrade process complete");
-        
-        // console.log(balance, upgrades)
+        console.log("---> upgrade process complete; response: ", responseObject);
     }
 }
 
