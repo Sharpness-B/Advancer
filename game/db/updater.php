@@ -1,6 +1,9 @@
 <?php
     require("connection.php");
 
+    // $sql = "INSERT INTO users (fingerprint) VALUES(\"ja\");INSERT INTO users (fingerprint) VALUES(\"nei\");";
+    // $result = mysqli_multi_query($connection, $sql); 
+
     $userID = $_GET["userID"];
     $data = json_decode( $_GET["data"] ); // url escape
 
@@ -25,20 +28,26 @@
 
 
 
-    // fjern gamle verdier fra DB
-    $sql = "DELETE FROM ships WHERE userid=$userID;";
+    // fjern egne og andres gamle verdier fra DB
+    $sql = "DELETE FROM ships 
+            WHERE userid=$userID 
+            OR time < NOW() - INTERVAL 5 DAY_SECOND;";
+
     $result = mysqli_query($connection, $sql);  
 
-    $sql = "DELETE FROM lasers WHERE userid=$userID;";
-    $result = mysqli_query($connection, $sql); 
+    $sql = "DELETE FROM lasers 
+            WHERE userid=$userID 
+            OR time < NOW() - INTERVAL 5 DAY_SECOND;";
 
+    $result = mysqli_query($connection, $sql); 
+    
 
     // slett andres gamle verider
-    $sql = "DELETE FROM ships WHERE time < NOW() - INTERVAL 5 DAY_SECOND;";
-    $result = mysqli_query($connection, $sql);  
+    // $sql = "DELETE FROM ships WHERE time < NOW() - INTERVAL 5 DAY_SECOND;";
+    // $result = mysqli_query($connection, $sql);  
 
-    $sql = "DELETE FROM lasers WHERE time < NOW() - INTERVAL 5 DAY_SECOND;";
-    $result = mysqli_query($connection, $sql); 
+    // $sql = "DELETE FROM lasers WHERE time < NOW() - INTERVAL 5 DAY_SECOND;";
+    // $result = mysqli_query($connection, $sql); 
 
 
     // legg til oppdaterte verdier i DB
