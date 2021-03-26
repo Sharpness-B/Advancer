@@ -57,7 +57,6 @@ function DrawModelVerts(model)
 
 function DrawModel(model)
 {
-    let color = model.color;
     let modelScreen = new Array();
     for(let v = 0; v < model.vert.length; v++)   // Project all vertex positions to 2d
     {
@@ -96,9 +95,15 @@ function DrawModel(model)
 
         let luminance = ambLum + difLum;
 
-        ctx.fillStyle = "rgb(" + color[0]*luminance + ", " + color[1]*luminance + ", " + color[2]*luminance + ")"; // Change luminance of object
-        //ctx.fillStyle = "rgb(" + color[0]*difLum + ", " + color[1]*difLum + ", " + color[2]*difLum + ")"; // Change luminance of object
-        
+        if(model.face[f].length > 4)
+        {
+            ctx.fillStyle = "rgb(" + model.face[f][4].r*luminance + ", " + model.face[f][4].g*luminance + ", " + model.face[f][4].b*luminance + ")"; // Change luminance of face with given color
+        }
+        else
+        {
+            ctx.fillStyle = "rgb(" + model.color.r*luminance + ", " + model.color.g*luminance + ", " + model.color.b*luminance + ")"; // Change luminance of face if no face color is given
+        }
+
         ctx.beginPath();
         ctx.moveTo(scale*modelScreen[model.face[f][0]].x, scale*modelScreen[model.face[f][0]].y);
         ctx.lineTo(scale*modelScreen[model.face[f][1]].x, scale*modelScreen[model.face[f][1]].y);
