@@ -11,7 +11,7 @@ let polygon = {
         //          /===============\ P ''  \                          //                              P           
         //         /=================\' ' ' ' \                        //                           /====\---\                
         //        /===================\' ' '  ' \                      //                       /========|' '  ---\                  
-        //       /=====================\' '   ' ' \ C                  //                   /=============\' '   ' ' \ C                      
+        //       /=====================\' '   ' ' \ C                  //                   /=============\' '   ' '\ C                      
         //      /=======================\  '   ' /                     //               /=================|  '   ' /                   
         //     /=========================\   ' /                       //           /=====================\  '  /                 
         //    /===========================\'  /                        //       /=========================|'  /                                                  
@@ -20,9 +20,8 @@ let polygon = {
         // hvis volum(ABC...N) = volum(ABC....P) + volum(ABP...N) + volum(APC...N) + volum(PBC...N)
         //                     = volum(ABCP) + volum(ABPD) + volum(APCD) + volum(PBCD)
 
-        // 1 dele polygonet inn i trekanter
         // konstruere pyramider med trekantene og p
-        // 2 volum av alle pyramidene med flate trekant og 
+        // hvis volum av alle pyramidene er lik med hele figuren
 
         let volumePolygon = this.volume(triangulatedPolygon);
         let volumePyramides = 0;
@@ -54,7 +53,9 @@ let polygon = {
         let b = vec3.subtract( tetrahedron[2], tetrahedron[1] );
         let c = vec3.subtract( tetrahedron[3], tetrahedron[1] );
 
-        return Math.abs( vec3.dot( vec3.cross(a,b), c ) )/6;
+        return Math.abs( 
+            vec3.dot( vec3.cross(a,b), c ) 
+        )/6;
     },
 
     area: function(polygon) { // har en bug
