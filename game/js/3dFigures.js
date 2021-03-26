@@ -1,7 +1,9 @@
 let figures = {
     scale: function() {},
 
-    move: function() {},
+    moveOrigo: function(origio, figure) {
+        return figure
+    },
 
     cube = {
         vert: [
