@@ -1,0 +1,744 @@
+<canvas id="ctx" width=800 height=600 style="border: 1px solid white"></canvas>
+<style>
+    body {
+        background-color: black;
+    }
+</style>
+<script>
+
+let ctx = document.getElementById("ctx").getContext("2d");
+ctx.imageSmoothingEnabled = false;
+ctx.translate(ctx.canvas.width/2, ctx.canvas.height/2);
+ctx.font = "40px Courier";
+//ctx.globalAlpha = 0.5;
+
+let rot = 0;
+let rotz = 0;
+let deltapos = 0;
+
+document.onkeydown = function(e)
+{
+    if(e.key == "ArrowLeft") { rot = 0.02; } 
+    if(e.key == "ArrowRight") { rot = -0.02; }
+    if(e.key == "ArrowUp") { deltapos = 0.02; }
+    if(e.key == "ArrowDown") { deltapos = -0.02 }
+    if(e.key == "q") { rotz = -0.01; }
+    if(e.key == "e") { rotz = 0.01; }
+}
+
+document.onkeyup = function(e)
+{
+    rot = 0;
+    rotz = 0;
+    deltapos = 0;
+}
+
+let fps = 0;
+let drawFps;
+let dt_old = 0;   // Til å ta tiden brukt per frame
+
+let intervalFpsCounter = setInterval(function() { drawFps = fps; }, 200);
+
+class Matrix
+{
+    static multiply(left, right)
+    {
+
+        let leftRows      = left.length;
+        // let leftColumns   = left[0].length;
+        // let rightRows     = right.length;
+        let rightColumns  = right[0].length;
+
+        let resultRows    = leftRows;
+        let resultColumns = rightColumns;
+
+        let result = [];
+        for(let r=0; r<resultRows; r++) {
+            let row= [];
+            for(let c=0; c<resultColumns; c++) {
+                let value = 0;
+                for( let i=0; i<right.length; i++) {
+                    value += left[r][i] * right[i][c];
+                }
+                row.push(value);
+            }
+            result.push(row);
+        }
+        return result;
+    }
+
+    static v3tom(vector)
+    {
+        return([[vector.x],
+                [vector.y],
+                [vector.z],
+                [1]]);
+    }
+
+    static rotateX(ang)
+    {
+        return([[                 1,                  0,                  0],
+                [                 0,    Math.cos(ang), -1*Math.sin(ang)],
+                [                 0,    Math.sin(ang),    Math.cos(ang)]]);
+    }
+
+    static rotateY(ang)
+    {
+        return( [[Math.cos(ang),  0, Math.sin(ang)],
+                [0,                1,             0],
+                [-1*Math.sin(ang), 0,  Math.cos(ang)]]);
+    }
+
+    static rotateZ(ang)
+    {
+        return([[   Math.cos(ang), -1*Math.sin(ang),                  0],
+                [   Math.sin(ang),    Math.cos(ang),                  0],
+                [                 0,                  0,                  1]]);
+    }
+}
+
+class vec3
+{
+    x;
+    y;
+    z;
+
+    constructor(x, y, z)
+    {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+
+    toString()
+    {
+        return("[" + this.x + ", " + this.y + ", " + this.z + "]");
+    }
+
+    length()
+    {
+        return(Math.sqrt(this.x**2 + this.y**2 + this.z**2));
+    }
+
+    static add(vec1, vec2)
+    {
+        return(new vec3(vec1.x + vec2.x, vec1.y + vec2.y, vec1.z + vec2.z));
+    }
+
+    static subtract(vec1, vec2)
+    {
+        return(new vec3(vec1.x - vec2.x, vec1.y - vec2.y, vec1.z - vec2.z));
+    }    
+
+    multiply(scale)
+    {
+        if(scale instanceof vec3)
+        {
+            return(this.x * scale.x + this.y * scale.y + this.z * scale.z);
+        }
+        else
+        {
+            this.x *= scale;
+            this.y *= scale;
+            this.z *= scale;
+        }
+    }
+
+    divide(scale)
+    {
+        if(scale instanceof vec3)
+        {
+            return(this.x / scale.x + this.y / scale.y + this.z / scale.z);
+        }
+        else
+        {
+            this.x /= scale;
+            this.y /= scale;
+            this.z /= scale;
+        }   
+    }
+
+    normalize()
+    {
+        let len = this.length();
+        this.x /= len;
+        this.y /= len;
+        this.z /= len;
+    }
+
+    transform(mat)
+    {
+        let x = mat[0][0]*this.x +
+                mat[0][1]*this.y +
+                mat[0][2]*this.z;
+
+        let y = mat[1][0]*this.x +
+                mat[1][1]*this.y +
+                mat[1][2]*this.z;
+
+        let z = mat[2][0]*this.x +
+                mat[2][1]*this.y +
+                mat[2][2]*this.z;
+
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+
+    static dot(v, u)
+    {
+        return v.x * u.x + v.y * u.y + v.z * u.z;
+    }
+
+    static cross(v, u)
+    {
+        return new vec3(
+            v.y * u.z - v.z * u.y,
+          -(v.x * u.z - v.z * u.x),
+            v.x * u.y - v.y * u.x
+        );
+    }
+}
+
+class vec2
+{
+    x;
+    y;
+
+    constructor(x, y)
+    {
+        this.x = x;
+        this.y = y;
+    }
+
+    toString()
+    {
+        return("[" + this.x + ", " + this.y + "]");
+    }
+
+    get length()
+    {
+        return(Math.sqrt(this.x**2 + this.y**2));
+    }
+
+    add(vector)
+    {
+        this.x += vector.x;
+        this.y += vector.y;
+    }
+
+    subtract(vector)
+    {
+        this.x -= vector.x;
+        this.y -= vector.y;
+    }
+
+    multiply(scale)
+    {
+        if(scale instanceof Victor)
+        {
+            return(this.x * scale.x + this.y * scale.y);
+        }
+        else
+        {
+            this.x *= scale;
+            this.y *= scale;
+        }
+    }
+
+    normalize()
+    {
+        if(this.x != 0 && this.y != 0)
+        {
+            let len = this.length;
+            this.x /= len;
+            this.y /= len;
+        }
+        else
+        {
+            this.x == 0;
+            this.y == 0;
+        }
+    }
+
+    clone()
+    {
+        return(new Victor(this.x, this.y));
+    }
+
+    rotate(radians)
+    {
+        let x = this.x * Math.cos(radians) - this.y * Math.sin(radians);
+        let y = this.x * Math.sin(radians) + this.y * Math.cos(radians);
+        this.x = x;
+        this.y = y;
+    }
+
+    angle(vector)
+    {
+        return(Math.acos(this.multiply(vector) / this.length * vector.length));
+    }
+
+    isOrthogonal(vector)
+    {
+        if(this.multiply(vector) == 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    isParallell(vector)
+    {
+        if(this.x / this.y == vector.x / vector.y)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    tov3(z)
+    {
+        return new vec3(this.x, this.y, z);
+    }
+}
+
+class Camera
+{
+    fov;
+    near;
+    far;
+    position;
+    direction;
+    
+    constructor(position, direction, fov, near, far)
+    {
+        this.fov = fov;
+        this.near = near;
+        this.far = far;
+        this.position = position;
+        this.direction = direction;
+    }
+
+    get viewMatrix()
+    {
+        return([
+            [1/Math.tan(this.fov/2), 0, 0,                   0],
+            [0, 1/Math.tan(this.fov/2), 0,                   0], 
+            [0, 0, (this.far+this.near)/(this.far-this.near),       -1],
+            [0, 0, (2 * this.far * this.near)/(this.far-this.near),  0]
+        ]);
+    }
+
+    get cameraMatrix()
+    {
+        let p = this.position;
+        let d = this.direction;
+
+        // (T)ranslate to origin
+        let T = [   [   1,    0,    0,    0],
+                [   0,    1,    0,    0],
+                [   0,    0,    1,    0],
+                [-1*p.x, -1*p.y, -1*p.z,    1]   ];
+
+        // (R)otate so -z is forward
+        let theta = Math.atan(d.x/d.z);
+        let Ry = [      [   Math.cos(theta),                  0,    Math.sin(theta),                  0],
+                        [                 0,                  1,                  0,                  0],
+                        [-1*Math.sin(theta),                  0,    Math.cos(theta),                  0],
+                        [                 0,                  0,                  0,                  1]    ];;
+
+        let phi = Math.atan(d.y/Math.sqrt( d.x**2 + d.z**2 ));
+        let Rx = [  [                 1,                  0,                  0,                  0],
+                    [                 0,    Math.cos(  phi), -1*Math.sin(  phi),                  0],
+                    [                 0,    Math.sin(  phi),    Math.cos(  phi),                  0],
+                    [                 0,                  0,                  0,                  1]    ];
+
+        // Combination of Rx and Ry to R
+        let R = Matrix.multiply(Rx, Ry);
+        
+        // (C)ameraMatrix
+        let C = Matrix.multiply(T, R);
+        return(C);
+    }
+
+    project(vec)
+    {
+        let C = this.cameraMatrix;
+        let V = this.viewMatrix;
+        let CV = Matrix.multiply(C, V);
+
+        let p4 = Matrix.multiply(CV, Matrix.v3tom(vec)); // Egentlig bytte CV og Matrix.v3tom(vec)
+        
+        let w = p4[3][0];
+        
+        let p3 = new vec3(p4[0][0]/w,
+                          p4[1][0]/w,
+                          p4[2][0]/w);
+
+        return new vec2(p3.x/p3.z, p3.y/p3.z);
+    }
+}
+
+let cam = new Camera(   new vec3(0.0, 0.0, -3.0), // Pos
+                        new vec3(0.0, 0.0, -1.0), // Dir
+                        1.6, 1.0, -5.0);          // FOV, near, far
+
+let light = {
+    strength: 1,
+    vert: [
+        new vec3(-0.1, 0.1, 0.1),
+        new vec3(0.1, 0.1, 0.1),
+        new vec3(0.1, -0.1, 0.1),
+        new vec3(-0.1, -0.1, 0.1),
+        new vec3(-0.1, 0.1, -0.1),
+        new vec3(0.1, 0.1, -0.1),
+        new vec3(0.1, -0.1, -0.1),
+        new vec3(-0.1, -0.1, -0.1)],
+    face: [
+        [0, 1, 2, 0],
+        [0, 2, 3, 0],
+
+        [4, 6, 5, 4],
+        [4, 7, 6, 4],
+
+        [1, 5, 6, 1],
+        [1, 6, 2, 1],
+
+        [0, 7, 4, 0],
+        [0, 3, 7, 0],
+    
+        [0, 5, 1, 0],
+        [0, 4, 5, 0],
+    
+        [2, 6, 7, 2],
+        [2, 7, 3, 2]],
+    pos: new vec3(0.0, 0.5, -5.0)
+};
+
+let cube = {
+    vert: [
+        new vec3(-0.3, 0.3, 0.3),
+        new vec3(0.3, 0.3, 0.3),
+        new vec3(0.3, -0.3, 0.3),
+        new vec3(-0.3, -0.3, 0.3),
+        new vec3(-0.3, 0.3, -0.3),
+        new vec3(0.3, 0.3, -0.3),
+        new vec3(0.3, -0.3, -0.3),
+        new vec3(-0.3, -0.3, -0.3)],
+        
+    face: [
+        [0, 1, 2, 0],
+        [0, 2, 3, 0],
+
+        [4, 6, 5, 4],
+        [4, 7, 6, 4],
+
+        [1, 5, 6, 1],
+        [1, 6, 2, 1],
+
+        [0, 7, 4, 0],
+        [0, 3, 7, 0],
+    
+        [0, 5, 1, 0],
+        [0, 4, 5, 0],
+    
+        [2, 6, 7, 2],
+        [2, 7, 3, 2]],
+    pos: new vec3(0.0, -0.8, -3.0),
+    color: [100, 150, 300]
+};
+
+let jet = {
+    vert: [
+        new vec3(0.2, 0.0, -1.0),       // Kokpit front left
+        new vec3(-0.2, 0.0, -1.0),      // Kokpit front right
+
+        new vec3(0.3, 0.0, -1.0),
+        new vec3(-0.3, 0.0, -1.0),
+
+        new vec3(0.2, 0.2, 0.0),        // Kokpit top left
+        new vec3(-0.2, 0.2, 0.0),       // Kokpit top right
+    ],
+    face: [
+        [1, 3, 5, 1],
+        [0, 4, 2, 0]
+        ],
+    pos: new vec3(0.0, 0.0, 0.0),
+    color: [255, 255, 255]
+};
+
+let scale = ctx.canvas.width/2;
+
+let worldObjects = [cube];
+let worldObjectsCopy = [...worldObjects];               // Not worknig rn...
+let worldObjectsZ = FG_qSortZ(worldObjectsCopy);
+
+for(let v = 0; v < cube.vert.length; v++)
+{
+    cube.vert[v].transform(Matrix.rotateY(0.5));
+    //cube.vert[v].transform(Matrix.rotateZ(0.01));
+}
+
+function main()
+{
+    fps = Math.round(1000 / (performance.now() - dt_old));
+    dt_old = performance.now();
+
+    ctx.clearRect(-ctx.canvas.width/2, -ctx.canvas.height/2, ctx.canvas.width, ctx.canvas.height);
+
+    //worldObjectsCopy = [...worldObjects];
+
+    //worldObjectsZ = FG_qSortZ(worldObjectsCopy);
+
+    light.pos.x += rot;
+    light.pos.y += deltapos;
+    
+    /*for(let o = 0; o < worldObjectsZ.length; o++)
+    {
+        DrawModel(worldObjects[o]);
+    }*/
+
+    DrawModel(jet);
+
+    //DrawModelWF(light);
+
+    //Drawvec3(light.pos, new vec3(0, 0, 0));
+
+    ctx.fillStyle = "white";
+    ctx.fillText(drawFps, -ctx.canvas.width/2 + 10, -ctx.canvas.height/2 + 30);
+
+    requestAnimationFrame(main);
+}
+main();
+
+function DrawCube(cube)
+{
+    let cubeScreen = new Array();
+    for(let v = 0; v < cube.vert.length; v++)   
+    {
+        cubeScreen.push(cam.project(vec3.add(cube.vert[v], cube.pos)));
+    }
+
+    for(let f = 0; f < cube.face.length; f++)
+    {
+        ctx.beginPath();
+        ctx.moveTo(scale*cubeScreen[cube.face[f][0]].x, scale*cubeScreen[cube.face[f][0]].y);
+        ctx.lineTo(scale*cubeScreen[cube.face[f][1]].x, scale*cubeScreen[cube.face[f][1]].y);
+        ctx.lineTo(scale*cubeScreen[cube.face[f][2]].x, scale*cubeScreen[cube.face[f][2]].y);
+        ctx.lineTo(scale*cubeScreen[cube.face[f][3]].x, scale*cubeScreen[cube.face[f][3]].y);
+        ctx.lineTo(scale*cubeScreen[cube.face[f][4]].x, scale*cubeScreen[cube.face[f][4]].y);
+        ctx.fillStyle = cube.face[f][5];
+        ctx.fill();
+    }
+}
+
+function DrawCubeWF(cube)
+{
+    let cubeScreen = new Array();
+    for(let v = 0; v < cube.vert.length; v++)   
+    {
+        cubeScreen.push(cam.project(vec3.add(cube.vert[v], cube.pos)));
+    }
+
+    ctx.beginPath();
+    for(let f = 0; f < cube.face.length; f++)
+    {
+        ctx.moveTo(scale*cubeScreen[cube.face[f][0]].x, scale*cubeScreen[cube.face[f][0]].y);
+        ctx.lineTo(scale*cubeScreen[cube.face[f][1]].x, scale*cubeScreen[cube.face[f][1]].y);
+        ctx.lineTo(scale*cubeScreen[cube.face[f][2]].x, scale*cubeScreen[cube.face[f][2]].y);
+        ctx.lineTo(scale*cubeScreen[cube.face[f][3]].x, scale*cubeScreen[cube.face[f][3]].y);
+        ctx.lineTo(scale*cubeScreen[cube.face[f][4]].x, scale*cubeScreen[cube.face[f][4]].y);
+    }
+    ctx.stroke();
+
+    return(cubeScreen);
+}
+
+function DrawModelVerts(model)
+{
+    let vertScreen = new Array();
+    for(let v = 0; v < model.vert.length; v++)   
+    {
+        vertScreen.push(cam.project(vec3.add(model.vert[v], model.pos)));
+    }
+
+    for(let v = 0; v < model.vert.length; v++)
+    {
+        ctx.fillStyle = "red";
+        ctx.beginPath();
+        ctx.arc(scale*vertScreen[v].x, scale*vertScreen[v].y, 3, 0, 2*Math.PI);
+        ctx.fill();
+    }
+}
+
+function DrawModel(model)
+{
+    let color = model.color;
+    let modelScreen = new Array();
+    for(let v = 0; v < model.vert.length; v++)   // Project all vertex positions to 2d
+    {
+        modelScreen.push(cam.project(vec3.add(model.vert[v], model.pos)));
+    }
+    
+    for(let f = 0; f < model.face.length; f++)
+    {
+        /* Backface culling */
+
+        let v = vec3.subtract(modelScreen[model.face[f][1]].tov3(model.vert[model.face[f][1]].z), modelScreen[model.face[f][0]].tov3(model.vert[model.face[f][0]].z));
+        let u = vec3.subtract(modelScreen[model.face[f][2]].tov3(model.vert[model.face[f][2]].z), modelScreen[model.face[f][0]].tov3(model.vert[model.face[f][0]].z));
+        let N = vec3.cross(v, u); // Surface (N)ormal
+
+        if(N.z >= 0) { continue; }      // cull the backfaces
+
+        /* Ambient lighting */
+
+        let ambLum = 0.2;
+
+        /* Diffusion lighting */
+
+        let pc = vec3.add(vec3.add(model.vert[model.face[f][0]], model.vert[model.face[f][1]]), model.vert[model.face[f][2]]);
+        pc.divide(3);   // pc: polygon center (current face's center)
+
+        let vl = vec3.subtract(light.pos, vec3.add(pc, model.pos)); // vector from pc to light source
+
+        N.normalize();      // Normalize bot vectors
+        vl.normalize();     // so to be used for dotproduct
+
+        let difLum = vec3.dot(N, vl);    // 0-1 value luminance mulitplier
+
+        /* Set color luminance */
+
+        if(difLum < 0) { difLum = 0; }
+
+        let luminance = ambLum + difLum;
+
+        //ctx.fillStyle = "rgb(" + color[0]*difLum + ", " + color[1]*difLum + ", " + color[2]*difLum + ")"; // Change luminance of object
+        
+        ctx.fillStyle = "white";
+        ctx.beginPath();
+        ctx.moveTo(scale*modelScreen[model.face[f][0]].x, scale*modelScreen[model.face[f][0]].y);
+        ctx.fillText(model.face[f][0], scale*modelScreen[model.face[f][0]].x, scale*modelScreen[model.face[f][0]].y); // Debug: vertex number
+        
+        ctx.lineTo(scale*modelScreen[model.face[f][1]].x, scale*modelScreen[model.face[f][1]].y);
+        ctx.fillText(model.face[f][1], scale*modelScreen[model.face[f][1]].x, scale*modelScreen[model.face[f][1]].y);
+        
+        ctx.lineTo(scale*modelScreen[model.face[f][2]].x, scale*modelScreen[model.face[f][2]].y);
+        ctx.fillText(model.face[f][2], scale*modelScreen[model.face[f][2]].x, scale*modelScreen[model.face[f][2]].y);
+        
+        ctx.lineTo(scale*modelScreen[model.face[f][0]].x, scale*modelScreen[model.face[f][0]].y);
+        ctx.fillStyle = "rgb(" + color[0]*luminance + ", " + color[1]*luminance + ", " + color[2]*luminance + ")"; // Change luminance of object
+        ctx.fill();
+
+        //Drawvec3(pc, model.pos);
+        //Drawvec3(vl, vec3.add(model.pos, pc));
+    }
+}
+
+function DrawModelWF(model)
+{
+    let modelScreen = new Array();
+    for(let v = 0; v < model.vert.length; v++)   
+    {
+        modelScreen.push(cam.project(vec3.add(model.vert[v], model.pos)));
+    }
+
+    for(let f = 0; f < model.face.length; f++)
+    {
+        let v = vec3.subtract(modelScreen[model.face[f][1]].tov3(), modelScreen[model.face[f][0]].tov3());
+        let u = vec3.subtract(modelScreen[model.face[f][2]].tov3(), modelScreen[model.face[f][0]].tov3());
+        let N = vec3.cross(v, u); // Surface (N)ormal
+
+        if(N.z >= 0) { continue; } // Don't draw if normal is pointing towards you
+
+        ctx.beginPath();
+        ctx.moveTo(scale*modelScreen[model.face[f][0]].x, scale*modelScreen[model.face[f][0]].y); // 1. Vertex position
+        //ctx.fillText(model.face[f][0], scale*modelScreen[model.face[f][0]].x, scale*modelScreen[model.face[f][0]].y); // Debug: vertex number
+
+        ctx.lineTo(scale*modelScreen[model.face[f][1]].x, scale*modelScreen[model.face[f][1]].y); // 2. Vertex position
+        //ctx.fillText(model.face[f][1], scale*modelScreen[model.face[f][1]].x, scale*modelScreen[model.face[f][1]].y);
+
+        ctx.lineTo(scale*modelScreen[model.face[f][2]].x, scale*modelScreen[model.face[f][2]].y); // 3. Vertex position
+        //ctx.fillText(model.face[f][2], scale*modelScreen[model.face[f][2]].x, scale*modelScreen[model.face[f][2]].y);
+
+        ctx.lineTo(scale*modelScreen[model.face[f][0]].x, scale*modelScreen[model.face[f][0]].y); // Back to first vertex position
+        ctx.strokeStyle = "white";
+        ctx.stroke();
+    }
+}
+
+function Drawvec3(vec, pos)
+{
+    let posScreen = cam.project(pos);
+    let vecScreen = cam.project(vec3.add(pos, vec));
+    ctx.beginPath();
+    ctx.moveTo(scale*posScreen.x, scale*posScreen.y);
+    ctx.lineTo(scale*vecScreen.x, scale*vecScreen.y);
+    ctx.strokeStyle = "white";
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(scale*vecScreen.x, scale*vecScreen.y, 4, 0, 2*Math.PI);
+    ctx.fillStyle = "red";
+    ctx.fill();
+}
+
+function FG_qSort(sequence)
+{
+    if(sequence.length <= 1)
+    {
+        return sequence;
+    }
+    let pivot = sequence.pop();
+
+    let itemsGreater = [];
+    let itemsSmaler = [];
+
+    for(let i = 0; i < sequence.length; i++)
+    {
+        if(sequence[i] > pivot)
+        {
+            itemsGreater.push(sequence[i]);
+        }
+        else
+        {
+            itemsSmaler.push(sequence[i]);
+        }
+    }
+    return FG_qSort(itemsSmaler).concat([pivot]).concat(FG_qSort(itemsGreater));
+}
+
+function FG_qSortZ(sequence)
+{
+    if(sequence.length <= 1)
+    {
+        return sequence;
+    }
+    let pivot = sequence.pop();
+    //console.log(pivot);
+    //console.log(sequence);
+
+    let itemsGreater = [];
+    let itemsSmaler = [];
+
+    for(let i = 0; i < sequence.length; i++)
+    {
+        if(sequence[i].z > pivot.z)
+        {
+            itemsGreater.push(sequence[i]);
+        }
+        else
+        {
+            itemsSmaler.push(sequence[i]);
+        }
+    }
+    //console.log(FG_qSortZ(itemsSmaler).concat([pivot]).concat(FG_qSortZ(itemsGreater)));
+    return FG_qSortZ(itemsSmaler).concat([pivot]).concat(FG_qSortZ(itemsGreater));
+}
+
+</script>
