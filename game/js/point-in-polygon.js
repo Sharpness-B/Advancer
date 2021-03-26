@@ -1,5 +1,5 @@
 let polygon = {
-    pipConvex3D: function(polygon) {
+    pipConvex3D: function(triangulatedPolygon, point) {
         //                D .                                          //            
         //                 /=\\                                        //  
         //                /===\ \                                      //      
@@ -23,63 +23,59 @@ let polygon = {
         // 1 dele polygonet inn i trekanter
         // konstruere pyramider med trekantene og p
         // 2 volum av alle pyramidene med flate trekant og 
+
+        let volumePolygon = this.volume(triangulatedPolygon);
+        let volumePyramides = 0;
+
+        for (let i=0; i< triangulatedPolygon.length; i++) {
+            volumePyramides += this.volumeTetrahedron(
+                [...triangulatedPolygon[i], point]
+            );
+        }
+
+        return volumePolygon == volumePyramides;
     },
 
-    poplygonip: function(polygon) {},
+    volume: function(triangulatedPolygon) { 
+        let tmpPoint = triangulatedPolygon[0][0]; // gjør at alt kun fungerer på konvekse ting
+        let V = 0;
 
-    volume: function(polygon) {},
+        for (let i=0; i<triangulatedPolygon.length; i++) {
+            V += this.volumeTetrahedron( [...triangulatedPolygon[i], tmpPoint] );
+        }
 
-    area: function(polygon) {
+        return V;
+    },
+
+    volumeTetrahedron: function(tetrahedron) {
+        // |a×b⋅c|/6 https://math.stackexchange.com/questions/1603651/volume-of-tetrahedron-using-cross-and-dot-product
+
+        let a = vec3.subtract( tetrahedron[0], tetrahedron[1] );
+        let b = vec3.subtract( tetrahedron[2], tetrahedron[1] );
+        let c = vec3.subtract( tetrahedron[3], tetrahedron[1] );
+
+        return Math.abs( vec3.dot( vec3.cross(a,b), c ) )/6;
+    },
+
+    area: function(polygon) { // har en bug
         // https://www.mathwords.com/a/area_convex_polygon.htm
 
         let det1 = 0;
         let det2 = 0;
     
         for (let n=0; n<polygon.length-1; n++) {
-            det1 += polygon[n][0]*polygon[n+1][1];
-            det2 += polygon[n][1]*polygon[n+1][0];
+            det1 += polygon[n].x*polygon[n+1].x;
+            det2 += polygon[n].y*polygon[n+1].y;
         }
 
-        det1 += polygon[polygon.length-1][0]*polygon[0][1];
-        det2 += polygon[polygon.length-1][1]*polygon[0][0];
+        det1 += polygon[polygon.length-1].x*polygon[0].y;
+        det2 += polygon[polygon.length-1].y*polygon[0].x;
 
         let area = 0.5 * (det1 - det2);
         return Math.abs(area); // rekkefølgen har betydning; derfor abs-verdi
     },
 
     triangulate: function(polygon) {},
-
-    pip3D: function(polygon, point) { // fungerer logikken?
-        // projsjektere til plan fra 3 ulike perspektiv
-        // hvis innenfor alle <=> punktet er sannsynligvis innenfor plygonet
-    
-        // xy-planet
-        let xyPolygon = polygon.map(function(val) {
-            return val.slice(0, -1);
-        });
-        let xyPoint = [point[0], point[1]];
-        let isInXY = this.pip2D(xyPolygon, xyPoint);
-        
-        // yz-planet
-        let yzPolygon = polygon.map(function(val) {
-            return val.slice(1, 3);
-        });
-        let yzPoint = [point[1], point[2]];
-        let isInYZ = this.pip2D(yzPolygon, yzPoint);
-
-        // xz-planet
-        // let xzPolygon = polygon.map(function(val) {
-        //     return val.slice();???
-        // });
-        polygonClone = [...polygon];
-        polygonClone.forEach(a => a.splice(3, 1));
-        xzPolygon = polygonClone;
-
-        let xzPoint = [point[0], point[2]];
-        let isInXZ = this.pip2D(xzPolygon, xzPoint);
-    
-        return isInXY && isInYZ && isInXZ;
-    },
 
     pip2D: function(polygon, point) {
         let countPointInTriangle = 0;
@@ -133,45 +129,38 @@ let polygon = {
     },
 
     areaOfTriangle: function (triangle) {
-        let [x1, y1] = triangle[0];
-        let [x2, y2] = triangle[1];
-        let [x3, y3] = triangle[2];
+        let t1 = triangle[0];
+        let t2 = triangle[1];
+        let t3 = triangle[2];
     
-        return Math.abs((x1 * (y2 - y3) + x2 * (y3 - y1)  
-                       + x3 * (y1 - y2)) / 2);
+        return Math.abs((t1.x * (t2.y - t3.y) + t2.x * (t3.y - t1.y)  
+                       + t3.x * (t1.y - t2.y)) / 2);
     },
+
+    polygonip: function(polygon) {},
 };
 
-// // 2D TEST
-// let a = [
-//     [0,0],
-//     [0,1],
-//     [1,2],
-//     [2,1],
-//     [1,-1]
-// ];
-// 
-// let b = [1,1];
-// let c = [10,10];
-// 
-// console.log(polygon.pip2D(a,b));
-
-// // 3D TEST
-// let a = [
-//     [0,0,0],
-//     [2,0,0],
-//     [1,2,0],
-//     [1,1,2]
+// let polygon = [
+//     new vec3(0,0,0),
+//     new vec3(2,0,0),
+//     new vec3(1,2,0),
+//     new vec3(1,1,1)
 // ];
 
-// let b = [1,1,1];
+// let triangulatedPolygon = [
+//     [polygon[0],polygon[1],polygon[3]],
+//     [polygon[1],polygon[2],polygon[3]],
+//     [polygon[2],polygon[0],polygon[3]],
+//     [polygon[0],polygon[1],polygon[2]]
+// ];
 
-// console.log(polygon.pip3D(a,b))
+// let triangulatedPolygon = [
+//     [new vec3(0,0,0),new vec3(2,0,0),new vec3(1,1,1)],
+//     [new vec3(2,0,0),new vec3(1,2,0),new vec3(1,1,1)],
+//     [new vec3(1,2,0),new vec3(0,0,0),new vec3(1,1,1)],
+//     [new vec3(0,0,0),new vec3(2,0,0),new vec3(1,2,0)]
+// ];
 
-console.log(polygon.area([
-    [2,-4],
-    [2,3],
-    [6,1],
-    [3,1],
-    [5,-2]
-]));
+// console.log(polygon.pipConvex3D(
+//     triangulatedPolygon, new vec3(1,1,0.5)
+// ));
