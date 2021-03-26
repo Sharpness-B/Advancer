@@ -58,15 +58,15 @@ let polygon = {
         )/6;
     },
 
-    area: function(polygon) { // har en bug
+    area: function(polygon) {
         // https://www.mathwords.com/a/area_convex_polygon.htm
 
         let det1 = 0;
         let det2 = 0;
     
         for (let n=0; n<polygon.length-1; n++) {
-            det1 += polygon[n].x*polygon[n+1].x;
-            det2 += polygon[n].y*polygon[n+1].y;
+            det1 += polygon[n].x*polygon[n+1].y;
+            det2 += polygon[n].y*polygon[n+1].x;
         }
 
         det1 += polygon[polygon.length-1].x*polygon[0].y;
