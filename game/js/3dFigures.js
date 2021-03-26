@@ -1,8 +1,10 @@
 let figures = {
-    scale: function() {},
+    scale: function(scalar, figure) {
+        return figure;
+    },
 
     moveOrigo: function(origio, figure) {
-        return figure
+        return figure;
     },
 
     cube = {
