@@ -40,7 +40,7 @@ let figures = {
         ],
 
         pos: new vec3(0.0, -0.8, -3.0),
-        color: {r:255, g:255, b:255}
+        color: {r:255, g:255, b:255, a: 1}
     },
 
     icosahedron: {}
