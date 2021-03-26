@@ -1,12 +1,25 @@
+class Object {
+    constructor(type, scalar, color, pos) {
+        this.vert  = figures[type].vert;
+        this.face  = figures[type].face;
+        this.color = (typeof color == "undefined") ? figures[type].color : color;
+        this.pos   = (typeof pos   == "undefined") ? figures[type].pos   : pos;
+
+        scale(scalar)
+    }
+
+    scale(scalar) {
+        
+    }
+
+    moveOrigo(origio) {
+        
+    }
+}
+
+
+
 let figures = {
-    scale: function(scalar, figure) {
-        return figure;
-    },
-
-    moveOrigo: function(origio, figure) {
-        return figure;
-    },
-
     cube: {
         vert: [
             new vec3(-0.6, 0.6, 0.6),
