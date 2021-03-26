@@ -7,7 +7,7 @@ let figures = {
         return figure;
     },
 
-    cube = {
+    cube: {
         vert: [
             new vec3(-0.6, 0.6, 0.6),
             new vec3(0.6, 0.6, 0.6),
