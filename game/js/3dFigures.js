@@ -1,11 +1,11 @@
-class Object {
+class figure {
     constructor(type, scalar, color, pos) {
         this.vert  = figures[type].vert;
         this.face  = figures[type].face;
         this.color = (typeof color == "undefined") ? figures[type].color : color;
         this.pos   = (typeof pos   == "undefined") ? figures[type].pos   : pos;
 
-        scale(scalar)
+        this.scale(scalar)
     }
 
     scale(scalar) {
