@@ -491,66 +491,66 @@ let jet = {
         // Bottom faces
 
         // Left Wing
-        [0, 2, 4, 0],
-        [0, 4, 8, 0],
-        [8, 4, 12, 8],
-        [4, 10, 12, 4],
+        [0, 2, 4],
+        [0, 4, 8],
+        [8, 4, 12],
+        [4, 10, 12],
 
         // Right Wing
-        [3, 1, 5, 3],
-        [5, 1, 9, 5],
-        [5, 9, 13, 5],
-        [11, 5, 13, 11],
+        [3, 1, 5],
+        [5, 1, 9],
+        [5, 9, 13],
+        [11, 5, 13],
 
         // Cockpit :)
-        [6, 7, 10, 6],
-        [7, 11, 10, 7],
+        [6, 7, 10],
+        [7, 11, 10],
 
         // Back end
-        [10, 11, 12, 10],
-        [11, 13, 12, 11],
+        [10, 11, 12],
+        [11, 13, 12],
 
         // Top faces
 
         // Cockpit :)
-        [7, 6, 18, 7, {r:100, g:200, b:255}],
-        [6, 10, 18, 6, {r:100, g:200, b:255}],
-        [11, 7, 18, 11, {r:100, g:200, b:255}],
-        [19, 21, 18, 19],
-        [10, 19, 18, 10],
-        [21, 20, 18, 21],
-        [20, 11, 18, 20],
-        [19, 12, 21, 19],
-        [13, 20, 21, 13],
-        [12, 13, 21, 12],
+        [7, 6, 18, {r:100, g:200, b:255}],
+        [6, 10, 18, {r:100, g:200, b:255}],
+        [11, 7, 18, {r:100, g:200, b:255}],
+        [19, 21, 18],
+        [10, 19, 18],
+        [21, 20, 18],
+        [20, 11, 18],
+        [19, 12, 21],
+        [13, 20, 21],
+        [12, 13, 21],
         
         // Left wing
         // Top sheet
-        [0, 16, 14, 0],
-        [0, 8, 16, 0],
-        [8, 12, 16, 8],
-        [16, 12, 19, 16],
+        [0, 16, 14],
+        [0, 8, 16],
+        [8, 12, 16],
+        [16, 12, 19],
 
         // Front sheet
-        [0, 14, 2, 0],
-        [4, 2, 14, 4],
-        [4, 14, 16, 4],
-        [10, 4, 16, 10],
-        [19, 10, 16, 19],
+        [0, 14, 2],
+        [4, 2, 14],
+        [4, 14, 16],
+        [10, 4, 16],
+        [19, 10, 16],
 
         // Right wing
         // Top sheet
-        [15, 17, 1, 15],
-        [1, 17, 9, 1],
-        [17, 13, 9, 17],
-        [17, 20, 13, 17],
+        [15, 17, 1],
+        [1, 17, 9],
+        [17, 13, 9],
+        [17, 20, 13],
 
         // Front sheet
-        [1, 3, 15, 1],
-        [3, 17, 15, 3],
-        [3, 5, 17, 3],
-        [5, 20, 17, 5],
-        [5, 11, 20, 5],
+        [1, 3, 15],
+        [3, 17, 15],
+        [3, 5, 17],
+        [5, 20, 17],
+        [5, 11, 20],
         ],
     pos: new vec3(0.0, -3.0, -10.0),
     color: {r:255, g:255, b:255, a:1}
@@ -558,14 +558,9 @@ let jet = {
 
 let scale = ctx.canvas.width/2;
 
-let worldObjects = [cube];
-let worldObjectsCopy = [...worldObjects];               // Not worknig rn...
-let worldObjectsZ = FG_qSortZ(worldObjectsCopy);
-
-for(let v = 0; v < cube.vert.length; v++)
+for(let v = 0; v < jet.vert.length; v++)
 {
-    cube.vert[v].transform(Matrix.rotateY(0.5));
-    //cube.vert[v].transform(Matrix.rotateZ(0.01));
+    jet.vert[v].transform(Matrix.rotateY(Math.PI));
 }
 
 function main()
@@ -576,19 +571,10 @@ function main()
     ctx.clearRect(-ctx.canvas.width/2, -ctx.canvas.height/2, ctx.canvas.width, ctx.canvas.height);
 
     for(let v = 0; v < jet.vert.length; v++)
-{
+    {
     jet.vert[v].transform(Matrix.rotateY(-rotY));
     jet.vert[v].transform(Matrix.rotateX(rotX));
-}
-
-    //worldObjectsCopy = [...worldObjects];
-
-    //worldObjectsZ = FG_qSortZ(worldObjectsCopy);
-    
-    /*for(let o = 0; o < worldObjectsZ.length; o++)
-    {
-        DrawModel(worldObjects[o]);
-    }*/
+    }
 
     DrawModel(jet);
 
@@ -662,18 +648,47 @@ function DrawModelVerts(model)
 
 function DrawModel(model)
 {
+
+    // calculate the center of the faces and arrange array in correct order to be sorted
+    let faceCenters = [];
+    for(let f = 0; f < model.face.length; f++)
+    {
+        // Calculate COM(center of mass)
+        let pc = vec3.add(vec3.add(model.vert[model.face[f][0]], model.vert[model.face[f][1]]), model.vert[model.face[f][2]]);
+        pc.divide(3);   // pc: polygon center (current face's center)
+        let element = [...model.face[f]];
+        
+        // Take away color object to put it back later so z positions are in the same place in all face elements
+        if(element.length > 3)
+        {
+            element.pop();
+        }
+        element.push(pc.z);     // Append the faces COM to face element
+
+        if(model.face[f].length > 3)
+        {
+            element.push(model.face[f][3]);     // Add back color element if it was present before
+        }
+
+        faceCenters.push(element);      // Add final face element to list of faces with added z-value
+    }
+
+    // Sort faces by Z-distance
+    faceCenters.sort(function (a, b) { return a[3] - b[3]; });
+
+    // Project all vertex positions to 2d and append to modelScreen
     let modelScreen = new Array();
-    for(let v = 0; v < model.vert.length; v++)   // Project all vertex positions to 2d
+    for(let v = 0; v < model.vert.length; v++)
     {
         modelScreen.push(cam.project(vec3.add(model.vert[v], model.pos)));
     }
-    
-    for(let f = 0; f < model.face.length; f++)
+
+
+    for(let f = 0; f < faceCenters.length; f++)
     {
         /* Backface culling */
-
-        let v = vec3.subtract(modelScreen[model.face[f][1]].tov3(model.vert[model.face[f][1]].z), modelScreen[model.face[f][0]].tov3(model.vert[model.face[f][0]].z));
-        let u = vec3.subtract(modelScreen[model.face[f][2]].tov3(model.vert[model.face[f][2]].z), modelScreen[model.face[f][0]].tov3(model.vert[model.face[f][0]].z));
+        let v = vec3.subtract(modelScreen[faceCenters[f][1]].tov3(model.vert[faceCenters[f][1]].z), modelScreen[faceCenters[f][0]].tov3(model.vert[faceCenters[f][0]].z));
+        let u = vec3.subtract(modelScreen[faceCenters[f][2]].tov3(model.vert[faceCenters[f][2]].z), modelScreen[faceCenters[f][0]].tov3(model.vert[faceCenters[f][0]].z));
         let N = vec3.cross(v, u); // Surface (N)ormal
 
         if(N.z >= 0) { continue; }      // cull the backfaces
@@ -684,7 +699,9 @@ function DrawModel(model)
 
         /* Diffusion lighting */
 
-        let pc = vec3.add(vec3.add(model.vert[model.face[f][0]], model.vert[model.face[f][1]]), model.vert[model.face[f][2]]);
+        //let pc = vec3.add(vec3.add(model.vert[model.face[f][0]], model.vert[model.face[f][1]]), model.vert[model.face[f][2]]);
+
+        let pc = vec3.add(vec3.add(model.vert[faceCenters[f][0]], model.vert[faceCenters[f][1]]), model.vert[faceCenters[f][2]]);
         pc.divide(3);   // pc: polygon center (current face's center)
 
         let vl = vec3.subtract(light.pos, vec3.add(pc, model.pos)); // vector from pc to light source
@@ -700,9 +717,9 @@ function DrawModel(model)
 
         let luminance = ambLum + difLum;
 
-        if(model.face[f].length > 4)
+        if(faceCenters[f].length > 4)
         {
-            ctx.fillStyle = "rgb(" + model.face[f][4].r*luminance + ", " + model.face[f][4].g*luminance + ", " + model.face[f][4].b*luminance + ")"; // Change luminance of face with given color
+            ctx.fillStyle = "rgb(" + faceCenters[f][4].r*luminance + ", " + faceCenters[f][4].g*luminance + ", " + faceCenters[f][4].b*luminance + ")"; // Change luminance of face with given color
         }
         else
         {
@@ -710,14 +727,12 @@ function DrawModel(model)
         }
 
         ctx.beginPath();
-        ctx.moveTo(scale*modelScreen[model.face[f][0]].x, scale*modelScreen[model.face[f][0]].y);
-        ctx.lineTo(scale*modelScreen[model.face[f][1]].x, scale*modelScreen[model.face[f][1]].y);
-        ctx.lineTo(scale*modelScreen[model.face[f][2]].x, scale*modelScreen[model.face[f][2]].y);
-        ctx.lineTo(scale*modelScreen[model.face[f][0]].x, scale*modelScreen[model.face[f][0]].y);
-        ctx.fill();
 
-        //Drawvec3(pc, model.pos);
-        //Drawvec3(vl, vec3.add(model.pos, pc));
+        ctx.moveTo(scale*modelScreen[faceCenters[f][0]].x, scale*modelScreen[faceCenters[f][0]].y);
+        ctx.lineTo(scale*modelScreen[faceCenters[f][1]].x, scale*modelScreen[faceCenters[f][1]].y);
+        ctx.lineTo(scale*modelScreen[faceCenters[f][2]].x, scale*modelScreen[faceCenters[f][2]].y);
+        ctx.lineTo(scale*modelScreen[faceCenters[f][0]].x, scale*modelScreen[faceCenters[f][0]].y);
+        ctx.fill();
     }
 }
 
@@ -800,8 +815,6 @@ function FG_qSortZ(sequence)
         return sequence;
     }
     let pivot = sequence.pop();
-    //console.log(pivot);
-    //console.log(sequence);
 
     let itemsGreater = [];
     let itemsSmaler = [];
@@ -817,7 +830,6 @@ function FG_qSortZ(sequence)
             itemsSmaler.push(sequence[i]);
         }
     }
-    //console.log(FG_qSortZ(itemsSmaler).concat([pivot]).concat(FG_qSortZ(itemsGreater)));
     return FG_qSortZ(itemsSmaler).concat([pivot]).concat(FG_qSortZ(itemsGreater));
 }
 
