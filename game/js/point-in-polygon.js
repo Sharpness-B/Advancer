@@ -1,4 +1,32 @@
+Set.union = function(s1, s2) {
+    let newSet = new Set();
+    s1.forEach(e => newSet.add(e));
+    s2.forEach(e => newSet.add(e));
+    return newSet;
+}
+
 let polygon = {
+    triangulatedPolygon2Polygon: function(triangulatedPolygon) {
+        // returner unike verdier
+        let points = new Set();
+
+        triangulatedPolygon.map( 
+            (p) => { 
+                points = Set.union(points, new Set(p));
+            } 
+        );
+
+        return [...points];
+    },
+
+
+
+    giftWraping3d: function(polygon) {
+        // sjekke vinkel mot alle punkter
+    },
+
+
+
     pipConvex3D: function(triangulatedPolygon, point) {
         //                D .                                          //            
         //                 /=\\                                        //  
@@ -23,7 +51,7 @@ let polygon = {
         // konstruere pyramider med trekantene og p
         // hvis volum av alle pyramidene er lik med hele figuren
 
-        let volumePolygon = this.volume(triangulatedPolygon);
+        let volumePolygon = this.volumeConvex(triangulatedPolygon);
         let volumePyramides = 0;
 
         for (let i=0; i< triangulatedPolygon.length; i++) {
@@ -35,7 +63,9 @@ let polygon = {
         return volumePolygon == volumePyramides;
     },
 
-    volume: function(triangulatedPolygon) { 
+
+
+    volumeConvex: function(triangulatedPolygon) { 
         let tmpPoint = triangulatedPolygon[0][0]; // gjør at alt kun fungerer på konvekse ting
         let V = 0;
 
@@ -45,6 +75,8 @@ let polygon = {
 
         return V;
     },
+
+
 
     volumeTetrahedron: function(tetrahedron) {
         // |a×b⋅c|/6 https://math.stackexchange.com/questions/1603651/volume-of-tetrahedron-using-cross-and-dot-product
@@ -57,6 +89,8 @@ let polygon = {
             vec3.dot( vec3.cross(a,b), c ) 
         )/6;
     },
+
+
 
     area: function(polygon) {
         // https://www.mathwords.com/a/area_convex_polygon.htm
@@ -76,7 +110,7 @@ let polygon = {
         return Math.abs(area); // rekkefølgen har betydning; derfor abs-verdi
     },
 
-    triangulate: function(polygon) {},
+
 
     pip2D: function(polygon, point) {
         let countPointInTriangle = 0;
@@ -94,6 +128,8 @@ let polygon = {
         // true hvis punktet er et odde antall ganger i trekantene
         return ! countPointInTriangle%2 == 0;
     },
+
+
 
     pointInTriangle: function (triangle, point) {
         //        C
@@ -129,6 +165,8 @@ let polygon = {
         return areaABC == areaABP + areaAPC + areaPBC;
     },
 
+
+
     areaOfTriangle: function (triangle) {
         let t1 = triangle[0];
         let t2 = triangle[1];
@@ -138,7 +176,10 @@ let polygon = {
                        + t3.x * (t1.y - t2.y)) / 2);
     },
 
+
+
     polygonip: function(polygon) {},
+    triangulate: function(polygon) {},
 };
 
 // let polygon = [
