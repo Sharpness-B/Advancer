@@ -23,6 +23,14 @@ let polygon = {
 
     giftWraping3d: function(polygon) {
         // sjekke vinkel mot alle punkter
+
+        /*
+        
+        1. finn et triangel
+        2. ta to av punktene og bøy oppover ny flate til den treffer punkt
+        3. vi har et nytt triangel og gjentar
+        
+        */
     },
 
 

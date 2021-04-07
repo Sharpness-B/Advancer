@@ -1,11 +1,15 @@
 class figure {
-    constructor(type, scalar, color, pos) {
+    constructor(type, color, pos, scalar) {
         this.vert  = figures[type].vert;
         this.face  = figures[type].face;
         this.color = (typeof color == "undefined") ? figures[type].color : color;
         this.pos   = (typeof pos   == "undefined") ? figures[type].pos   : pos;
 
-        this.scale(scalar)
+        this.strength = figures[type].strength; // for lys
+
+        this.scale(scalar);
+        this.moveOrigo(this.pos);
+        this.createHitVolume();
     }
 
     scale(scalar) {
@@ -13,7 +17,11 @@ class figure {
     }
 
     moveOrigo(origio) {
-        
+        this.pos
+    }
+
+    createHitVolume() {
+
     }
 }
 
@@ -203,5 +211,81 @@ let figures = {
             ],
         pos: new vec3(0.0, -3.0, -10.0),
         color: {r:255, g:255, b:255, a:1}
+    },
+
+    kiran: {
+        vert: [
+            // body
+            new vec3(-0.4,  1.2, 0),
+            new vec3( 0.4,  1.2, 0),
+            new vec3( 1.2, -1.2, 0),
+            new vec3( 0.0, -1.6, -0.4),
+    
+            // back side
+            new vec3(-1.2, -1.2, 0),
+            new vec3( 0.0, -1.6, 0.4),
+    
+            // right gun
+            new vec3( 1.0 , -1.2, 0),
+            new vec3( 1.25,  0.4, 0),
+    
+            // left gun
+            new vec3(-1.0 , -1.2, 0),
+            new vec3(-1.25,  0.4, 0),
+            
+        ],
+            
+        face: [
+            [0, 1, 5, 0],
+            [0, 5, 4, 0],
+            [0, 4, 3, 0],
+            [0, 3, 1, 0],
+    
+            [1, 2, 5, 1],
+            [1, 3, 2, 1],
+    
+            [5, 3, 4, 5],
+            [5, 2, 3, 5],
+    
+            [7,6,2,7],
+            [9,4,8,8],
+    
+            [7,2,6,7],
+            [9,8,4,8],
+        ],
+        pos: new vec3(0.0, -0.6, -2.0),
+        color: [245, 137, 5]
+    },
+
+    upgradesLight: {
+        strength: 1,
+        vert: [
+            new vec3(-0.1, 0.1, 0.1),
+            new vec3(0.1, 0.1, 0.1),
+            new vec3(0.1, -0.1, 0.1),
+            new vec3(-0.1, -0.1, 0.1),
+            new vec3(-0.1, 0.1, -0.1),
+            new vec3(0.1, 0.1, -0.1),
+            new vec3(0.1, -0.1, -0.1),
+            new vec3(-0.1, -0.1, -0.1)],
+        face: [
+            [0, 1, 2, 0],
+            [0, 2, 3, 0],
+    
+            [4, 6, 5, 4],
+            [4, 7, 6, 4],
+    
+            [1, 5, 6, 1],
+            [1, 6, 2, 1],
+    
+            [0, 7, 4, 0],
+            [0, 3, 7, 0],
+        
+            [0, 5, 1, 0],
+            [0, 4, 5, 0],
+        
+            [2, 6, 7, 2],
+            [2, 7, 3, 2]],
+        pos: new vec3(0.0, 0.5, -5.0)
     }
 };
