@@ -25,6 +25,17 @@ class figure {
     }
 }
 
+class illumination {
+    constructor(type, pos, strength) {
+        this.vert  = lights[type].vert;
+        this.face  = lights[type].face;
+        this.pos      = (typeof pos      == "undefined") ? lights[type].pos      : pos;
+        this.strength = (typeof strength == "undefined") ? lights[type].strength : strength;
+
+        //this.strength = lights[type].strength; // for lys
+    }
+}
+
 
 
 let figures = {
@@ -255,10 +266,11 @@ let figures = {
         ],
         pos: new vec3(0.0, -0.6, -2.0),
         color: [245, 137, 5]
-    },
+    }
+};
 
+let lights = {
     upgradesLight: {
-        strength: 1,
         vert: [
             new vec3(-0.1, 0.1, 0.1),
             new vec3(0.1, 0.1, 0.1),
@@ -267,7 +279,9 @@ let figures = {
             new vec3(-0.1, 0.1, -0.1),
             new vec3(0.1, 0.1, -0.1),
             new vec3(0.1, -0.1, -0.1),
-            new vec3(-0.1, -0.1, -0.1)],
+            new vec3(-0.1, -0.1, -0.1)
+        ],
+
         face: [
             [0, 1, 2, 0],
             [0, 2, 3, 0],
@@ -285,7 +299,10 @@ let figures = {
             [0, 4, 5, 0],
         
             [2, 6, 7, 2],
-            [2, 7, 3, 2]],
+            [2, 7, 3, 2]
+        ],
+
+        strength: 1,
         pos: new vec3(0.0, 0.5, -5.0)
     }
 };

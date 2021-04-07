@@ -93,7 +93,7 @@ let intervalFpsCounter = setInterval(function() { drawFps = fps; }, 200);
 
 let scale = ctx.canvas.width/2;
 
-light =  new figure("upgradesLight");
+let light = new illumination("upgradesLight");
 let fig = new figure("crabWing");
 
 for(let v = 0; v < fig.vert.length; v++) {fig.vert[v].transform(Matrix.rotateX(Math.PI/2));}
