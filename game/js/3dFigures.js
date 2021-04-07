@@ -31,8 +31,6 @@ class illumination {
         this.face  = lights[type].face;
         this.pos      = (typeof pos      == "undefined") ? lights[type].pos      : pos;
         this.strength = (typeof strength == "undefined") ? lights[type].strength : strength;
-
-        //this.strength = lights[type].strength; // for lys
     }
 }
 
