@@ -274,8 +274,13 @@ let spin = 1;
 
 
 rotating = true;
-fps = 20;
-setInterval(() => {
+let fps = 30;
+let dt_old;
+function maine() {
+    fps = Math.round(1000 / (performance.now() - dt_old));
+    dt_old = performance.now();
+    console.log(fps);
+
     if (rotating) player.viewVector.rotateZ(rotationX);
 
     player.position.y += (player.viewVector.y)/10 * player.speed;
@@ -293,9 +298,12 @@ setInterval(() => {
     };
     
     updateObjects("db/updater.php", testmultiplayer);
+    console.log(testmultiplayer);
 
-}, 1000/fps);
+    requestAnimationFrame(maine);
+}
 function b(x) {return ((x*1000)|0)/1000}
+maine();
 
 /*
 if (locc[locc.length-1].toString() == "singleplayer.html" || locc[locc.length-1].toString() == "multiplayer.html") {

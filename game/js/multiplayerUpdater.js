@@ -1,6 +1,7 @@
 let xmlhttp;
 
 function updateObjects(url, data) {
+    //console.log(data);
     let params = "data=" + JSON.stringify(data) + "&userID=" + userID; // url escape data
 
     // console.log(url+"?"+params);
