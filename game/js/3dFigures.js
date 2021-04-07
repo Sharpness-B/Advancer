@@ -222,7 +222,7 @@ let figures = {
         color: {r:255, g:255, b:255, a:1}
     },
 
-    kiran: {
+    kiranSpesial: {
         vert: [
             // body
             new vec3(-0.4,  1.2, 0),
