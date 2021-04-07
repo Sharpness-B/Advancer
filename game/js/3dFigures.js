@@ -21,7 +21,7 @@ class figure {
     }
 
     createHitVolume() {
-
+        // this.hitVolume = polygon.giftWraping3d(this.vert);
     }
 }
 
