@@ -1,8 +1,8 @@
 /* MUSIC */
 let loc = document.location.href.split("/");
-let audioElement = document.createElement('audio');
-if (loc[loc.length-1].toString() == "index.html") audioElement.setAttribute('src', 'assets/music1.mp3');
-else {audioElement.setAttribute('src', '../assets/music1.mp3'); }
+var audioElement = new Audio('button.mp3');
+if (loc[loc.length-1].toString() == "index.html") audioElement.src= 'assets/music1.mp3';
+else {audioElement.src = '../assets/music1.mp3'; }
 audioElement.load();
 audioElement.play();
 c = cookie.readCookie("music");
@@ -13,3 +13,4 @@ function musicCheck() {
     if (cookie.readCookie("music")) cookie.eraseCookie("music");
     cookie.createCookie("music",audioElement.currentTime,10);
 }
+audioElement.volume = 0.7;

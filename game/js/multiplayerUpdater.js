@@ -17,6 +17,6 @@ function handleFile(){
         let response = xmlhttp.response;
         objects = JSON.parse(response);
 
-        // console.log(objects);
+        //console.log(objects);
     }
 }

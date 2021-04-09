@@ -22,13 +22,21 @@ document.getElementById("go_back").onclick = function() {
 }
 
 // Button sound effect
-let audioButton = document.createElement('audio');
-audioButton.setAttribute('src', 'assets/button.mp3');
-audioButton.load();
+
+var audioElement2 = new Audio('button.mp3');
+function sound() {
+    audioElement2.src = 'assets/button.mp3'
+    audioElement2.play();
+}
+/*
+//let audioButton = document.createElement('audio');
 function sound(){
+    audioButton.setAttribute('src', 'assets/button.mp3');
+    audioButton.load();
     audioButton.currentTime=0;
     audioButton.play();
 }
+*/
 
 // Canvas menu moving background
 let cnv1 = document.getElementById("menu_canvas");
