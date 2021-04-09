@@ -25,7 +25,7 @@ function handleFile(){
         console.log("---> upgrade process complete; response: ", responseObject);
         
         let buye = responseObject["success"];
-        console.log('src', 'assets/buy'+buye+'.mp3');
+        //console.log('src', 'assets/buy'+buye+'.mp3');
 
         //audioButton.setAttribute('src', 'assets/buy'+buye+'.mp3');
         //audioButton.load();

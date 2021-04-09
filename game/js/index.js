@@ -21,8 +21,13 @@ document.getElementById("go_back").onclick = function() {
     document.getElementById("main_menu").style.display = "block";
 }
 
-// Button sound effect
+document.getElementsByClassName("button_upgr")[0].onmouseover = function(){sound();}
+document.getElementsByClassName("button_upgr")[1].onmouseover = function(){sound();}
+document.getElementsByClassName("button_upgr")[2].onmouseover = function(){sound();}
+document.getElementsByClassName("button_upgr")[3].onmouseover = function(){sound();}
+document.getElementsByClassName("button_upgr")[4].onmouseover = function(){sound();}
 
+// Button sound effect
 var audioElement2 = new Audio('button.mp3');
 function sound() {
     audioElement2.src = 'assets/button.mp3'

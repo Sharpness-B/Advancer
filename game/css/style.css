@@ -93,6 +93,11 @@ html, body {
     height: 2em;
     margin-top: 0.4em;
 }
+}
+.button_upgr:hover {
+    border: 2px solid white;
+    background-image: radial-gradient(white, rgba(0,0,0,0.1), rgba(0,0,0,0) 60%);
+}
 .dot, .dotFilled{
     margin-top: auto;
     margin-bottom: auto;
