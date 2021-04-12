@@ -32,6 +32,7 @@ let player = new Player(250,100);
 let objects = {};
 
 
+
 // keyboard input
 document.onkeydown = function(e) {
     if (e.key == "a") {
@@ -60,6 +61,8 @@ document.onkeydown = function(e) {
 
 // pipeline
 let dt_old;
+let data;
+
 
 function main() {
     let fps = Math.round(1000 / (performance.now() - dt_old));
@@ -68,17 +71,14 @@ function main() {
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
 
-
     player.update();
 
-    let data = {
+    data = {
         userID: userID,
         polygon: [[player.position.x,player.position.y]],
         lasers: [[3,3],[3,3]],
         missiles: []
     };
-
-    updateObjects("db/updater.php", data);
 
 
 
@@ -112,11 +112,46 @@ function main() {
     }
 
 
+
     ctx.fillStyle = "white";
     ctx.fillText(fps.toString(), 10, 30);
+    ctx.fillText(cnt.toString(), 10, 70);
+
+    try {
+        ctx.fillText(objects.ships[0], 10, 110);
+        // console.log(objects.ships[0][0]);
+    } catch{}
 
     requestAnimationFrame(main);
 }
 
 
+
+let xmlhttp2d;
+let cnt = 0;
+
+async function updateObjects2d(url, data) {
+    url = "db/updater.php";
+
+    let params = "data=" + JSON.stringify(data) + "&userID=" + userID; // url escape data
+    
+    xmlhttp2d = new XMLHttpRequest();
+    xmlhttp2d.onreadystatechange = handleFile2d;
+    xmlhttp2d.open("GET", url+"?"+params, true);
+    xmlhttp2d.send();
+}
+
+function handleFile2d() {
+    if (xmlhttp2d.readyState == 4 && xmlhttp2d.status == 200) {
+        let response = xmlhttp2d.response;
+        objects = JSON.parse(response);
+        
+        cnt ++;
+
+        updateObjects2d("db/updater.php", data);
+    }
+}
+
+
 main();
+updateObjects2d("db/updater.php", data);
