@@ -1,0 +1,2 @@
+npm install --global yarn
+npx live-server
