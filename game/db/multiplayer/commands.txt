@@ -1,2 +1,9 @@
 npm install --global yarn
-npx live-server
+
+yarn add socket.io 
+
+npx live-server # C:\wamp64\www\Advancer\game\db\multiplayer\node_modules
+npx nodemon server.js
+
+
+curl "http://localhost:8080/?EIO=4&transport=polling"

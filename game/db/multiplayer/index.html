@@ -4,13 +4,18 @@
         <title>Advancer</title>
         <meta   charset="utf-8">
         <link   rel="stylesheet" type="text/css"  href="../../css/style.css">
-        <link   rel="icon"       type="image/png" href="../../assets/spaceshipIcon.png">
-        <script defer src="../../js/sequentialScriptInclusion.js" 
-            onload="sequentialScriptInclusion([
-                'https:\/\/cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js',
-                '../../js/multiplayerFrontend.js',
-            ]);">
+
+        <script src="https:\/\/cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+        <script defer>
+            const socket = io("http://localhost:8080");
+
+            socket.on("init", handleInit);
+
+            function handleInit(data) {
+                console.log(data);
+            }
         </script>
+
     </head>
     <body>
         <canvas id="canvas"></canvas>
