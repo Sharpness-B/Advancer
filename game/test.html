@@ -736,8 +736,8 @@ let forward = false;
 
 document.onkeydown = function(e)
 {
-    if(e.key == "ArrowLeft") {  } 
-    if(e.key == "ArrowRight") {  }
+    if(e.key == "ArrowLeft") { light.pos = vec3.add(light.pos, new vec3(1, 0, 0)); } 
+    if(e.key == "ArrowRight") { light.pos = vec3.add(light.pos, new vec3(-1, 0, 0)); }
     if(e.key == "w") { forward = true; }
     if(e.key == "Enter") { canvas.requestPointerLock(); pointerlock = true;}
     if(e.key == "Escape") { pointerlock = false;}
@@ -789,8 +789,8 @@ function main()
         cam.position = vec3.add(cam.position, cam.direction);
         jet.pos = vec3.add(jet.pos, cam.direction);
         cam.direction.multiply(40/dt);
+        light.pos = cam.position;
     }
-    light.pos = cam.position;
     
     ctx.clearRect(-ctx.canvas.width/2, -ctx.canvas.height/2, ctx.canvas.width, ctx.canvas.height);
     for(let i = 0; i < comets.length; i++)
