@@ -346,7 +346,7 @@ class Camera
     get cameraMatrix()
     {
         let p = this.position;
-        let d = this.direction;
+        let d = {...this.direction};
 
         // (T)ranslate to origin
         let T = [   [   1,    0,    0,    0],
@@ -360,8 +360,9 @@ class Camera
                         [                 0,                  1,                  0,                  0],
                         [-1*Math.sin(theta),                  0,    Math.cos(theta),                  0],
                         [                 0,                  0,                  0,                  1]    ];;
-
+        
         let phi = Math.atan(d.y/Math.sqrt( d.x**2 + d.z**2 ));
+        
         let Rx = [  [                 1,                  0,                  0,                  0],
                     [                 0,    Math.cos(  phi), -1*Math.sin(  phi),                  0],
                     [                 0,    Math.sin(  phi),    Math.cos(  phi),                  0],
@@ -711,6 +712,7 @@ let comets = [];
 for(let i = 0; i < 300; i++)
 {
     comets.push(new figure("icosahedron", undefined, new vec3(Math.random() * 15 - 7.5, Math.random() * 15 - 7.5, -900 + i*3)));
+    //comets.push(new figure("icosahedron", undefined, new vec3(Math.cos((i/30)*2*Math.PI) * 50, i - 15, Math.sin((i/30)*2*Math.PI) * 50)));
 }
 
 
@@ -727,13 +729,13 @@ document.onmousemove = function(e)
 {
     if(pointerlock)
     {
-        cam.direction.transform(Matrix.rotateY(e.movementX * 0.002));
-        cam.direction.transform(Matrix.rotateX(e.movementY * -0.002));
+        cam.direction.transform(Matrix.rotateY(e.movementX * 0.001));
+        cam.direction.transform(Matrix.rotateX(e.movementY * -0.001));
 
         for(let v = 0; v < jet.vert.length; v++)
         {
             //jet.vert[v].transform(Matrix.rotateY(e.movementX * 0.002));
-            jet.vert[v].transform(Matrix.rotateX(e.movementY * -0.002));
+            jet.vert[v].transform(Matrix.rotateX(e.movementY * -0.001));
         }
     }
 }
@@ -744,6 +746,7 @@ document.onkeydown = function(e)
 {
     if(e.key == "ArrowLeft") { light.pos = vec3.add(light.pos, new vec3(1, 0, 0)); } 
     if(e.key == "ArrowRight") { light.pos = vec3.add(light.pos, new vec3(-1, 0, 0)); }
+    if(e.key == "a") { cam.direction.transform(Matrix.rotateY(-0.02)); }
     if(e.key == "w") { forward = true; }
     if(e.key == "Enter") { canvas.requestPointerLock(); pointerlock = true;}
     if(e.key == "Escape") { pointerlock = false;}
