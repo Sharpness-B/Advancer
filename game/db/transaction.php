@@ -27,6 +27,7 @@
 
 
     // har brukeren nok penger, og er nivået under max?
+    $success = 0;
     if ($values["balance"] >= price($values[$upgrade]) && $values[$upgrade]<5) {
         // gjennomføre transaksjon
         $sql = "UPDATE users 
@@ -38,14 +39,13 @@
 
         $values["balance"] -= price($values[$upgrade]);
         $values[$upgrade] ++;
+        $success = $values[$upgrade];
     }
-
-
 
     // returner nytt objekt
     echo "{
         \"balance\": ".$values["balance"].",
-
+        \"success\": $success,
         \"upgrades\": {
             \"armor\":   ".$values["armor"].",
             \"speed\":   ".$values["speed"].",

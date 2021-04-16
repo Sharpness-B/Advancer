@@ -12,6 +12,7 @@
         <script defer src="js/sequentialScriptInclusion.js" 
             onload="sequentialScriptInclusion([
                 'https:\/\/cdn.jsdelivr.net/npm/@fingerprintjs/fingerprintjs@3/dist/fp.min.js',
+                'https:\/\/cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js',
                 'js/cookie.js',
                 'js/userIdentifier.js',
                 'js/ingamegui.js',
@@ -20,13 +21,15 @@
                 'js/3dFigures.js',
                 'js/point-in-polygon.js',
                 'js/multiplayerUpdater.js',
+                'js/multiplayerFrontend.js',
                 'js/music.js',
-                'js/main.js'
+                // 'js/multiplayer2Dtest.js'
             ]);">
         </script>
     </head>
     <body>
         <canvas id="canvas"></canvas>
+        <!--img src="assets\insidespaceship2.png" alt="Spaceshipcorners"-->
         <svg id="game_svg">
             <line x1="50%"  x2="50%"  y1="42%"  y2="37%"  stroke="white" stroke-width="1"/>
             <line x1="50%"  x2="50%"  y1="58%"  y2="63%"  stroke="white" stroke-width="1"/>

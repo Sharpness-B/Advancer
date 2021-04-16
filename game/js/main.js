@@ -49,8 +49,8 @@ let width     = canvas.width;
 let height    = canvas.height;
 let ctx       = canvas.getContext("2d");
 function fit_to_screen() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth-5;
+    canvas.height = window.innerHeight-5;
     width = innerWidth;
     height = innerHeight;
 } window.addEventListener('resize', fit_to_screen);
@@ -121,17 +121,24 @@ class Star {
     y;
     z;
     color;
-    constructor(dis,angle,color) {
-        this.distanceFromCenter = dis+5;
+    cycleTime;
+    constructor(dis,angle,color,cycleTime) {
+        this.distanceFromCenter = dis;
         this.angleFromCenter = angle;
         this.x = (dis)*Math.cos(angle);
         this.y = (dis)*Math.sin(angle);
         this.z = 0;
         this.color = color;
+        this.cycleTime = cycleTime;
     }
     addAngle(angle){
         this.angleFromCenter += angle;
         if (this.angleFromCenter > Math.PI*2) this.angleFromCenter-=Math.PI*2;
+        this.x = this.distanceFromCenter*Math.cos(this.angleFromCenter);
+        this.y = this.distanceFromCenter*Math.sin(this.angleFromCenter);
+    }
+    setAngle(cyclePosition) {
+        this.angleFromCenter = cyclePosition*2*Math.PI;
         this.x = this.distanceFromCenter*Math.cos(this.angleFromCenter);
         this.y = this.distanceFromCenter*Math.sin(this.angleFromCenter);
     }
@@ -142,18 +149,21 @@ fit_to_screen();
 let starCount = 100;
 let starList = [
     new Star(
-        0,
-        0,
-        "#"+"rgb("+0+","+Math.floor(Math.random()*255)+","+Math.floor(Math.random()*255)+")"
+        0.1,
+        0.1,
+        "rgb("+255+","+Math.floor(Math.random()*255)+","+0+")",
+        60*10*1000
     )
 ];
 let renderdistance = 20;
 
 function randomStar() {
+    let distancen = (Math.random()*renderdistance) +10;
     return new Star(
-        Math.random()*renderdistance,
+        distancen,
         Math.random()*(Math.PI*2),
-        "rgb("+0+","+Math.floor(Math.random()*50+205)+","+Math.floor(Math.random()*50+205)+")"
+        "rgb("+0+","+Math.floor(Math.random()*50+205)+","+Math.floor(Math.random()*50+205)+")",
+        distancen*10*1000
     );
 }
 
@@ -165,6 +175,7 @@ if (starCount>1) {
 }
 let distances;
 let f = false;
+
 function update() {
     if (spin>1) spin = 0;
 
@@ -175,11 +186,21 @@ function update() {
 
     let World_objects = [];
 
-
+    let gameDate = Date.now();
     // Collect stars
     for (let i=0;i<starCount;i++) {
         let s = starList[i];
-        if (spin==1) s.addAngle(0.01);
+        if (spin==1) {
+            //s.addAngle(0.01);
+
+            // Syklyser gjort + desimaler om hvor langt inn i en syklus den er.
+            let cycleTimer = (gameDate/s.cycleTime); 
+            
+            // Finner posisjonen til nåverende syklur ved å trekke ut desimaltallene
+            cycleTimer -= Math.floor(cycleTimer);
+            //console.log(cycleTimer);
+            s.setAngle(cycleTimer);
+        }
         let dis = Vector.distance(player.position,s);
 
         //list1.concat(list2);
@@ -274,12 +295,12 @@ let spin = 1;
 
 
 rotating = true;
-let fps = 30;
+let fps;
 let dt_old;
 function maine() {
     fps = Math.round(1000 / (performance.now() - dt_old));
     dt_old = performance.now();
-    console.log(fps);
+    //console.log(fps);
 
     if (rotating) player.viewVector.rotateZ(rotationX);
 
@@ -298,7 +319,7 @@ function maine() {
     };
     
     updateObjects("db/updater.php", testmultiplayer);
-    console.log(testmultiplayer);
+    //console.log(testmultiplayer);
 
     requestAnimationFrame(maine);
 }
@@ -351,4 +372,11 @@ if (locc[locc.length-1].toString() == "singleplayer.html" || locc[locc.length-1]
         // Enemy's (x,y) pos relativ til meg + missiler.
     }, 1000/fps);
 }
+*/
+/*
+let d = Date.now();
+let cycleTime = 3*60*60*1000; // 3 timer
+let cyclePosition = (d/cycleTime);
+cyclePosition -=Math.floor(cyclePosition);
+
 */

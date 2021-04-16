@@ -27,20 +27,15 @@
 
 
     // fjern egne og andres gamle verdier fra DB
-    $sql = "DELETE FROM ships 
-            WHERE userid=$userID 
-            OR time < NOW() - INTERVAL 5 DAY_SECOND;";
+    $sql = "DELETE FROM ships WHERE time < NOW() - INTERVAL 2 DAY_SECOND;";
 
     $result = mysqli_query($connection, $sql);  
 
     $sql = "DELETE FROM lasers 
             WHERE userid=$userID 
-            OR time < NOW() - INTERVAL 5 DAY_SECOND;";
+            OR time < NOW() - INTERVAL 2 DAY_SECOND;";
 
     $result = mysqli_query($connection, $sql); 
-    
-    // $sql = "INSERT INTO users (fingerprint) VALUES(\"ja\");INSERT INTO users (fingerprint) VALUES(\"nei\");";
-    // $result = mysqli_multi_query($connection, $sql); 
 
 
 
@@ -66,7 +61,11 @@
     // hente ut objekter fra andre spillere fra DB
     // skip
     $ships = []; 
-    $sql = "SELECT * FROM ships WHERE NOT userid=$userID;";
+    // $sql = "SELECT * FROM ships WHERE NOT userid=$userID;";
+    $sql = "SELECT * FROM ships WHERE NOT userid=$userID GROUP BY userid;";
+
+
+
     $result = mysqli_query($connection, $sql); 
     while ($row = mysqli_fetch_assoc($result)) {
         array_push($ships, $row["polygon"]);

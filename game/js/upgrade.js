@@ -23,6 +23,16 @@ function handleFile(){
         updateBalance(balance);
 
         console.log("---> upgrade process complete; response: ", responseObject);
+        
+        let buye = responseObject["success"];
+        //console.log('src', 'assets/buy'+buye+'.mp3');
+
+        //audioButton.setAttribute('src', 'assets/buy'+buye+'.mp3');
+        //audioButton.load();
+        //audioButton.currentTime=0;
+        //audioButton.play();
+        audioElement2.src = 'assets/buy'+buye+'.mp3';
+        audioElement2.play();
     }
 }
 
