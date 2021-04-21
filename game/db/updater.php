@@ -4,7 +4,7 @@
     $userID = $_GET["userID"];
     $data = json_decode( $_GET["data"] ); // url escape
 
-
+    // bruke multiplayerLiveRegistry.json som db eller google sheets?
 
     // formater data.polygon
     $polygonSTR = "[";
