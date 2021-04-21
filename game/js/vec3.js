@@ -99,4 +99,11 @@ class vec3
             v.x * u.y - v.y * u.x
         );
     }
+
+    static angle(v, u) 
+    {
+        return Math.acos(
+            this.dot(v, u) / ( v.length() * u.length() )
+        );
+    }
 }
