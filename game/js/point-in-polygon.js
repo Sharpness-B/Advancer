@@ -21,14 +21,56 @@ let polygon = {
 
 
 
-    giftWraping3d: function(polygon) {
+    convexTriangulation: function(fig) {
         // sjekke vinkel mot alle punkter
 
-        /*
+        /* gift wraping
         
         1. finn et triangel
         2. ta to av punktene og bøy oppover ny flate til den treffer punkt
         3. vi har et nytt triangel og gjentar
+        */
+        
+
+        let triangles = [];
+        let points    = fig.vert;
+        let nPoints   = points.length;
+  
+        while (false) {
+            let previousTriangle = triangles[triangles.length - 1];
+            let previousNormalVec;
+
+            let a = previousTriangle[0];
+            let b = previousTriangle[1];
+
+            let angle = Math.pi;
+            let c;
+
+            for (let i=0; i<nPoints; i++) {
+                let candidate = points[i];
+                let candidateAngle;
+                let candidateNormalVec;
+
+                if (candidateAngle < angle) {
+                    c = candidate;
+                }
+            }
+
+            triangles.push( [a,b,c] );
+
+            break;
+        }
+        
+
+        /* paint dipping
+
+        Dyppe figuren i maling
+
+        1 punktet med minst z er det første punktet i den første trekanten
+        2 rotere figuren slik at punktene har samme z
+        3 punktet med tredje minst z er det siste punktet i trekanten
+
+        4 roter figuren 
         
         */
     },
