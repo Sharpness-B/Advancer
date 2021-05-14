@@ -101,6 +101,11 @@ class vec3
         this.z = z;
     }
 
+    get copy()
+    {
+        return(new vec3(this.x, this.y, this.z));
+    }
+
     toString()
     {
         return("[" + this.x + ", " + this.y + ", " + this.z + "]");
@@ -323,6 +328,7 @@ class Camera
     far;
     position;
     direction;
+    facingZ;
     
     constructor(position, direction, fov, near, far)
     {
@@ -331,6 +337,7 @@ class Camera
         this.far = far;
         this.position = position;
         this.direction = direction;
+        this.facingZ = direction.z > 0;
     }
 
     get viewMatrix()
@@ -400,6 +407,7 @@ class figure {
         this.face  = figures[type].face;
         this.color = (typeof color == "undefined") ? figures[type].color : color;
         this.pos   = (typeof pos   == "undefined") ? figures[type].pos   : pos;
+        this.dir   = (typeof dir   == "undefined") ? figures[type].dir   : dir;
 
         this.strength = figures[type].strength; // for lys
 
@@ -464,7 +472,8 @@ let figures = {
         ],
 
         pos: new vec3(0.0, -0.8, -3.0),
-        color: {r:255, g:255, b:255, a: 1}
+        color: {r:255, g:255, b:255, a: 1},
+        dir: new vec3(0.0, 0.0, -1.0)
     },
 
     icosahedron: {
@@ -507,7 +516,8 @@ let figures = {
         ],
 
         pos: new vec3(0,0,0),
-        color: {r:255, g:255, b:255, a: 1}
+        color: {r:255, g:255, b:255, a: 1},
+        dir: new vec3(0.0, 0.0, -1.0)
     },
 
     // El jet de el master Jacob que se llama el "Crab Wing"
@@ -613,7 +623,8 @@ let figures = {
             [5, 11, 20],
             ],
         pos: new vec3(0.0, -3.0, -10.0),
-        color: {r:255, g:255, b:255, a:1}
+        color: {r:255, g:255, b:255, a:1},
+        dir: new vec3(0.0, 0.0, -1.0)
     },
 
     kiranSpesial: {
@@ -657,7 +668,8 @@ let figures = {
             [9,8,4,8],
         ],
         pos: new vec3(0.0, -0.6, -2.0),
-        color: [245, 137, 5]
+        color: [245, 137, 5],
+        dir: new vec3(0.0, 0.0, -1.0)
     }
 };
 
@@ -709,14 +721,26 @@ let light = new illumination("upgradesLight", new vec3(-2, 2, -3), 0.5);
 
 let comets = [];
 
-for(let i = 0; i < 300; i++)
+for(let i = 0; i < 30; i++)
 {
-    comets.push(new figure("icosahedron", undefined, new vec3(Math.random() * 15 - 7.5, Math.random() * 15 - 7.5, -900 + i*3)));
-    //comets.push(new figure("icosahedron", undefined, new vec3(Math.cos((i/30)*2*Math.PI) * 50, i - 15, Math.sin((i/30)*2*Math.PI) * 50)));
+    //comets.push(new figure("icosahedron", undefined, new vec3(Math.random() * 15 - 7.5, Math.random() * 15 - 7.5, -900 + i*9)));
+    comets.push(new figure("icosahedron", undefined, new vec3(Math.cos((i/30)*2*Math.PI) * 50, 0, Math.sin((i/30)*2*Math.PI) * 50)));
 }
 
+comets[23].pos.y = 3;
+comets[23].color = {r:500, g:0, b:0, a: 1};
+
+comets[15].pos.y = 3;
+comets[15].color = {r:0, g:500, b:0, a: 1};
+
+comets[7].pos.y = 3;
+comets[7].color = {r:0, g:0, b:500, a: 1};
+
+comets[0].pos.y = 3;
+comets[0].color = {r:500, g:500, b:0, a: 1};
 
 let jet = new figure("crabWing", undefined, new vec3(0.0, -2.0, -9.0));
+let cameraToJetDist = 9.0;
 
 for(let v = 0; v < jet.vert.length; v++)
 {    
@@ -730,24 +754,28 @@ document.onmousemove = function(e)
     if(pointerlock)
     {
         cam.direction.transform(Matrix.rotateY(e.movementX * 0.001));
-        cam.direction.transform(Matrix.rotateX(e.movementY * -0.001));
+        //cam.direction.transform(Matrix.rotateX(e.movementY * -0.001));
+        cam.facingZ = cam.direction.z > 0;
+
+        
+        let dirAmped = jet.dir.copy;
+        dirAmped.multiply(cameraToJetDist*-1);
+        cam.position = vec3.subtract(jet.pos, dirAmped);
 
         for(let v = 0; v < jet.vert.length; v++)
         {
-            //jet.vert[v].transform(Matrix.rotateY(e.movementX * 0.002));
-            jet.vert[v].transform(Matrix.rotateX(e.movementY * -0.001));
+            jet.vert[v].transform(Matrix.rotateY(e.movementX * 0.001));
+            //jet.vert[v].transform(Matrix.rotateX(e.movementY * -0.001));
         }
+        jet.dir.transform(Matrix.rotateY(e.movementX * 0.001));
     }
 }
-
-let forward = false;
 
 document.onkeydown = function(e)
 {
     if(e.key == "ArrowLeft") { light.pos = vec3.add(light.pos, new vec3(1, 0, 0)); } 
     if(e.key == "ArrowRight") { light.pos = vec3.add(light.pos, new vec3(-1, 0, 0)); }
     if(e.key == "a") { cam.direction.transform(Matrix.rotateY(-0.02)); }
-    if(e.key == "w") { forward = true; }
     if(e.key == "Enter") { canvas.requestPointerLock(); pointerlock = true;}
     if(e.key == "Escape") { pointerlock = false;}
     if(e.key == " ") { rot = !rot; }
@@ -757,7 +785,7 @@ document.onkeydown = function(e)
 
 document.onkeyup = function(e)
 {
-    if(e.key == "w") { forward = false; }
+    ;
 }
 
 let scale = ctx.canvas.width/2;
@@ -766,6 +794,7 @@ for(let v = 0; v < jet.vert.length; v++)
 {
     jet.vert[v].transform(Matrix.rotateY(Math.PI));
 }
+jet.dir.z *= -1;
 
 function main()
 {
@@ -776,7 +805,7 @@ function main()
     
     if(rot)
     {
-        rotY = 0.000002;
+        rotY = 0.00002;
     }
     else
     {
@@ -791,15 +820,6 @@ function main()
             comets[i].vert[v].transform(Matrix.rotateX(rotY*dt));
         }
     }
-
-    if(forward)
-    {
-        cam.direction.multiply(0.025*dt);
-        cam.position = vec3.add(cam.position, cam.direction);
-        jet.pos = vec3.add(jet.pos, cam.direction);
-        cam.direction.multiply(40/dt);
-        light.pos = cam.position;
-    }
     
     ctx.clearRect(-ctx.canvas.width/2, -ctx.canvas.height/2, ctx.canvas.width, ctx.canvas.height);
     for(let i = 0; i < comets.length; i++)
@@ -812,6 +832,7 @@ function main()
     ctx.fillStyle = "white";
     ctx.fillText(drawFps, -ctx.canvas.width/2, -ctx.canvas.height/2 + 30);
 
+    // Draw crosshair
     ctx.fillRect(-10, -1, 20, 2);
     ctx.fillRect(-1, -10, 2, 20);
 
@@ -927,6 +948,8 @@ function DrawModel(model)
         modelScreen.push(cam.project(vec3.add(model.vert[v], model.pos)));
     }
 
+    // set scaleY to apropiate value to flip y coordinates to fix upside down view when looking down positive z-axis
+    let scaleY = (cam.facingZ ? -1 : 1);
 
     for(let f = 0; f < faceCenters.length; f++)
     {
@@ -935,7 +958,14 @@ function DrawModel(model)
         let u = vec3.subtract(modelScreen[faceCenters[f][2]].tov3(model.vert[faceCenters[f][2]].z), modelScreen[faceCenters[f][0]].tov3(model.vert[faceCenters[f][0]].z));
         let N = vec3.cross(v, u); // Surface (N)ormal
 
-        if(N.z >= 0) { continue; }      // cull the backfaces
+        if(cam.facingZ)
+        {
+            if(N.z <= 0) { continue; }      // cull the backfaces
+        }
+        else
+        {
+            if(N.z >= 0) { continue; }      // cull the backfaces
+        }
 
         /* Ambient lighting */
 
@@ -974,10 +1004,10 @@ function DrawModel(model)
 
         ctx.beginPath();
 
-        ctx.moveTo(scale*modelScreen[faceCenters[f][0]].x, scale*modelScreen[faceCenters[f][0]].y);
-        ctx.lineTo(scale*modelScreen[faceCenters[f][1]].x, scale*modelScreen[faceCenters[f][1]].y);
-        ctx.lineTo(scale*modelScreen[faceCenters[f][2]].x, scale*modelScreen[faceCenters[f][2]].y);
-        ctx.lineTo(scale*modelScreen[faceCenters[f][0]].x, scale*modelScreen[faceCenters[f][0]].y);
+        ctx.moveTo(scale*modelScreen[faceCenters[f][0]].x, scale*scaleY*modelScreen[faceCenters[f][0]].y);
+        ctx.lineTo(scale*modelScreen[faceCenters[f][1]].x, scale*scaleY*modelScreen[faceCenters[f][1]].y);
+        ctx.lineTo(scale*modelScreen[faceCenters[f][2]].x, scale*scaleY*modelScreen[faceCenters[f][2]].y);
+        ctx.lineTo(scale*modelScreen[faceCenters[f][0]].x, scale*scaleY*modelScreen[faceCenters[f][0]].y);
         ctx.fill();
     }
 }
