@@ -22,7 +22,7 @@ let polygon = {
 
 
     convexTriangulation: function(fig) {
-        // sjekke vinkel mot alle punkter
+        // sjekke vinkel mot alle punkter // når skipet flytter seg flytter boksen seg
 
         /* gift wraping
         
@@ -228,8 +228,33 @@ let polygon = {
 
 
 
+    normalVecTriangle: function(triangel) {
+        let a = new vec3(
+            triangel[0],
+            triangel[0],
+            triangel[0]
+        );
+        let b = new vec3(
+            triangel[1],
+            triangel[1],
+            triangel[1]
+        );
+        let c = new vec3(
+            triangel[2],
+            triangel[2],
+            triangel[2]
+        );
+
+        return vec3.cross(
+            vec3.subtract(a,b),
+            vec3.subtract(a,c)
+        );
+    },
+
+
+
     polygonip: function(polygon) {},
-    triangulate: function(polygon) {},
+    triangulate: function(polygon) {}
 };
 
 // let polygon = [
